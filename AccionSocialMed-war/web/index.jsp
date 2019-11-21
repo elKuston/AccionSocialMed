@@ -7,6 +7,9 @@
 <%@page import="entity.Usuarios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%Usuarios user = (Usuarios)request.getAttribute("usuario");%>
+<%
+   
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +22,7 @@
         
         <h1>TU NOMBRE ES: <%= user.getNombre() %></h1><br/>
         <h1>TU CORREO ES: <%= user.getCorreo() %></h1><br/>
-        <h1>TU CONTRASEÑA ES: <%= user.getContrasena() %></h1><br/><br/><br/>
+        <h1>TU CONTRASEÑA ES: <%= user.getContrasena() %></h1><br/><br/>
         
         <a  href="CerrarSesionServlet">CERRAR SESION </a>
     </center>
