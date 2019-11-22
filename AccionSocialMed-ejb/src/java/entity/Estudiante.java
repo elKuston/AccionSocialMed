@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author romol
+ * @author jange
  */
 @Entity
 @Table(name = "ESTUDIANTE")
@@ -60,7 +60,7 @@ public class Estudiante implements Serializable {
     private List<Asignatura> asignaturaList;
     @JoinColumn(name = "CORREO", referencedColumnName = "CORREO", insertable = false, updatable = false)
     @OneToOne(optional = false)
-    private Usuarios usuarios;
+    private Usuario usuario;
 
     public Estudiante() {
     }
@@ -102,12 +102,12 @@ public class Estudiante implements Serializable {
         this.asignaturaList = asignaturaList;
     }
 
-    public Usuarios getUsuarios() {
-        return usuarios;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarios(Usuarios usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override

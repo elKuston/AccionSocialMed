@@ -5,19 +5,19 @@
  */
 package dao;
 
-import entity.ClaveRegistro;
+import entity.Estudiante;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author romol
+ * @author jange
  */
 @Stateless
-public class ClaveRegistroFacade extends AbstractFacade<ClaveRegistro> {
+public class EstudianteFacade extends AbstractFacade<Estudiante> {
 
-    @PersistenceContext(unitName = "AccionSocialMed-ejbPU")
+    @PersistenceContext(unitName = "Aegislash-ejbPU")
     private EntityManager em;
 
     @Override
@@ -25,8 +25,8 @@ public class ClaveRegistroFacade extends AbstractFacade<ClaveRegistro> {
         return em;
     }
 
-    public ClaveRegistroFacade() {
-        super(ClaveRegistro.class);
+    public EstudianteFacade() {
+        super(Estudiante.class);
     }
     
 }

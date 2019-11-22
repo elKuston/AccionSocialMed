@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author romol
+ * @author jange
  */
 @Entity
 @Table(name = "PROFESOR")
@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Profesor.findAll", query = "SELECT p FROM Profesor p")
     , @NamedQuery(name = "Profesor.findByCorreo", query = "SELECT p FROM Profesor p WHERE p.correo = :correo")
     , @NamedQuery(name = "Profesor.findByFechaNacimiento", query = "SELECT p FROM Profesor p WHERE p.fechaNacimiento = :fechaNacimiento")
-    , @NamedQuery(name = "Profesor.findByApellidos", query = "SELECT p FROM Profesor p WHERE p.apellidos = :apellidos")})
+    , @NamedQuery(name = "Profesor.findByApellidos", query = "SELECT p FROM Profesor p WHERE p.apellidos = :apellidos")
+    , @NamedQuery(name = "Profesor.findByGestor", query = "SELECT p FROM Profesor p WHERE p.gestor = :gestor")})
 public class Profesor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,6 +55,8 @@ public class Profesor implements Serializable {
     @Size(max = 50)
     @Column(name = "APELLIDOS")
     private String apellidos;
+    @Column(name = "GESTOR")
+    private Boolean gestor;
     @JoinTable(name = "IMPARTE", joinColumns = {
         @JoinColumn(name = "CORREO_PROFESOR", referencedColumnName = "CORREO")}, inverseJoinColumns = {
         @JoinColumn(name = "COD_ASIGNATURA", referencedColumnName = "COD_ASIGNATURA")})
@@ -63,7 +66,7 @@ public class Profesor implements Serializable {
     private List<Actividad> actividadList;
     @JoinColumn(name = "CORREO", referencedColumnName = "CORREO", insertable = false, updatable = false)
     @OneToOne(optional = false)
-    private Usuarios usuarios;
+    private Usuario usuario;
 
     public Profesor() {
     }
@@ -96,6 +99,14 @@ public class Profesor implements Serializable {
         this.apellidos = apellidos;
     }
 
+    public Boolean getGestor() {
+        return gestor;
+    }
+
+    public void setGestor(Boolean gestor) {
+        this.gestor = gestor;
+    }
+
     @XmlTransient
     public List<Asignatura> getAsignaturaList() {
         return asignaturaList;
@@ -114,12 +125,12 @@ public class Profesor implements Serializable {
         this.actividadList = actividadList;
     }
 
-    public Usuarios getUsuarios() {
-        return usuarios;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarios(Usuarios usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override

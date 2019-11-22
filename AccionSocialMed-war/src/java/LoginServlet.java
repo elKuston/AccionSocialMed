@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 
-import dao.UsuariosFacade;
-import entity.Usuarios;
+import dao.UsuarioFacade;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @EJB
-    UsuariosFacade usuariosFacade;
+    UsuarioFacade usuarioFacade;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -44,10 +44,10 @@ public class LoginServlet extends HttpServlet {
         String contrasena = request.getParameter("contrasena");
         String direccion = "/login.jsp";
 
-        if (usuariosFacade.find(correo) != null) {
-            if (usuariosFacade.find(correo).getContrasena().equals(contrasena)) {
+        if (usuarioFacade.find(correo) != null) {
+            if (usuarioFacade.find(correo).getContrasena().equals(contrasena)) {
                 direccion = "/IndexServlet";
-                sesion.setAttribute("usuario", usuariosFacade.find(correo));
+                sesion.setAttribute("usuario", usuarioFacade.find(correo));
             }
         }
 

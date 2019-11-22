@@ -5,19 +5,19 @@
  */
 package dao;
 
-import entity.Usuarios;
+import entity.Actividad;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author romol
+ * @author jange
  */
 @Stateless
-public class UsuariosFacade extends AbstractFacade<Usuarios> {
+public class ActividadFacade extends AbstractFacade<Actividad> {
 
-    @PersistenceContext(unitName = "AccionSocialMed-ejbPU")
+    @PersistenceContext(unitName = "Aegislash-ejbPU")
     private EntityManager em;
 
     @Override
@@ -25,8 +25,8 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
         return em;
     }
 
-    public UsuariosFacade() {
-        super(Usuarios.class);
+    public ActividadFacade() {
+        super(Actividad.class);
     }
     
 }

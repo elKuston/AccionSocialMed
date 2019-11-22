@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import entity.Usuarios;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -35,7 +35,7 @@ public class IndexServlet extends HttpServlet {
             throws ServletException, IOException {
      
         HttpSession sesion = request.getSession();
-        Usuarios user= (Usuarios) sesion.getAttribute("usuario");
+        Usuario user= (Usuario) sesion.getAttribute("usuario");
         request.setAttribute("usuario",user);
         
         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");

@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author romol
+ * @author jange
  */
 @Entity
 @Table(name = "PAS")
@@ -51,7 +51,7 @@ public class Pas implements Serializable {
     private String apellidos;
     @JoinColumn(name = "CORREO", referencedColumnName = "CORREO", insertable = false, updatable = false)
     @OneToOne(optional = false)
-    private Usuarios usuarios;
+    private Usuario usuario;
 
     public Pas() {
     }
@@ -84,12 +84,12 @@ public class Pas implements Serializable {
         this.apellidos = apellidos;
     }
 
-    public Usuarios getUsuarios() {
-        return usuarios;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarios(Usuarios usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override

@@ -4,9 +4,9 @@
     Author     : jange
 --%>
 
-<%@page import="entity.Usuarios"%>
+<%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%Usuarios user = (Usuarios)request.getAttribute("usuario");%>
+<%Usuario user = (Usuario)request.getAttribute("usuario");%>
 <%
    
 %>

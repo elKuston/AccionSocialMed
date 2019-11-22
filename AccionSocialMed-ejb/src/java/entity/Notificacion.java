@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author romol
+ * @author jange
  */
 @Entity
 @Table(name = "NOTIFICACION")
@@ -41,10 +41,10 @@ public class Notificacion implements Serializable {
     private Boolean leido;
     @JoinColumn(name = "EMISOR", referencedColumnName = "CORREO")
     @ManyToOne
-    private Usuarios emisor;
+    private Usuario emisor;
     @JoinColumn(name = "RECEPTOR", referencedColumnName = "CORREO")
     @ManyToOne
-    private Usuarios receptor;
+    private Usuario receptor;
 
     public Notificacion() {
     }
@@ -69,19 +69,19 @@ public class Notificacion implements Serializable {
         this.leido = leido;
     }
 
-    public Usuarios getEmisor() {
+    public Usuario getEmisor() {
         return emisor;
     }
 
-    public void setEmisor(Usuarios emisor) {
+    public void setEmisor(Usuario emisor) {
         this.emisor = emisor;
     }
 
-    public Usuarios getReceptor() {
+    public Usuario getReceptor() {
         return receptor;
     }
 
-    public void setReceptor(Usuarios receptor) {
+    public void setReceptor(Usuario receptor) {
         this.receptor = receptor;
     }
 

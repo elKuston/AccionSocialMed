@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author romol
+ * @author jange
  */
 @Entity
 @Table(name = "ONG")
@@ -34,7 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Ong.findAll", query = "SELECT o FROM Ong o")
     , @NamedQuery(name = "Ong.findByCorreo", query = "SELECT o FROM Ong o WHERE o.correo = :correo")
     , @NamedQuery(name = "Ong.findByDireccion", query = "SELECT o FROM Ong o WHERE o.direccion = :direccion")
-    , @NamedQuery(name = "Ong.findByWeb", query = "SELECT o FROM Ong o WHERE o.web = :web")})
+    , @NamedQuery(name = "Ong.findByWeb", query = "SELECT o FROM Ong o WHERE o.web = :web")
+    , @NamedQuery(name = "Ong.findByClaveRegistro", query = "SELECT o FROM Ong o WHERE o.claveRegistro = :claveRegistro")
+    , @NamedQuery(name = "Ong.findByActiva", query = "SELECT o FROM Ong o WHERE o.activa = :activa")})
 public class Ong implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,11 +52,16 @@ public class Ong implements Serializable {
     @Size(max = 50)
     @Column(name = "WEB")
     private String web;
+    @Size(max = 50)
+    @Column(name = "CLAVE_REGISTRO")
+    private String claveRegistro;
+    @Column(name = "ACTIVA")
+    private Boolean activa;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ong")
     private List<Actividad> actividadList;
     @JoinColumn(name = "CORREO", referencedColumnName = "CORREO", insertable = false, updatable = false)
     @OneToOne(optional = false)
-    private Usuarios usuarios;
+    private Usuario usuario;
 
     public Ong() {
     }
@@ -87,6 +94,22 @@ public class Ong implements Serializable {
         this.web = web;
     }
 
+    public String getClaveRegistro() {
+        return claveRegistro;
+    }
+
+    public void setClaveRegistro(String claveRegistro) {
+        this.claveRegistro = claveRegistro;
+    }
+
+    public Boolean getActiva() {
+        return activa;
+    }
+
+    public void setActiva(Boolean activa) {
+        this.activa = activa;
+    }
+
     @XmlTransient
     public List<Actividad> getActividadList() {
         return actividadList;
@@ -96,12 +119,12 @@ public class Ong implements Serializable {
         this.actividadList = actividadList;
     }
 
-    public Usuarios getUsuarios() {
-        return usuarios;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarios(Usuarios usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override

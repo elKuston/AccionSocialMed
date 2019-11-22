@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author romol
+ * @author jange
  */
 @Entity
 @Table(name = "ACTIVIDAD")
@@ -77,7 +77,12 @@ public class Actividad implements Serializable {
         @JoinColumn(name = "NACTIVIDAD", referencedColumnName = "NACTIVIDAD")}, inverseJoinColumns = {
         @JoinColumn(name = "USUARIO", referencedColumnName = "CORREO")})
     @ManyToMany
-    private List<Usuarios> usuariosList;
+    private List<Usuario> usuarioList;
+    @JoinTable(name = "ETIQUETAS_ACTIVIDAD", joinColumns = {
+        @JoinColumn(name = "ACTIVIDAD", referencedColumnName = "NACTIVIDAD")}, inverseJoinColumns = {
+        @JoinColumn(name = "ETIQUETA", referencedColumnName = "ETIQUETA")})
+    @ManyToMany
+    private List<Etiqueta> etiquetaList;
     @JoinColumn(name = "ASIGNATURA_ASOCIADA", referencedColumnName = "COD_ASIGNATURA")
     @ManyToOne
     private Asignatura asignaturaAsociada;
@@ -159,12 +164,21 @@ public class Actividad implements Serializable {
     }
 
     @XmlTransient
-    public List<Usuarios> getUsuariosList() {
-        return usuariosList;
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
     }
 
-    public void setUsuariosList(List<Usuarios> usuariosList) {
-        this.usuariosList = usuariosList;
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
+    }
+
+    @XmlTransient
+    public List<Etiqueta> getEtiquetaList() {
+        return etiquetaList;
+    }
+
+    public void setEtiquetaList(List<Etiqueta> etiquetaList) {
+        this.etiquetaList = etiquetaList;
     }
 
     public Asignatura getAsignaturaAsociada() {
