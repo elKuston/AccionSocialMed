@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import dao.EstudianteFacade;
 import dao.OngFacade;
 import dao.PasFacade;
@@ -53,18 +57,27 @@ public class LoginServlet extends HttpServlet {
         String contrasena = request.getParameter("contrasena");
         String direccion = "/login.jsp";
 
-        String resultado="";
+        String resultado = "";
+        String link="http://idumamockup-env.3mca2qexfx.eu-central-1.elasticbeanstalk.com/getuser/";
+        link=link.concat(correo);
+        link=link.concat("/");
+        link=link.concat(contrasena);
+     /* METODO PARA OBTENER EL TIPO DE USUARIO DE IDUMA
         try {
-            URL url = new URL("http://idumamockup-env.3mca2qexfx.eu-central-1.elasticbeanstalk.com/getuser/jmmunoz@uma.es/sanchez");
+            URL url = new URL(link);
             BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
             String str = "";
             while (null != (str = br.readLine())) {
-                resultado= resultado.concat(str);
+                resultado = resultado.concat(str);
             }
         } catch (IOException ex) {
         }
+        //Aqui obtengo el valor del usuario y se de que tipo es en iduma
+        JsonObject jobj = new Gson().fromJson(resultado, JsonObject.class);
+        String json = jobj.get("categoryName").getAsString(); 
         
-        sesion.setAttribute("json", resultado);
+        sesion.setAttribute("json", json);
+        */
 
         if (usuarioFacade.find(correo) != null) {
             if (usuarioFacade.find(correo).getContrasena().equals(contrasena)) {
