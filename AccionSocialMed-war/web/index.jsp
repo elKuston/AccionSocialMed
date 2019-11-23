@@ -23,6 +23,8 @@
         <h1>TU NOMBRE ES: <%= user.getNombre() %></h1><br/>
         <h1>TU CORREO ES: <%= user.getCorreo() %></h1><br/>
         <h1>TU CONTRASEÑA ES: <%= user.getContrasena() %></h1><br/><br/>
+        <h1>TU TIPO ES: <%= request.getSession().getAttribute("tipo") %></h1><br/><br/>
+        <h1>EL JSON DEVUELVE: <%= request.getSession().getAttribute("json") %></h1><br/><br/>
         
         <a  href="CerrarSesionServlet">CERRAR SESION </a><br/><br/>
         <% 
