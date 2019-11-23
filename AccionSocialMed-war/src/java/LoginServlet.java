@@ -4,8 +4,15 @@
  * and open the template in the editor.
  */
 
+import dao.EstudianteFacade;
+import dao.OngFacade;
+import dao.PasFacade;
+import dao.ProfesorFacade;
 import dao.UsuarioFacade;
 import entity.Usuario;
+import entity.Profesor;
+import entity.Pas;
+import entity.Ong;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -35,6 +42,10 @@ public class LoginServlet extends HttpServlet {
      */
     @EJB
     UsuarioFacade usuarioFacade;
+    OngFacade ongFacade;
+    ProfesorFacade profesorFacade;
+    PasFacade pasFacade;
+    EstudianteFacade estudianteFacade;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -48,6 +59,10 @@ public class LoginServlet extends HttpServlet {
             if (usuarioFacade.find(correo).getContrasena().equals(contrasena)) {
                 direccion = "/IndexServlet";
                 sesion.setAttribute("usuario", usuarioFacade.find(correo));
+                if(usuarioFacade.find(correo).getProfesor() != null) sesion.setAttribute("tipo", "profesor");
+                if(usuarioFacade.find(correo).getPas() != null) sesion.setAttribute("tipo", "pas");
+                if(usuarioFacade.find(correo).getEstudiante() != null) sesion.setAttribute("tipo","estudiante");
+                if(usuarioFacade.find(correo).getOng()!= null) sesion.setAttribute("tipo","ong");  
             }
         }
 
