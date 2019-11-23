@@ -75,9 +75,9 @@ public class LoginServlet extends HttpServlet {
         //Aqui obtengo el valor del usuario y se de que tipo es en iduma
         JsonObject jobj = new Gson().fromJson(resultado, JsonObject.class);
         String json = jobj.get("categoryName").getAsString(); 
-        
-        sesion.setAttribute("json", json);
         */
+        sesion.setAttribute("json", link);
+        
 
         if (usuarioFacade.find(correo) != null) {
             if (usuarioFacade.find(correo).getContrasena().equals(contrasena)) {
