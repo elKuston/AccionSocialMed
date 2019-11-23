@@ -24,7 +24,14 @@
         <h1>TU CORREO ES: <%= user.getCorreo() %></h1><br/>
         <h1>TU CONTRASEÑA ES: <%= user.getContrasena() %></h1><br/><br/>
         
-        <a  href="CerrarSesionServlet">CERRAR SESION </a>
+        <a  href="CerrarSesionServlet">CERRAR SESION </a><br/><br/>
+        <% 
+            if(!user.getCorreo().contains("uma.es")){//es (PROBABLEMENTE) una ong (hay que refinar bien si esto incluye a alguna no-ong o excluye a alguna ong
+                %>
+                    <a href ="ProponerActividadServlet">NUEVA ACTIVIDAD</a>
+                <%
+            }
+        %>
     </center>
     </body>
 </html>
