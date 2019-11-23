@@ -9,15 +9,9 @@ import dao.OngFacade;
 import dao.PasFacade;
 import dao.ProfesorFacade;
 import dao.UsuarioFacade;
-import entity.Usuario;
-import entity.Profesor;
-import entity.Pas;
-import entity.Ong;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
+import java.io.InputStreamReader;
 import java.net.URL;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -58,31 +52,40 @@ public class LoginServlet extends HttpServlet {
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
         String direccion = "/login.jsp";
+
+        String resultado="";
+        try {
+            URL url = new URL("http://idumamockup-env.3mca2qexfx.eu-central-1.elasticbeanstalk.com/getuser/jmmunoz@uma.es/sanchez");
+            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+            String str = "";
+            while (null != (str = br.readLine())) {
+                resultado= resultado.concat(str);
+            }
+        } catch (IOException ex) {
+        }
         
-        URL url = new URL("http://idumamockup-env.3mca2qexfx.eu-central-1.elasticbeanstalk.com");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        con.connect();
-        InputStream stream =con.getInputStream();
-        int data =stream.read();
-        int code = con.getResponseCode();
-        sesion.setAttribute("json", data);
+        sesion.setAttribute("json", resultado);
 
         if (usuarioFacade.find(correo) != null) {
             if (usuarioFacade.find(correo).getContrasena().equals(contrasena)) {
                 direccion = "/IndexServlet";
                 sesion.setAttribute("usuario", usuarioFacade.find(correo));
-                if(usuarioFacade.find(correo).getProfesor() != null) sesion.setAttribute("tipo", "profesor");
-                if(usuarioFacade.find(correo).getPas() != null) sesion.setAttribute("tipo", "pas");
-                if(usuarioFacade.find(correo).getEstudiante() != null) sesion.setAttribute("tipo","estudiante");
-                if(usuarioFacade.find(correo).getOng()!= null && usuarioFacade.find(correo).getOng().getActiva()){
-                    sesion.setAttribute("tipo","ong");
-                }  else{
-                    direccion="/login.jsp";
+                if (usuarioFacade.find(correo).getProfesor() != null) {
+                    sesion.setAttribute("tipo", "profesor");
+                }
+                if (usuarioFacade.find(correo).getPas() != null) {
+                    sesion.setAttribute("tipo", "pas");
+                }
+                if (usuarioFacade.find(correo).getEstudiante() != null) {
+                    sesion.setAttribute("tipo", "estudiante");
+                }
+                if (usuarioFacade.find(correo).getOng() != null && usuarioFacade.find(correo).getOng().getActiva()) {
+                    sesion.setAttribute("tipo", "ong");
+                } else {
+                    direccion = "/login.jsp";
                     sesion.removeAttribute("usuario");
                 }
-                
-                
+
             }
         }
 
