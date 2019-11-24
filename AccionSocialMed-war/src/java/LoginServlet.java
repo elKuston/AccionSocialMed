@@ -16,6 +16,7 @@ import dao.UsuarioFacade;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.URL;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -42,12 +43,11 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @EJB
-    UsuarioFacade usuarioFacade;
-    OngFacade ongFacade;
-    ProfesorFacade profesorFacade;
-    PasFacade pasFacade;
-    EstudianteFacade estudianteFacade;
+    @EJB UsuarioFacade usuarioFacade;
+    @EJB OngFacade ongFacade;
+    @EJB ProfesorFacade profesorFacade;
+    @EJB PasFacade pasFacade;
+    @EJB EstudianteFacade estudianteFacade;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -77,22 +77,17 @@ public class LoginServlet extends HttpServlet {
         String json = jobj.get("categoryName").getAsString(); 
         */
         sesion.setAttribute("json", link);
-        
-
         if (usuarioFacade.find(correo) != null) {
             if (usuarioFacade.find(correo).getContrasena().equals(contrasena)) {
                 direccion = "/IndexServlet";
                 sesion.setAttribute("usuario", usuarioFacade.find(correo));
-                if (usuarioFacade.find(correo).getProfesor() != null) {
+                if (profesorFacade.find(correo)!= null) {
                     sesion.setAttribute("tipo", "profesor");
-                }
-                if (usuarioFacade.find(correo).getPas() != null) {
+                } else if (pasFacade.find(correo)!= null) {
                     sesion.setAttribute("tipo", "pas");
-                }
-                if (usuarioFacade.find(correo).getEstudiante() != null) {
+                }else if (estudianteFacade.find(correo) != null) {
                     sesion.setAttribute("tipo", "estudiante");
-                }
-                if (usuarioFacade.find(correo).getOng() != null && usuarioFacade.find(correo).getOng().getActiva()) {
+                } else if (ongFacade.find(correo) != null && ongFacade.find(correo).getActiva()) {
                     sesion.setAttribute("tipo", "ong");
                 } else {
                     direccion = "/login.jsp";

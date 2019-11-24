@@ -58,6 +58,7 @@ public class ProponerActividadServlet extends HttpServlet {
             //cogemos los datos de la actividad
             String titulo = request.getParameter("titulo");
             String descripcion = request.getParameter("descripcion");
+            String lugar = request.getParameter("lugar");
             int plazasDisponibles = Integer.parseInt(request.getParameter("plazas"));
             Date fechaInicio = Date.valueOf(request.getParameter("fechaInicio"));
             String ff = request.getParameter("fechaFin");
@@ -66,6 +67,7 @@ public class ProponerActividadServlet extends HttpServlet {
             Actividad a = new Actividad(nActividad, titulo, descripcion, fechaInicio);
             a.setOng(ongFacade.find(((Usuario) request.getSession().getAttribute("usuario")).getCorreo()));
             a.setNpersonas(plazasDisponibles);
+            a.setLugar(lugar);
             if(ff!=null){
                 Date fechaFin;
                 try{
@@ -81,6 +83,11 @@ public class ProponerActividadServlet extends HttpServlet {
                 boolean activada = request.getAttribute(e.getEtiqueta()) != null;
                 if(activada){
                     etiquetasActividad.add(e);
+                    try (PrintWriter out = response.getWriter()) {
+                        out.println(e.getEtiqueta());
+                    }catch(Exception exc){
+                        
+                    }
                 }
             }
             if(etiquetasActividad.size()>0){
@@ -89,8 +96,8 @@ public class ProponerActividadServlet extends HttpServlet {
             
             actividadFacade.create(a);
             
-            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-            rd.forward(request, response);
+            /*RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);*/     
         }
     }
 
