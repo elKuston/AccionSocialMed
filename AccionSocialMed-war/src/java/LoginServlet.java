@@ -96,7 +96,6 @@ public class LoginServlet extends HttpServlet {
 
             }
         }
-
         RequestDispatcher rd = request.getRequestDispatcher(direccion);
         rd.forward(request, response);
 

@@ -36,6 +36,9 @@ public class IndexServlet extends HttpServlet {
      
         HttpSession sesion = request.getSession();
         Usuario user= (Usuario) sesion.getAttribute("usuario");
+        String mensaje = (String) sesion.getAttribute("mensaje");
+        request.setAttribute("mensaje",mensaje);
+        sesion.removeAttribute("mensaje");
         request.setAttribute("usuario",user);
         
         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
