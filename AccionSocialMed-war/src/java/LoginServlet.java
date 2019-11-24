@@ -96,6 +96,10 @@ public class LoginServlet extends HttpServlet {
 
             }
         }
+        else if(correo.equals("") || contrasena.equals(null)){request.setAttribute("mensaje", "No dejes campos vacios"); }
+        
+        else{request.setAttribute("mensaje", "Datos incorrectos"); }
+        
         RequestDispatcher rd = request.getRequestDispatcher(direccion);
         rd.forward(request, response);
 

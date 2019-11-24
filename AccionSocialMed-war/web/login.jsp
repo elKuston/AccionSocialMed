@@ -14,6 +14,15 @@
     </head>
     <body>
     <center>
+         <% if(request.getAttribute("mensaje")!=null){
+            String mensaje =(String) request.getAttribute("mensaje");
+            request.removeAttribute("mensaje");
+            %>
+            <script>
+                alert("<%=mensaje%>");
+            </script>
+            <%
+        }%>
         <h1>AccionSocialMed</h1>
         <br/><br/>
         <h2>LOGIN</h2>
