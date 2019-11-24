@@ -95,7 +95,7 @@ public class ProponerActividadServlet extends HttpServlet {
             
             actividadFacade.create(a);
             
-            
+            request.getSession().setAttribute("mensaje", "La actividad será enviada al gestor para revisión");
             RequestDispatcher rd = request.getRequestDispatcher("/IndexServlet");
             rd.forward(request, response);  
         }
