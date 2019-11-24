@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -77,27 +78,26 @@ public class ProponerActividadServlet extends HttpServlet {
                     
                 }
             }
-            List<Etiqueta> etiquetas = etiquetaFacade.findAll();
             List<Etiqueta> etiquetasActividad = new ArrayList<>();
-            for(Etiqueta e : etiquetas){
-                boolean activada = request.getAttribute(e.getEtiqueta()) != null;
-                if(activada){
-                    etiquetasActividad.add(e);
-                    try (PrintWriter out = response.getWriter()) {
-                        out.println(e.getEtiqueta());
-                    }catch(Exception exc){
-                        
+            
+                Enumeration<String> ets = request.getParameterNames();
+                while(ets.hasMoreElements()){
+                    String s = ets.nextElement();
+                    Etiqueta et = etiquetaFacade.find(s);
+                    if(et!=null){
+                        etiquetasActividad.add(et);
                     }
                 }
-            }
+            
             if(etiquetasActividad.size()>0){
                 a.setEtiquetaList(etiquetasActividad);
             }
             
             actividadFacade.create(a);
             
-            /*RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-            rd.forward(request, response);*/     
+            
+            RequestDispatcher rd = request.getRequestDispatcher("/IndexServlet");
+            rd.forward(request, response);  
         }
     }
 

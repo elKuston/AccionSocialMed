@@ -28,7 +28,7 @@
         
         <a  href="CerrarSesionServlet">CERRAR SESION </a><br/><br/>
         <% 
-            if(!user.getCorreo().contains("uma.es")){//es (PROBABLEMENTE) una ong (hay que refinar bien si esto incluye a alguna no-ong o excluye a alguna ong
+            if(request.getSession().getAttribute("tipo").equals("ong")){//es (PROBABLEMENTE) una ong (hay que refinar bien si esto incluye a alguna no-ong o excluye a alguna ong
                 %>
                     <a href ="ProponerActividadServlet">NUEVA ACTIVIDAD</a>
                 <%
