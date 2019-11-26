@@ -62,7 +62,7 @@ public class LoginServlet extends HttpServlet {
         link=link.concat(correo);
         link=link.concat("/");
         link=link.concat(contrasena);
-     /* METODO PARA OBTENER EL TIPO DE USUARIO DE IDUMA
+     //METODO PARA OBTENER EL TIPO DE USUARIO DE IDUMA
         try {
             URL url = new URL(link);
             BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -74,11 +74,14 @@ public class LoginServlet extends HttpServlet {
         }
         //Aqui obtengo el valor del usuario y se de que tipo es en iduma
         JsonObject jobj = new Gson().fromJson(resultado, JsonObject.class);
-        String json = jobj.get("categoryName").getAsString(); 
-        */
-        sesion.setAttribute("json", link);
-        if (usuarioFacade.find(correo) != null) {
-            if (usuarioFacade.find(correo).getContrasena().equals(contrasena)) {
+        
+        String json = jobj.get("situation").getAsString(); 
+        sesion.setAttribute("json",json);
+        
+        
+        
+        if (usuarioFacade.find(correo) != null){
+            if (json.equals("PRESENT")) {
                 direccion = "/IndexServlet";
                 sesion.setAttribute("usuario", usuarioFacade.find(correo));
                 if (profesorFacade.find(correo)!= null) {
@@ -92,10 +95,15 @@ public class LoginServlet extends HttpServlet {
                 } else {
                     direccion = "/login.jsp";
                     sesion.removeAttribute("usuario");
+                    request.setAttribute("mensaje", "Datos incorrectos");
                 }
 
             }
         }
+        else if(correo.equals("") || contrasena.equals("")){request.setAttribute("mensaje", "No dejes campos vacios"); }
+        
+        else{request.setAttribute("mensaje", "Datos incorrectos"); }
+        
         RequestDispatcher rd = request.getRequestDispatcher(direccion);
         rd.forward(request, response);
 

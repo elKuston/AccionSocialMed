@@ -14,13 +14,22 @@
     </head>
     <body>
     <center>
+         <% if(request.getAttribute("mensaje")!=null){
+            String mensaje =(String) request.getAttribute("mensaje");
+            request.removeAttribute("mensaje");
+            %>
+            <script>
+                alert("<%=mensaje%>");
+            </script>
+            <%
+        }%>
         <h1>AccionSocialMed</h1>
         <br/><br/>
         <h2>LOGIN</h2>
         <br/><br/>
         <form action="LoginServlet" method="post">
         <input name="correo" placeholder="Usuario" size="30" maxlength="30" /> <br/><br/>
-        <input name="contrasena" placeholder="Contraseña" size="30" maxlength="30" /> <br/><br/>
+        <input type="password" name="contrasena" placeholder="Contraseña" size="30" maxlength="30" /> <br/><br/>
         <input type="submit" value="Logearse">
         <form/>
         

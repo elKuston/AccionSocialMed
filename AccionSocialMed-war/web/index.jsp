@@ -28,11 +28,10 @@
             <%
         }%>
     <center>
-        <h1>HOLA PUTO AMO </h1><br/><br/>
+        <h1>HOLA SEÑOR </h1><br/><br/>
         
         <h1>TU NOMBRE ES: <%= user.getNombre() %></h1><br/>
         <h1>TU CORREO ES: <%= user.getCorreo() %></h1><br/>
-        <h1>TU CONTRASEÑA ES: <%= user.getContrasena() %></h1><br/><br/>
         <h1>TU TIPO ES: <%= request.getSession().getAttribute("tipo") %></h1><br/><br/>
         <h1>El link del iduma es: <%= request.getSession().getAttribute("json") %></h1><br/><br/>
         
