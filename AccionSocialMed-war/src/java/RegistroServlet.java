@@ -52,6 +52,20 @@ public class RegistroServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        if(request.getParameter("correo").equals(""))
+        {
+                        request.setAttribute("mensaje", "Datos incorrectos");
+            
+            RequestDispatcher rd = request.getRequestDispatcher("/Registro.jsp");
+        rd.forward(request, response);
+        }
+                if(request.getParameter("contrasena").equals(""))
+        {
+                        request.setAttribute("mensaje", "Datos incorrectos");
+            
+            RequestDispatcher rd = request.getRequestDispatcher("/Registro.jsp");
+        rd.forward(request, response);
+        }
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
 
@@ -82,11 +96,9 @@ public class RegistroServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/Registro.jsp");
         rd.forward(request, response);
         }
-        
-        json = jobj.get("categoryName").getAsString();
-        Usuario nuevoU = new Usuario(request.getParameter("correo"),request.getParameter("contrasena"),jobj.get("nombre").getAsString());
+
         List<Usuario> u = usuarioFacade.findAll();
-        
+        Usuario nuevoU = new Usuario(request.getParameter("correo"),request.getParameter("contrasena"),jobj.get("nombre").getAsString());
         for(int i=0;i<u.size();i++)
         {
             if(u.get(i).getCorreo().equals(nuevoU.getCorreo()))
@@ -98,22 +110,50 @@ public class RegistroServlet extends HttpServlet {
                 }
             
         }
+        
+        json = jobj.get("categoryName").getAsString();
+       
+        
+            if(!request.getParameter("telefono").equals(""))
+    {
+            nuevoU.setTelefono(Integer.parseInt(request.getParameter("telefono")));
+    }
+            
+            if(!request.getParameter("localidad").equals(""))
+    {
+            nuevoU.setLocalidad(request.getParameter("localidad"));
+    }
+            
+            if(!request.getParameter("direccion").equals(""))
+    {
+            nuevoU.setDireccion(request.getParameter("direccion"));
+    }
+                
+    nuevoU.setNombre(jobj.get("nombre").getAsString());
+
+    String apellidos = jobj.get("primerApellido").getAsString()+" "+jobj.get("primerApellido").getAsString();
+        
+
         usuarioFacade.create(nuevoU);
         if(json.equals("Estudiante"))
         {
             Estudiante nuevoE = new Estudiante(nuevoU.getCorreo());
+            nuevoE.setApellidos(apellidos);
             estudianteFacade.create(nuevoE);
             
         } 
         else if (json.equals("PAS"))
         {
                   Pas nuevoPAS = new Pas(nuevoU.getCorreo());
+                  nuevoPAS.setApellidos(apellidos);
                   pasFacade.create(nuevoPAS);
                     
         } 
         else if (json.equals("PDI"))
         {
                  Profesor nuevoPDI = new Profesor(nuevoU.getCorreo());
+                  nuevoPDI.setApellidos(apellidos);
+
                  profesorFacade.create(nuevoPDI);
                     
                     
