@@ -59,7 +59,7 @@ public class OngRegister2Servlet extends HttpServlet {
            u.setLocalidad(localidad);
            u.getOng().setActiva(true);
            
-           dir = "/login.jsp";
+           dir = "/prettyLogin.jsp";
        }
        
        RequestDispatcher rd = request.getRequestDispatcher(dir);
