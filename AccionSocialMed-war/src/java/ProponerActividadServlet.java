@@ -46,6 +46,10 @@ public class ProponerActividadServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        if(request.getSession().getAttribute("tipo")==null || (request.getSession().getAttribute("tipo")!=null && !request.getSession().getAttribute("tipo").equals("ong"))){
+            RequestDispatcher rd = request.getRequestDispatcher("/404");
+            rd.forward(request, response); 
+        }
         
         if(request.getParameter("validar")==null){//primera llamada al servlet, tenemos que cargar las etiquetas
             List<Etiqueta> etiquetas = etiquetaFacade.findAll();
