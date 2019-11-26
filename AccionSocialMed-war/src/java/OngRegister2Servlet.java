@@ -6,6 +6,7 @@
 
 import dao.OngFacade;
 import dao.UsuarioFacade;
+import entity.Ong;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -52,12 +53,16 @@ public class OngRegister2Servlet extends HttpServlet {
        
        if (passw1.equals(passw2)){
            Usuario u = usuarioFacade.find(correo);
+           Ong o = ongFacade.find(correo);
            u.setContrasena(passw1);
            u.setTelefono(tlf);
-           u.getOng().setWeb(web);
+           o.setWeb(web);
            u.setDireccion(direc);
            u.setLocalidad(localidad);
-           u.getOng().setActiva(true);
+           o.setActiva(true);
+           
+           usuarioFacade.edit(u);
+           ongFacade.edit(o);
            
            dir = "/prettyLogin.jsp";
        }
