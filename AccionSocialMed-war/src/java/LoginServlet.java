@@ -55,7 +55,7 @@ public class LoginServlet extends HttpServlet {
         HttpSession sesion = request.getSession();
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
-        String direccion = "/login.jsp";
+        String direccion = "/prettyLogin.jsp";
 
         String resultado = "";
         String link="http://idumamockup-env.3mca2qexfx.eu-central-1.elasticbeanstalk.com/getuser/";
@@ -63,6 +63,7 @@ public class LoginServlet extends HttpServlet {
         link=link.concat("/");
         link=link.concat(contrasena);
      //METODO PARA OBTENER EL TIPO DE USUARIO DE IDUMA
+        if(!correo.equals("") && !contrasena.equals("")){
         try {
             URL url = new URL(link);
             BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -91,18 +92,19 @@ public class LoginServlet extends HttpServlet {
                 }else if (estudianteFacade.find(correo) != null) {
                     sesion.setAttribute("tipo", "estudiante");
                 } else if (ongFacade.find(correo) != null && ongFacade.find(correo).getActiva()) {
-                    sesion.setAttribute("tipo", "ong");
-                } else {
-                    direccion = "/login.jsp";
-                    sesion.removeAttribute("usuario");
-                    request.setAttribute("mensaje", "Datos incorrectos");
-                }
-
+                    sesion.setAttribute("tipo", "ong");}
             }
+            else {
+                    direccion = "/prettyLogin.jsp";
+                    sesion.removeAttribute("usuario");
+                    request.setAttribute("mensaje", "Contraseña erronea");
+                }
         }
-        else if(correo.equals("") || contrasena.equals("")){request.setAttribute("mensaje", "No dejes campos vacios"); }
+        else{request.setAttribute("mensaje", "Usuario o contraseña erroneos"); }
         
-        else{request.setAttribute("mensaje", "Datos incorrectos"); }
+        }else{
+            request.setAttribute("mensaje", "No dejes campos vacios");
+        }
         
         RequestDispatcher rd = request.getRequestDispatcher(direccion);
         rd.forward(request, response);
