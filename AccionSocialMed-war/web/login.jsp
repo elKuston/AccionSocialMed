@@ -32,7 +32,8 @@
         <input type="password" name="contrasena" placeholder="Contraseña" size="30" maxlength="30" /> <br/><br/>
         <input type="submit" value="Logearse">
         <form/>
-        
+        <br/><br/>
+        <a href="Registro.jsp">Registro iDUMA</a>
         </center>
     </body>
 </html>

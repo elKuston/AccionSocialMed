@@ -24,7 +24,7 @@
             <%
         }%>
         
-        <h1>Aqui te meto las ongsss</h1>
+        <h1>Ingreso de ONGs</h1>
         
         <%
             List<Ong> ongs = (List<Ong>)request.getAttribute("ongs");
