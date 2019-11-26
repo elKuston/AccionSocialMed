@@ -29,7 +29,7 @@
         <br/><br/>
         <form action="LoginServlet" method="post">
         <input name="correo" placeholder="Usuario" size="30" maxlength="30" /> <br/><br/>
-        <input name="contrasena" placeholder="Contraseña" size="30" maxlength="30" /> <br/><br/>
+        <input type="password" name="contrasena" placeholder="Contraseña" size="30" maxlength="30" /> <br/><br/>
         <input type="submit" value="Logearse">
         <form/>
         
