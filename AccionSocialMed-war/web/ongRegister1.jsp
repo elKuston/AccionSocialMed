@@ -28,6 +28,7 @@
         <input name="correo" placeholder="Introduzca correo ONG" size="30" maxlength="30" /><br><br>
         <input type="submit" value="Validar">
         </form>
+        </form>
     </center>    
     </body>
 </html>
