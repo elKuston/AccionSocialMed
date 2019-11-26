@@ -43,6 +43,14 @@
                 <%
             }
         %>
+        
+                <% 
+            if(request.getSession().getAttribute("tipo").equals("profesor")){//es (PROBABLEMENTE) una ong (hay que refinar bien si esto incluye a alguna no-ong o excluye a alguna ong
+                %>
+                    <a href ="IngresarONGServlet">Ingresar ONG</a>
+                <%
+            }
+        %>
     </center>
     </body>
 </html>
