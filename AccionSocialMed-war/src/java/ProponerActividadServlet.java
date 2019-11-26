@@ -47,8 +47,9 @@ public class ProponerActividadServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         if(request.getSession().getAttribute("tipo")==null || (request.getSession().getAttribute("tipo")!=null && !request.getSession().getAttribute("tipo").equals("ong"))){
-            RequestDispatcher rd = request.getRequestDispatcher("/404");
-            rd.forward(request, response); 
+            request.getSession().setAttribute("mensaje", "No te cueles fiera");
+            RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
+            rd.forward(request, response);
         }
         
         if(request.getParameter("validar")==null){//primera llamada al servlet, tenemos que cargar las etiquetas
