@@ -4,8 +4,12 @@
  * and open the template in the editor.
  */
 
+import dao.OngFacade;
+import entity.Ong;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,9 +33,14 @@ public class IngresarONGServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    @EJB OngFacade ongFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+                List<Ong> ongs = ongFacade.findAll();
+                request.setAttribute("ongs", ongs);
+        
                 RequestDispatcher rd = request.getRequestDispatcher("/IngresarONG.jsp");
         rd.forward(request, response);
     }
