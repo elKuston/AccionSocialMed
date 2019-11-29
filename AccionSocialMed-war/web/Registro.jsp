@@ -21,10 +21,10 @@
             </script>
             <%
         }%>
-        <h1>Aqui vas y te registras</h1>
+        <h1>Registro Usuario</h1>
         <form action="RegistroServlet" method="post">
-            Correo*:<input name="correo" placeholder="Correo" size="30" maxlength="30" /><br/><br/>
-            Contraseña*:<input type="password" name="contrasena" placeholder="pass" size="30" maxlength="30" /><br/><br/>
+            Correo*:<input name="correo" placeholder="Correo" size="30" maxlength="30" required="true" /><br/><br/>
+            Contraseña*:<input type="password" name="contrasena" placeholder="pass" size="30" maxlength="30" required="true" /><br/><br/>
             Telefono:<input name="telefono" placeholder="Telefono" size="30" maxlength="30" /><br/><br/>
             Direccion:<input name="direccion" placeholder="Direccion" size="30" maxlength="30" /><br/><br/>
             Localidad:<input name="localidad" placeholder="Localidad" size="30" maxlength="30" /><br/><br/>
