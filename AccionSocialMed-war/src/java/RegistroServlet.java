@@ -44,37 +44,39 @@ public class RegistroServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-        @EJB UsuarioFacade usuarioFacade;
-    @EJB ProfesorFacade profesorFacade;
-    @EJB PasFacade pasFacade;
-    @EJB EstudianteFacade estudianteFacade;
+    @EJB
+    UsuarioFacade usuarioFacade;
+    @EJB
+    ProfesorFacade profesorFacade;
+    @EJB
+    PasFacade pasFacade;
+    @EJB
+    EstudianteFacade estudianteFacade;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        if(request.getParameter("correo").equals(""))
-        {
-                        request.setAttribute("mensaje", "Datos incorrectos");
-            
+
+        if (request.getParameter("correo").equals("")) {
+            request.setAttribute("mensaje", "Datos incorrectos");
+
             RequestDispatcher rd = request.getRequestDispatcher("/Registro.jsp");
-        rd.forward(request, response);
+            rd.forward(request, response);
         }
-                if(request.getParameter("contrasena").equals(""))
-        {
-                        request.setAttribute("mensaje", "Datos incorrectos");
-            
+        if (request.getParameter("contrasena").equals("")) {
+            request.setAttribute("mensaje", "Datos incorrectos");
+
             RequestDispatcher rd = request.getRequestDispatcher("/Registro.jsp");
-        rd.forward(request, response);
+            rd.forward(request, response);
         }
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
 
         String resultado = "";
-        String link="http://idumamockup-env.3mca2qexfx.eu-central-1.elasticbeanstalk.com/getuser/";
-        link=link.concat(correo);
-        link=link.concat("/");
-        link=link.concat(contrasena);
-     //METODO PARA OBTENER EL TIPO DE USUARIO DE IDUMA
+        String link = "http://idumamockup-env.3mca2qexfx.eu-central-1.elasticbeanstalk.com/getuser/";
+        link = link.concat(correo);
+        link = link.concat("/");
+        link = link.concat(contrasena);
+        //METODO PARA OBTENER EL TIPO DE USUARIO DE IDUMA
         try {
             URL url = new URL(link);
             BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -86,85 +88,65 @@ public class RegistroServlet extends HttpServlet {
         }
         //Aqui obtengo el valor del usuario y se de que tipo es en iduma
         JsonObject jobj = new Gson().fromJson(resultado, JsonObject.class);
-        
+
         String json = jobj.get("situation").getAsString();
-        
-        if(json.equals("ABSENT"))
-        {
+
+        if (json.equals("ABSENT")) {
             request.setAttribute("mensaje", "Datos incorrectos");
-            
+
             RequestDispatcher rd = request.getRequestDispatcher("/Registro.jsp");
-        rd.forward(request, response);
+            rd.forward(request, response);
         }
 
         List<Usuario> u = usuarioFacade.findAll();
-        Usuario nuevoU = new Usuario(request.getParameter("correo"),request.getParameter("contrasena"),jobj.get("nombre").getAsString());
-        for(int i=0;i<u.size();i++)
-        {
-            if(u.get(i).getCorreo().equals(nuevoU.getCorreo()))
-                {
-                                   request.setAttribute("mensaje", "El usuario ya se enuentra registrado");
-            
-                RequestDispatcher rd = request.getRequestDispatcher("/Registro.jsp"); 
-                                rd.forward(request, response);
-                }
-            
-        }
-        
-        json = jobj.get("categoryName").getAsString();
-       
-        
-            if(!request.getParameter("telefono").equals(""))
-    {
-            nuevoU.setTelefono(Integer.parseInt(request.getParameter("telefono")));
-    }
-            
-            if(!request.getParameter("localidad").equals(""))
-    {
-            nuevoU.setLocalidad(request.getParameter("localidad"));
-    }
-            
-            if(!request.getParameter("direccion").equals(""))
-    {
-            nuevoU.setDireccion(request.getParameter("direccion"));
-    }
-                
-    nuevoU.setNombre(jobj.get("nombre").getAsString());
+        Usuario nuevoU = new Usuario(request.getParameter("correo"), request.getParameter("contrasena"), jobj.get("nombre").getAsString());
+        for (int i = 0; i < u.size(); i++) {
+            if (u.get(i).getCorreo().equals(nuevoU.getCorreo())) {
+                request.setAttribute("mensaje", "El usuario ya se enuentra registrado");
 
-    String apellidos = jobj.get("primerApellido").getAsString()+" "+jobj.get("primerApellido").getAsString();
-        
+                RequestDispatcher rd = request.getRequestDispatcher("/Registro.jsp");
+                rd.forward(request, response);
+            }
+
+        }
+
+        json = jobj.get("categoryName").getAsString();
+
+        if (!request.getParameter("telefono").equals("")) {
+            nuevoU.setTelefono(Integer.parseInt(request.getParameter("telefono")));
+        }
+
+        if (!request.getParameter("localidad").equals("")) {
+            nuevoU.setLocalidad(request.getParameter("localidad"));
+        }
+
+        if (!request.getParameter("direccion").equals("")) {
+            nuevoU.setDireccion(request.getParameter("direccion"));
+        }
+
+        nuevoU.setNombre(jobj.get("nombre").getAsString());
+
+        String apellidos = jobj.get("primerApellido").getAsString() + " " + jobj.get("primerApellido").getAsString();
 
         usuarioFacade.create(nuevoU);
-        if(json.equals("Estudiante"))
-        {
+        if (json.equals("Estudiante")) {
             Estudiante nuevoE = new Estudiante(nuevoU.getCorreo());
             nuevoE.setApellidos(apellidos);
             estudianteFacade.create(nuevoE);
-            
-        } 
-        else if (json.equals("PAS"))
-        {
-                  Pas nuevoPAS = new Pas(nuevoU.getCorreo());
-                  nuevoPAS.setApellidos(apellidos);
-                  pasFacade.create(nuevoPAS);
-                    
-        } 
-        else if (json.equals("PDI"))
-        {
-                 Profesor nuevoPDI = new Profesor(nuevoU.getCorreo());
-                  nuevoPDI.setApellidos(apellidos);
 
-                 profesorFacade.create(nuevoPDI);
-                    
-                    
+        } else if (json.equals("PAS")) {
+            Pas nuevoPAS = new Pas(nuevoU.getCorreo());
+            nuevoPAS.setApellidos(apellidos);
+            pasFacade.create(nuevoPAS);
+
+        } else if (json.equals("PDI")) {
+            Profesor nuevoPDI = new Profesor(nuevoU.getCorreo());
+            nuevoPDI.setApellidos(apellidos);
+
+            profesorFacade.create(nuevoPDI);
+
         }
-        
-        
-        
-        
-        
-        
-        
+
         RequestDispatcher rd = request.getRequestDispatcher("/prettyLogin.jsp");
         rd.forward(request, response);
     }

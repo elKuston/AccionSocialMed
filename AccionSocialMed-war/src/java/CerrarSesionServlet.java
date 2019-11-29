@@ -34,7 +34,7 @@ public class CerrarSesionServlet extends HttpServlet {
      
         request.getSession().invalidate();
         
-        RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/prettyLogin.jsp");
         rd.forward(request, response);
     }
 

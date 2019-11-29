@@ -84,6 +84,10 @@
                             <a class="txt2" href="ongRegister1.jsp">
                                 Registro nueva ONG
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                            </a><br>
+                             <a class="txt2" href="Registro.jsp">
+                                Registro Usuario
+                                <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                             </a>
                         </div>
                     </form>
