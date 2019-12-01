@@ -38,45 +38,17 @@
                     <div class="login100-pic js-tilt" data-tilt>
                         <img src="images/Asm.png" alt="IMG">
                     </div>
-
-                    <form action="LoginServlet" method="post" class="login100-form validate-form">
-                        <span class="login100-form-title">
-                            Inicia sesión
-                        </span>
-
-                        <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                            <input class="input100" type="text" name="correo" placeholder="Email">
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                            </span>
-                        </div>
-
-                        <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                            <input class="input100" type="password" name="contrasena" placeholder="Contraseña">
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-lock" aria-hidden="true"></i>
-                            </span>
-                        </div>
-
-                        <div class="container-login100-form-btn">
-                            <!--<button class="login100-form-btn">
-                                    Login
-                            </button>-->
-                            <input type="submit" value="Iniciar sesión" class="login100-form-btn"/>
-                        </div>
-
-                        <div class="text-center p-t-12">
-                            <span class="txt1">
-                                Forgot
-                            </span>
-                            <a class="txt2" href="#">
-                                Username / Password?
-                            </a>
-                        </div>
-
+                    
                         <div class="text-center p-t-100">
+                            <h1>AccionSocialMed</h1></br></br></br></br>
+                            <a class="txt2" href="loginUma.jsp">
+                                Inicio sesión IDUMA
+                                <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                            </a><br>
+                            <a class="txt2" href="loginOng  .jsp">
+                                Inicio sesión ONG
+                                <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                            </a><br>
                             <a class="txt2" href="Registro.jsp">
                                 Registro nuevo usuario UMA
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>

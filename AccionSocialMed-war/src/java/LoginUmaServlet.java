@@ -31,8 +31,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author jange
  */
-@WebServlet(urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/LoginUmaServlet"})
+public class LoginUmaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -55,7 +55,7 @@ public class LoginServlet extends HttpServlet {
         HttpSession sesion = request.getSession();
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
-        String direccion = "/prettyLogin.jsp";
+        String direccion = "/loginUma.jsp";
 
         String resultado = "";
         String link="http://idumamockup-env.3mca2qexfx.eu-central-1.elasticbeanstalk.com/getuser/";
@@ -74,10 +74,8 @@ public class LoginServlet extends HttpServlet {
         } catch (IOException ex) {
         }
         //Aqui obtengo el valor del usuario y se de que tipo es en iduma
-        JsonObject jobj = new Gson().fromJson(resultado, JsonObject.class);
-        
+        JsonObject jobj = new Gson().fromJson(resultado, JsonObject.class);     
         String json = jobj.get("situation").getAsString(); 
-        sesion.setAttribute("json",json);
         
         
         
@@ -91,11 +89,11 @@ public class LoginServlet extends HttpServlet {
                     sesion.setAttribute("tipo", "pas");
                 }else if (estudianteFacade.find(correo) != null) {
                     sesion.setAttribute("tipo", "estudiante");
-                } else if (ongFacade.find(correo) != null && ongFacade.find(correo).getActiva()) {
-                    sesion.setAttribute("tipo", "ong");}
+                } else if (ongFacade.find(correo) != null) {
+                    request.setAttribute("mensaje", "Este login es para usuarios");
+                    direccion="/loginUma.jsp";}
             }
             else {
-                    direccion = "/prettyLogin.jsp";
                     sesion.removeAttribute("usuario");
                     request.setAttribute("mensaje", "Contraseña erronea");
                 }
