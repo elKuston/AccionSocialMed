@@ -4,6 +4,8 @@
     Author     : jange
 --%>
 
+<%@page import="entity.Notificacion"%>
+<%@page import="java.util.List"%>
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%Usuario user = (Usuario)request.getAttribute("usuario");%>
@@ -27,6 +29,19 @@
             </script>
             <%
         }%>
+        
+        <%
+            List<Notificacion> notificaciones = (List<Notificacion>) request.getAttribute("pendientes");
+            if(notificaciones.size()>0){
+                %>
+                <h2><a href="VerNotificacionesServlet"><%=notificaciones.size()%> notificaciones pendientes</a></h2>
+                <%
+            }else{
+                %>
+                <h2><a href="VerNotificacionesServlet">Mis notificaciones</a></h2>
+                <%
+            }
+        %>
     <center>
         <h1>HOLA SEÑOR </h1><br/><br/>
         
