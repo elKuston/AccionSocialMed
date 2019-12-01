@@ -33,14 +33,17 @@
                 }%>
 
         <div class="limiter">
+            
             <div class="container-login100">
+                
                 <div class="wrap-login100">
+                    <img src="images/Imagen1.png" alt="IMG">
                     <div class="login100-pic js-tilt" data-tilt>
-                        <img src="images/Asm.png" alt="IMG">
+                        
                     </div>
                     
-                        <div class="text-center p-t-100">
-                            <h1>AccionSocialMed</h1></br></br></br></br>
+                        <div class="text-center p-t-10">
+                            
                             <a class="txt2" href="loginUma.jsp">
                                 Inicio sesión IDUMA
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
