@@ -76,19 +76,15 @@
                             </a>
                         </div>
 
-                        <div class="text-center p-t-136">
+                        <div class="text-center p-t-100">
                             <a class="txt2" href="Registro.jsp">
-                                Create your Account
+                                Registro nuevo usuario UMA
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                             </a><br>
                             <a class="txt2" href="ongRegister1.jsp">
                                 Registro nueva ONG
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-                            </a><br>
-                             <a class="txt2" href="Registro.jsp">
-                                Registro Usuario
-                                <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-                            </a>
+                            </a><br><br>
                         </div>
                     </form>
                 </div>
