@@ -48,7 +48,7 @@
                                 Inicio sesión IDUMA
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                             </a><br>
-                            <a class="txt2" href="loginOng  .jsp">
+                            <a class="txt2" href="loginOng.jsp">
                                 Inicio sesión ONG
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                             </a><br>
