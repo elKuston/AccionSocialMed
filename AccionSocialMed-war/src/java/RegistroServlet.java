@@ -27,6 +27,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -55,62 +56,24 @@ public class RegistroServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        if (request.getParameter("correo").equals("")) {
-            request.setAttribute("mensaje", "Datos incorrectos");
-
-            RequestDispatcher rd = request.getRequestDispatcher("/Registro.jsp");
-            rd.forward(request, response);
-        }
-        if (request.getParameter("contrasena").equals("")) {
-            request.setAttribute("mensaje", "Datos incorrectos");
-
-            RequestDispatcher rd = request.getRequestDispatcher("/Registro.jsp");
-            rd.forward(request, response);
-        }
+        
+        HttpSession sesion = request.getSession();
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
 
-        String resultado = "";
-        String link = "http://idumamockup-env.3mca2qexfx.eu-central-1.elasticbeanstalk.com/getuser/";
-        link = link.concat(correo);
-        link = link.concat("/");
-        link = link.concat(contrasena);
-        //METODO PARA OBTENER EL TIPO DE USUARIO DE IDUMA
-        try {
-            URL url = new URL(link);
-            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-            String str = "";
-            while (null != (str = br.readLine())) {
-                resultado = resultado.concat(str);
-            }
-        } catch (IOException ex) {
-        }
-        //Aqui obtengo el valor del usuario y se de que tipo es en iduma
-        JsonObject jobj = new Gson().fromJson(resultado, JsonObject.class);
-
-        String json = jobj.get("situation").getAsString();
-
-        if (json.equals("ABSENT")) {
-            request.setAttribute("mensaje", "Datos incorrectos");
-
-            RequestDispatcher rd = request.getRequestDispatcher("/Registro.jsp");
-            rd.forward(request, response);
-        }
-
         List<Usuario> u = usuarioFacade.findAll();
-        Usuario nuevoU = new Usuario(request.getParameter("correo"), request.getParameter("contrasena"), jobj.get("nombre").getAsString());
+        Usuario nuevoU = new Usuario(request.getParameter("correo"), request.getParameter("contrasena"), (String) sesion.getAttribute("name"));
         for (int i = 0; i < u.size(); i++) {
             if (u.get(i).getCorreo().equals(nuevoU.getCorreo())) {
-                request.setAttribute("mensaje", "El usuario ya se enuentra registrado");
+                request.setAttribute("mensaje", "El usuario ya se enuentra registrado. Puede iniciar sesión");
 
-                RequestDispatcher rd = request.getRequestDispatcher("/Registro.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/prettyLogin.jsp");
                 rd.forward(request, response);
             }
 
         }
-
-        json = jobj.get("categoryName").getAsString();
+        
+        String ocupacion = (String)sesion.getAttribute("ocupation");
 
         if (!request.getParameter("telefono").equals("")) {
             nuevoU.setTelefono(Integer.parseInt(request.getParameter("telefono")));
@@ -124,22 +87,22 @@ public class RegistroServlet extends HttpServlet {
             nuevoU.setDireccion(request.getParameter("direccion"));
         }
 
-        nuevoU.setNombre(jobj.get("nombre").getAsString());
+        nuevoU.setNombre((String) sesion.getAttribute("name"));
 
-        String apellidos = jobj.get("primerApellido").getAsString() + " " + jobj.get("primerApellido").getAsString();
+        String apellidos = (String) sesion.getAttribute("apellidos");
 
         usuarioFacade.create(nuevoU);
-        if (json.equals("Estudiante")) {
+        if (ocupacion.equals("Estudiante")) {
             Estudiante nuevoE = new Estudiante(nuevoU.getCorreo());
             nuevoE.setApellidos(apellidos);
             estudianteFacade.create(nuevoE);
 
-        } else if (json.equals("PAS")) {
+        } else if (ocupacion.equals("PAS")) {
             Pas nuevoPAS = new Pas(nuevoU.getCorreo());
             nuevoPAS.setApellidos(apellidos);
             pasFacade.create(nuevoPAS);
 
-        } else if (json.equals("PDI")) {
+        } else if (ocupacion.equals("PDI")) {
             Profesor nuevoPDI = new Profesor(nuevoU.getCorreo());
             nuevoPDI.setApellidos(apellidos);
 
@@ -147,6 +110,10 @@ public class RegistroServlet extends HttpServlet {
 
         }
 
+        sesion.removeAttribute("name");
+        sesion.removeAttribute("ocupation");
+        sesion.removeAttribute("correo2");
+        sesion.removeAttribute("apellidos");
         RequestDispatcher rd = request.getRequestDispatcher("/prettyLogin.jsp");
         rd.forward(request, response);
     }

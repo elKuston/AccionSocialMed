@@ -52,7 +52,7 @@
                                 Inicio sesión ONG
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                             </a><br>
-                            <a class="txt2" href="Registro.jsp">
+                            <a class="txt2" href="iDUMARegistro.jsp">
                                 Registro nuevo usuario UMA
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                             </a><br>

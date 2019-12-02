@@ -21,10 +21,22 @@
             </script>
             <%
         }%>
+        <%
+            HttpSession sesion = request.getSession();
+            String corr = (String) sesion.getAttribute("correo2");
+            String cn = (String) sesion.getAttribute("ocupation");
+            String nombre = (String) sesion.getAttribute("name");
+            String apellidos = (String) sesion.getAttribute("apellidos");
+            %>
         <h1>Registro Usuario</h1>
         <form action="RegistroServlet" method="post">
-            Correo*:<input name="correo" placeholder="Correo" size="30" maxlength="30" required="true" /><br/><br/>
-            Contraseña*:<input type="password" name="contrasena" placeholder="pass" size="30" maxlength="30" required="true" /><br/><br/>
+            Usuario: <%=corr%> <br/><br/>
+            Nombre: <%=nombre%> <%=apellidos%><br/><br/>
+            <input type="hidden" name="correo" value= "<%=corr%>" size="30" maxlength="30" required="true" />
+            <input type="hidden" name="cn" value= "<%=cn%>" size="30" maxlength="30" required="true" />
+            <input type="hidden" name="contrasena" value="rellenar" size="30" maxlength="30" required="true" />
+            <input type="hidden" name="nombre" value="<%=nombre%>" size="30" maxlength="30" /><br/><br/>
+            <input type="hidden" name="apellidos" placeholder="<%=apellidos%>" size="30" maxlength="30" />
             Telefono:<input name="telefono" placeholder="Telefono" size="30" maxlength="30" /><br/><br/>
             Direccion:<input name="direccion" placeholder="Direccion" size="30" maxlength="30" /><br/><br/>
             Localidad:<input name="localidad" placeholder="Localidad" size="30" maxlength="30" /><br/><br/>
