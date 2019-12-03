@@ -29,12 +29,22 @@
                 <p>Fecha fin (*)</p>
                 <input name="fechaFin" type="date"/>
             </div>
-            <p>Seleccione al menos un campo:</p>
+            <p>Seleccione el ámbito de la actividad (al menos una opción):</p>
             
             <%
                 //etiquetas
-                List<Etiqueta> etiquetas = (List<Etiqueta>) request.getAttribute("etiquetas");
-                for(Etiqueta e : etiquetas){
+                List<Etiqueta> ambitos = (List<Etiqueta>) request.getAttribute("ambitos");
+                List<Etiqueta> tipos = (List<Etiqueta>) request.getAttribute("tipos");
+                for(Etiqueta e : ambitos){
+                    %>
+                    <input type="checkbox" name="<%=e.getEtiqueta()%>"/><%=e.getEtiqueta()%> <br/>
+                    <%
+                }
+            %>
+            <p>Seleccione el tipo de la actividad (al menos una opción):</p>
+            
+            <%
+                for(Etiqueta e : tipos){
                     %>
                     <input type="checkbox" name="<%=e.getEtiqueta()%>"/><%=e.getEtiqueta()%> <br/>
                     <%

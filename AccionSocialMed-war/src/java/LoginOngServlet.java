@@ -45,7 +45,7 @@ public class LoginOngServlet extends HttpServlet {
         String contrasena = request.getParameter("contrasena");
 
         if (usuarioFacade.find(correo).getOng() != null) {
-            if (contrasena.equals(ongFacade.find(correo).getContrasena())) {
+            if (contrasena.equals(usuarioFacade.find(correo).getOng().getContrasena())) {
                 direccion = "/IndexServlet";
                 sesion.setAttribute("usuario", usuarioFacade.find(correo));
                 sesion.setAttribute("tipo", "ong");

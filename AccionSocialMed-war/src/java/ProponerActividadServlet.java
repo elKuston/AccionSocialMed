@@ -54,8 +54,17 @@ public class ProponerActividadServlet extends HttpServlet {
         
         if(request.getParameter("validar")==null){//primera llamada al servlet, tenemos que cargar las etiquetas
             List<Etiqueta> etiquetas = etiquetaFacade.findAll();
+            List<Etiqueta> ambitos = new ArrayList<>(), tipos = new ArrayList<>();
+            for(Etiqueta e : etiquetas){
+                if(e.getTipo()==1){
+                    ambitos.add(e);
+                }else{
+                    tipos.add(e);
+                }
+            }
             
-            request.setAttribute("etiquetas", etiquetas);
+            request.setAttribute("ambitos", ambitos);
+            request.setAttribute("tipos", tipos);
             
             RequestDispatcher rd = request.getRequestDispatcher("/proponerActividad.jsp");
             rd.forward(request, response);
