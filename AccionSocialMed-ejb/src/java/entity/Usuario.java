@@ -12,6 +12,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author jange
+ * @author romol
  */
 @Entity
 @Table(name = "USUARIO")
@@ -33,7 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
     , @NamedQuery(name = "Usuario.findByCorreo", query = "SELECT u FROM Usuario u WHERE u.correo = :correo")
-    , @NamedQuery(name = "Usuario.findByContrasena", query = "SELECT u FROM Usuario u WHERE u.contrasena = :contrasena")
     , @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre")
     , @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono")
     , @NamedQuery(name = "Usuario.findByDireccion", query = "SELECT u FROM Usuario u WHERE u.direccion = :direccion")
@@ -50,11 +51,6 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "CONTRASENA")
-    private String contrasena;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "NOMBRE")
     private String nombre;
     @Column(name = "TELEFONO")
@@ -67,6 +63,11 @@ public class Usuario implements Serializable {
     private String localidad;
     @ManyToMany(mappedBy = "usuarioList")
     private List<Actividad> actividadList;
+    @JoinTable(name = "ETIQUETAS_USUARIO", joinColumns = {
+        @JoinColumn(name = "CORREO", referencedColumnName = "CORREO")}, inverseJoinColumns = {
+        @JoinColumn(name = "ETIQUETA", referencedColumnName = "ETIQUETA")})
+    @ManyToMany
+    private List<Etiqueta> etiquetaList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Pas pas;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
@@ -87,9 +88,8 @@ public class Usuario implements Serializable {
         this.correo = correo;
     }
 
-    public Usuario(String correo, String contrasena, String nombre) {
+    public Usuario(String correo, String nombre) {
         this.correo = correo;
-        this.contrasena = contrasena;
         this.nombre = nombre;
     }
 
@@ -99,14 +99,6 @@ public class Usuario implements Serializable {
 
     public void setCorreo(String correo) {
         this.correo = correo;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
     }
 
     public String getNombre() {
@@ -148,6 +140,15 @@ public class Usuario implements Serializable {
 
     public void setActividadList(List<Actividad> actividadList) {
         this.actividadList = actividadList;
+    }
+
+    @XmlTransient
+    public List<Etiqueta> getEtiquetaList() {
+        return etiquetaList;
+    }
+
+    public void setEtiquetaList(List<Etiqueta> etiquetaList) {
+        this.etiquetaList = etiquetaList;
     }
 
     public Pas getPas() {

@@ -54,7 +54,7 @@ public class OngRegister2Servlet extends HttpServlet {
        if (passw1.equals(passw2)){
            Usuario u = usuarioFacade.find(correo);
            Ong o = ongFacade.find(correo);
-           u.setContrasena(passw1);
+           o.setContrasena(passw1);
            u.setTelefono(tlf);
            o.setWeb(web);
            u.setDireccion(direc);

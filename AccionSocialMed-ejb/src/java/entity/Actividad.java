@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author jange
+ * @author romol
  */
 @Entity
 @Table(name = "ACTIVIDAD")
@@ -41,7 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Actividad.findByFechaInicio", query = "SELECT a FROM Actividad a WHERE a.fechaInicio = :fechaInicio")
     , @NamedQuery(name = "Actividad.findByFechaFin", query = "SELECT a FROM Actividad a WHERE a.fechaFin = :fechaFin")
     , @NamedQuery(name = "Actividad.findByNpersonas", query = "SELECT a FROM Actividad a WHERE a.npersonas = :npersonas")
-    , @NamedQuery(name = "Actividad.findByLugar", query = "SELECT a FROM Actividad a WHERE a.lugar = :lugar")})
+    , @NamedQuery(name = "Actividad.findByLugar", query = "SELECT a FROM Actividad a WHERE a.lugar = :lugar")
+    , @NamedQuery(name = "Actividad.findByTurnotarde", query = "SELECT a FROM Actividad a WHERE a.turnotarde = :turnotarde")})
 public class Actividad implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -73,6 +74,8 @@ public class Actividad implements Serializable {
     @Size(max = 50)
     @Column(name = "LUGAR")
     private String lugar;
+    @Column(name = "TURNOTARDE")
+    private Boolean turnotarde;
     @JoinTable(name = "PARTICIPACION", joinColumns = {
         @JoinColumn(name = "NACTIVIDAD", referencedColumnName = "NACTIVIDAD")}, inverseJoinColumns = {
         @JoinColumn(name = "USUARIO", referencedColumnName = "CORREO")})
@@ -161,6 +164,14 @@ public class Actividad implements Serializable {
 
     public void setLugar(String lugar) {
         this.lugar = lugar;
+    }
+
+    public Boolean getTurnotarde() {
+        return turnotarde;
+    }
+
+    public void setTurnotarde(Boolean turnotarde) {
+        this.turnotarde = turnotarde;
     }
 
     @XmlTransient

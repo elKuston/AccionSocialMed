@@ -22,14 +22,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author jange
+ * @author romol
  */
 @Entity
 @Table(name = "ETIQUETA")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Etiqueta.findAll", query = "SELECT e FROM Etiqueta e")
-    , @NamedQuery(name = "Etiqueta.findByEtiqueta", query = "SELECT e FROM Etiqueta e WHERE e.etiqueta = :etiqueta")})
+    , @NamedQuery(name = "Etiqueta.findByEtiqueta", query = "SELECT e FROM Etiqueta e WHERE e.etiqueta = :etiqueta")
+    , @NamedQuery(name = "Etiqueta.findByTipo", query = "SELECT e FROM Etiqueta e WHERE e.tipo = :tipo")})
 public class Etiqueta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,8 +40,12 @@ public class Etiqueta implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "ETIQUETA")
     private String etiqueta;
+    @Column(name = "TIPO")
+    private Integer tipo;
     @ManyToMany(mappedBy = "etiquetaList")
     private List<Actividad> actividadList;
+    @ManyToMany(mappedBy = "etiquetaList")
+    private List<Usuario> usuarioList;
 
     public Etiqueta() {
     }
@@ -57,6 +62,14 @@ public class Etiqueta implements Serializable {
         this.etiqueta = etiqueta;
     }
 
+    public Integer getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
+    }
+
     @XmlTransient
     public List<Actividad> getActividadList() {
         return actividadList;
@@ -64,6 +77,15 @@ public class Etiqueta implements Serializable {
 
     public void setActividadList(List<Actividad> actividadList) {
         this.actividadList = actividadList;
+    }
+
+    @XmlTransient
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
+    }
+
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @Override

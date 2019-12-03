@@ -16,11 +16,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author jange
+ * @author romol
  */
 @Entity
 @Table(name = "NOTIFICACION")
@@ -28,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Notificacion.findAll", query = "SELECT n FROM Notificacion n")
     , @NamedQuery(name = "Notificacion.findByIdnotificacion", query = "SELECT n FROM Notificacion n WHERE n.idnotificacion = :idnotificacion")
-    , @NamedQuery(name = "Notificacion.findByLeido", query = "SELECT n FROM Notificacion n WHERE n.leido = :leido")})
+    , @NamedQuery(name = "Notificacion.findByLeido", query = "SELECT n FROM Notificacion n WHERE n.leido = :leido")
+    , @NamedQuery(name = "Notificacion.findByContenido", query = "SELECT n FROM Notificacion n WHERE n.contenido = :contenido")})
 public class Notificacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,6 +41,9 @@ public class Notificacion implements Serializable {
     private Integer idnotificacion;
     @Column(name = "LEIDO")
     private Boolean leido;
+    @Size(max = 2000)
+    @Column(name = "CONTENIDO")
+    private String contenido;
     @JoinColumn(name = "EMISOR", referencedColumnName = "CORREO")
     @ManyToOne
     private Usuario emisor;
@@ -67,6 +72,14 @@ public class Notificacion implements Serializable {
 
     public void setLeido(Boolean leido) {
         this.leido = leido;
+    }
+
+    public String getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
     }
 
     public Usuario getEmisor() {

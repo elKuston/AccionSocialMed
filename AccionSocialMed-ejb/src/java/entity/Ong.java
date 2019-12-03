@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author jange
+ * @author romol
  */
 @Entity
 @Table(name = "ONG")
@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Ong.findAll", query = "SELECT o FROM Ong o")
     , @NamedQuery(name = "Ong.findByCorreo", query = "SELECT o FROM Ong o WHERE o.correo = :correo")
-    , @NamedQuery(name = "Ong.findByDireccion", query = "SELECT o FROM Ong o WHERE o.direccion = :direccion")
+    , @NamedQuery(name = "Ong.findByContrasena", query = "SELECT o FROM Ong o WHERE o.contrasena = :contrasena")
     , @NamedQuery(name = "Ong.findByWeb", query = "SELECT o FROM Ong o WHERE o.web = :web")
     , @NamedQuery(name = "Ong.findByClaveRegistro", query = "SELECT o FROM Ong o WHERE o.claveRegistro = :claveRegistro")
     , @NamedQuery(name = "Ong.findByActiva", query = "SELECT o FROM Ong o WHERE o.activa = :activa")})
@@ -46,13 +46,17 @@ public class Ong implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "CORREO")
     private String correo;
-    @Size(max = 50)
-    @Column(name = "DIRECCION")
-    private String direccion;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "CONTRASENA")
+    private String contrasena;
     @Size(max = 50)
     @Column(name = "WEB")
     private String web;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "CLAVE_REGISTRO")
     private String claveRegistro;
     @Column(name = "ACTIVA")
@@ -70,6 +74,12 @@ public class Ong implements Serializable {
         this.correo = correo;
     }
 
+    public Ong(String correo, String contrasena, String claveRegistro) {
+        this.correo = correo;
+        this.contrasena = contrasena;
+        this.claveRegistro = claveRegistro;
+    }
+
     public String getCorreo() {
         return correo;
     }
@@ -78,12 +88,12 @@ public class Ong implements Serializable {
         this.correo = correo;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getWeb() {

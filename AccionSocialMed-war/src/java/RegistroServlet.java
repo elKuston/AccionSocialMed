@@ -62,7 +62,7 @@ public class RegistroServlet extends HttpServlet {
         String contrasena = request.getParameter("contrasena");
 
         List<Usuario> u = usuarioFacade.findAll();
-        Usuario nuevoU = new Usuario(request.getParameter("correo"), request.getParameter("contrasena"), (String) sesion.getAttribute("name"));
+        Usuario nuevoU = new Usuario(request.getParameter("correo"), (String) sesion.getAttribute("name"));
         for (int i = 0; i < u.size(); i++) {
             if (u.get(i).getCorreo().equals(nuevoU.getCorreo())) {
                 request.setAttribute("mensaje", "El usuario ya se enuentra registrado. Puede iniciar sesión");

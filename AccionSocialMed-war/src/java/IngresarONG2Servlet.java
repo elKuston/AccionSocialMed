@@ -63,8 +63,9 @@ public class IngresarONG2Servlet extends HttpServlet {
                     }
                 }
                 
-                Usuario nuevoU = new Usuario(request.getParameter("CorreoONG"),"Rellenar","Rellenar");
+                Usuario nuevoU = new Usuario(request.getParameter("CorreoONG"),"Rellenar");
                 Ong nuevaO = new Ong(request.getParameter("CorreoONG"));
+                nuevaO.setContrasena("rellenar");
                 nuevaO.setActiva(false);
                 String failsafe = request.getParameter("CorreoONG")+"bb";
                 nuevaO.setClaveRegistro(failsafe.substring(0, 3)+ongFacade.count());

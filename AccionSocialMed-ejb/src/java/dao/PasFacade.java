@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author jange
+ * @author romol
  */
 @Stateless
 public class PasFacade extends AbstractFacade<Pas> {
