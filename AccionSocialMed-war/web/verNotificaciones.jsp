@@ -12,14 +12,30 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        
+    </head>
+    <body>
         <%
             List<Notificacion> notificaciones = (List<Notificacion>) request.getAttribute("notificaciones");
             for(Notificacion n : notificaciones){
-                
+                if(!n.getLeido()){
+                    %>
+                    <b>
+                    <%
+                }
+                %>
+                <h2><%=n.getContenido()%></h2>
+                <%
+
+                if(!n.getLeido()){
+                    %>
+                    </b>
+                    <%
+                }
             }
         %>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
+        <form>
+            su
+        </form>
     </body>
 </html>

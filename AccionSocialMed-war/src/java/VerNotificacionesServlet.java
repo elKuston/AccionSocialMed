@@ -5,7 +5,9 @@
  */
 
 import dao.NotificacionFacade;
+import dao.UsuarioFacade;
 import entity.Notificacion;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -34,14 +36,16 @@ public class VerNotificacionesServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @EJB NotificacionFacade notificacionFacade;
+    UsuarioFacade usuarioFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Notificacion> notificaciones = notificacionFacade.findAll();
+        List<Notificacion> notificaciones = notificacionFacade.porReceptor((Usuario) request.getSession().getAttribute("usuario"));
+        
         request.setAttribute("notificaciones", notificaciones);
         
         
-        try (PrintWriter out = response.getWriter()) {
-        }
+        
+      
         RequestDispatcher rd = request.getRequestDispatcher("/verNotificaciones.jsp");
         rd.forward(request, response);
     }

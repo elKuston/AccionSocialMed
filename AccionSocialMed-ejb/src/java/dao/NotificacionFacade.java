@@ -6,9 +6,13 @@
 package dao;
 
 import entity.Notificacion;
+import entity.Usuario;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +31,13 @@ public class NotificacionFacade extends AbstractFacade<Notificacion> {
 
     public NotificacionFacade() {
         super(Notificacion.class);
+    }
+    
+    public List<Notificacion> porReceptor(Usuario receptor){
+        Query q;
+        q = this.em.createQuery("select n from Notificacion n where n.receptor.correo = :rec ");
+        q.setParameter("rec", receptor.getCorreo());
+        return q.getResultList();
     }
     
 }
