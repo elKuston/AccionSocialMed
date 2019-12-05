@@ -6,9 +6,11 @@
 package dao;
 
 import entity.Profesor;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,12 @@ public class ProfesorFacade extends AbstractFacade<Profesor> {
 
     public ProfesorFacade() {
         super(Profesor.class);
+    }
+    
+    public List<Profesor> getGestores(){
+        Query q;
+        q = this.em.createQuery("select p from Profesor p where P.gestor=true");
+        return q.getResultList();
     }
     
 }

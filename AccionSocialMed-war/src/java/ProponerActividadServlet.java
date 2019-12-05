@@ -6,9 +6,14 @@
 
 import dao.ActividadFacade;
 import dao.EtiquetaFacade;
+import dao.NotificacionFacade;
 import dao.OngFacade;
+import dao.ProfesorFacade;
 import entity.Actividad;
 import entity.Etiqueta;
+import entity.Notificacion;
+import entity.Ong;
+import entity.Profesor;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,6 +48,8 @@ public class ProponerActividadServlet extends HttpServlet {
     @EJB EtiquetaFacade etiquetaFacade;
     @EJB ActividadFacade actividadFacade;
     @EJB OngFacade ongFacade;
+    @EJB NotificacionFacade notificacionFacade;
+    @EJB ProfesorFacade profesorFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -109,7 +116,22 @@ public class ProponerActividadServlet extends HttpServlet {
             
             actividadFacade.create(a);
             
-            request.getSession().setAttribute("mensaje", "La actividad será enviada al gestor para revisión");
+            List<Profesor> gestores = profesorFacade.getGestores();
+            
+            Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+            for(Profesor g : gestores){
+                Notificacion n = new Notificacion();
+                n.setContenido("La ONG "+user.getNombre()+" ha propuesto una nueva actividad. Pulza <a href='ClasificarActividadServlet?act="+a.getNactividad()+"'> aquí para clasificarla</a>");
+                n.setLeido(false);
+                n.setEmisor(user);
+                n.setReceptor(g.getUsuario());
+                int id = notificacionFacade.count()+1;
+                n.setIdnotificacion(id);
+                notificacionFacade.create(n);
+            }
+            
+            //request.getSession().setAttribute("mensaje", "La actividad será enviada al gestor para revisión");
+            request.getSession().setAttribute("mensaje", gestores.size()+"");
             RequestDispatcher rd = request.getRequestDispatcher("/IndexServlet");
             rd.forward(request, response);  
         }
