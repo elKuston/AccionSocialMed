@@ -120,7 +120,8 @@ public class ProponerActividadServlet extends HttpServlet {
             List<Profesor> gestores = profesorFacade.getGestores();
             
             Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-            for(Profesor g : gestores){Notificacion n = new Notificacion();
+            for(Profesor g : gestores){
+                Notificacion n = new Notificacion();
                 n.setContenido("La ONG "+user.getNombre()+" ha propuesto una nueva actividad. Pulsa <a href='ClasificarActividadServlet?act="+a.getNactividad()+"'> aquí para clasificarla</a>");
                 n.setLeido(false);
                 n.setEmisor(user);

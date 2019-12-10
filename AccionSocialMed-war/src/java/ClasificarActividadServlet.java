@@ -10,10 +10,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dao.ActividadFacade;
 import dao.AsignaturaFacade;
+import dao.NotificacionFacade;
 import dao.ProfesorFacade;
 import entity.Actividad;
 import entity.Asignatura;
+import entity.Notificacion;
 import entity.Profesor;
+import entity.Usuario;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -50,26 +53,57 @@ public class ClasificarActividadServlet extends HttpServlet {
     @EJB ActividadFacade actividadFacade;
     @EJB AsignaturaFacade asignaturaFacade;
     @EJB ProfesorFacade profesorFacade;
+    @EJB NotificacionFacade notificacionFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //request.setAttribute("actividad", request.getParameter("act"));
-        int nActividad = Integer.parseInt(request.getParameter("act"));
-        Actividad a = actividadFacade.find(nActividad);
-        List<Asignatura> asignaturas = cargarAsignaturas();
-        List<Profesor> profesores = profesorFacade.findAll();
-        
-        request.setAttribute("actividad", a);
-        request.setAttribute("asignaturas", asignaturas);
-        request.setAttribute("profesores", profesores);
-        
+        if(request.getParameterMap().get("accion")==null){//Primera llamada al servlet, cargar los datos para la vista
+            
+            //request.setAttribute("actividad", request.getParameter("act"));
+            int nActividad = Integer.parseInt(request.getParameter("act"));
+            Actividad a = actividadFacade.find(nActividad);
+            if(a.getValidada()!=null){
+                request.getSession().setAttribute("mensaje", "La actividad ya ha sido clasificada o descartada anteriormente,");
+                RequestDispatcher rd = request.getRequestDispatcher("VerNotificacionesServlet");
+                rd.forward(request, response);
+            }
+            List<Asignatura> asignaturas = cargarAsignaturas();
+            List<Profesor> profesores = profesorFacade.findAll();
 
-        RequestDispatcher rd = request.getRequestDispatcher("clasificarActividad.jsp");
-        rd.forward(request, response);
+            request.setAttribute("actividad", a);
+            request.setAttribute("asignaturas", asignaturas);
+            request.setAttribute("profesores", profesores);
+
+
+            RequestDispatcher rd = request.getRequestDispatcher("clasificarActividad.jsp");
+            rd.forward(request, response);
+            
+        }else{//Segunda llamada, procesar los datos
+            Notificacion n = new Notificacion();
+                //n.setContenido("La ONG "+user.getNombre()+" ha propuesto una nueva actividad. Pulsa <a href='ClasificarActividadServlet?act="+a.getNactividad()+"'> aquí para clasificarla</a>");
+                n.setLeido(false);
+                n.setEmisor((Usuario) request.getSession().getAttribute("usuario"));
+                //n.setReceptor();
+                int id = notificacionFacade.count()+1;
+                n.setIdnotificacion(id);
+                
+            if(request.getParameter("accion").equals("Descartar actividad")){//Marcar la actividad como rechazada
+                System.out.println("descartar la actividad");
+                Actividad a = actividadFacade.find(Integer.parseInt(request.getParameter("nActividad")));
+                a.setValidada(Boolean.FALSE);
+                actividadFacade.edit(a);
+                //Enviar notificación a la ong
+                n.setContenido("La actividad "+a.getTitulo()+" ha sido descartada por el gestor.");
+                n.setReceptor(a.getOng().getUsuario());
+            }else if(request.getParameter("accion").equals("Clasificar actividad")){//Clasificar la actividad
+                
+            }
+            notificacionFacade.create(n);
+            
+        }
     }
     
     private List<Asignatura> cargarAsignaturas(){
         List<Asignatura> asignaturas = new ArrayList<>();
-        
         //Coger las asignaturas de iduma
         String resultado = "";
         String link = "http://idumamockup-env.3mca2qexfx.eu-central-1.elasticbeanstalk.com/fullcontent";
@@ -98,12 +132,7 @@ public class ClasificarActividadServlet extends HttpServlet {
                     a.setNombreAsignatura(nombre);
                     a.setNCreditos(6);
                     a.setCodAsignatura(asignaturaFacade.count()+1);
-                    //try{
-                        asignaturaFacade.create(a);
-                        //Thread.sleep(15);
-                    //}catch(Exception e){
-                      //  System.out.println("c mamo "+nombre.length());
-                    //}
+                    asignaturaFacade.create(a);
                 }
                 asignaturas.add(a);
             }

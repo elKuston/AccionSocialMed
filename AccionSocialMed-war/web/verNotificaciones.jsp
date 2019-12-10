@@ -11,8 +11,18 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Notificaciones</title>
         
+        
+        <% if(request.getAttribute("mensaje")!=null){
+            String mensaje =(String) request.getAttribute("mensaje");
+            request.removeAttribute("mensaje");
+            %>
+            <script>
+                alert("<%=mensaje%>");
+            </script>
+            <%
+        }%>
     </head>
     <body>
         <%
