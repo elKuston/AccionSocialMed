@@ -36,6 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Actividad.findAll", query = "SELECT a FROM Actividad a")
     , @NamedQuery(name = "Actividad.findByNactividad", query = "SELECT a FROM Actividad a WHERE a.nactividad = :nactividad")
+    , @NamedQuery(name = "Actividad.findByTipoActividad", query = "SELECT a FROM Actividad a WHERE a.tipoActividad = :tipoActividad")
+    , @NamedQuery(name = "Actividad.findByValidada", query = "SELECT a FROM Actividad a WHERE a.validada = :validada")
     , @NamedQuery(name = "Actividad.findByTitulo", query = "SELECT a FROM Actividad a WHERE a.titulo = :titulo")
     , @NamedQuery(name = "Actividad.findByDescripcion", query = "SELECT a FROM Actividad a WHERE a.descripcion = :descripcion")
     , @NamedQuery(name = "Actividad.findByFechaInicio", query = "SELECT a FROM Actividad a WHERE a.fechaInicio = :fechaInicio")
@@ -51,6 +53,11 @@ public class Actividad implements Serializable {
     @NotNull
     @Column(name = "NACTIVIDAD")
     private Integer nactividad;
+    @Size(max = 50)
+    @Column(name = "TIPO_ACTIVIDAD")
+    private String tipoActividad;
+    @Column(name = "VALIDADA")
+    private Boolean validada;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -116,6 +123,22 @@ public class Actividad implements Serializable {
 
     public void setNactividad(Integer nactividad) {
         this.nactividad = nactividad;
+    }
+
+    public String getTipoActividad() {
+        return tipoActividad;
+    }
+
+    public void setTipoActividad(String tipoActividad) {
+        this.tipoActividad = tipoActividad;
+    }
+
+    public Boolean getValidada() {
+        return validada;
+    }
+
+    public void setValidada(Boolean validada) {
+        this.validada = validada;
     }
 
     public String getTitulo() {
