@@ -4,14 +4,12 @@
     Author     : jange
 --%>
 
+<%@page import="entity.Actividad"%>
 <%@page import="entity.Notificacion"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%Usuario user = (Usuario)request.getAttribute("usuario");%>
-<%
-   
-%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -66,6 +64,10 @@
                 <%
             }
         %>
+        
+        <form action="VerActividadServlet" method="post">
+            <input type="submit" value="Acceder a actividad" >
+        </form>
     </center>
     </body>
 </html>

@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 
+import dao.ActividadFacade;
+import entity.Actividad;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,8 +32,12 @@ public class VerActividadServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @EJB ActividadFacade actividadFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        Actividad act = actividadFacade.find(1);
+        request.setAttribute("actividad",act );
         
         
         RequestDispatcher rd = request.getRequestDispatcher("/verActividad.jsp");

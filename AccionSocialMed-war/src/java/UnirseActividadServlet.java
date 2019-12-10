@@ -33,22 +33,27 @@ public class UnirseActividadServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    @EJB ActividadFacade actividadFacade;
+    @EJB
+    ActividadFacade actividadFacade;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String direccion="/IndexServlet";
-        Actividad act = (Actividad) request.getAttribute("actividad");
-        String accion= request.getParameter("boton");
-                
-        if(accion.equals("Quiero unirme")){
-            List lista= act.getUsuarioList();
-            lista.add(request.getSession().getAttribute("usuario"));
-            act.setUsuarioList(lista);
-            actividadFacade.edit(act);
+
+        String direccion = "/IndexServlet";
+        Actividad act = actividadFacade.find(Integer.parseInt(request.getParameter("id")));
+        String accion = request.getParameter("boton");
+
+        if (accion.equals("Quiero unirme")) {
+            List lista = act.getUsuarioList();
+
+            if (!lista.contains(request.getSession().getAttribute("usuario"))) {
+                lista.add(request.getSession().getAttribute("usuario"));
+                act.setUsuarioList(lista);
+                actividadFacade.edit(act);
+            }
+
         }
-        
+
         RequestDispatcher rd = request.getRequestDispatcher(direccion);
         rd.forward(request, response);
     }

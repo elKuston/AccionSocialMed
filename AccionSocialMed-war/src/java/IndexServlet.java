@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
+import dao.ActividadFacade;
 import dao.NotificacionFacade;
+import entity.Actividad;
 import entity.Notificacion;
 import entity.Usuario;
 import java.io.IOException;
@@ -37,6 +39,7 @@ public class IndexServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @EJB NotificacionFacade notificacionFacade;
+    @EJB ActividadFacade actividadFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
      
@@ -55,6 +58,8 @@ public class IndexServlet extends HttpServlet {
             }
         }
         request.setAttribute("pendientes", pendientes);
+        
+        
         
         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
