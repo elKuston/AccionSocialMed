@@ -90,6 +90,7 @@ public class ProponerActividadServlet extends HttpServlet {
             a.setOng(ongFacade.find(((Usuario) request.getSession().getAttribute("usuario")).getCorreo()));
             a.setNpersonas(plazasDisponibles);
             a.setLugar(lugar);
+            //a.setValidada(false);
             if(ff!=null){
                 Date fechaFin;
                 try{
@@ -119,19 +120,20 @@ public class ProponerActividadServlet extends HttpServlet {
             List<Profesor> gestores = profesorFacade.getGestores();
             
             Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-            for(Profesor g : gestores){
-                Notificacion n = new Notificacion();
-                n.setContenido("La ONG "+user.getNombre()+" ha propuesto una nueva actividad. Pulza <a href='ClasificarActividadServlet?act="+a.getNactividad()+"'> aquí para clasificarla</a>");
+            for(Profesor g : gestores){Notificacion n = new Notificacion();
+                n.setContenido("La ONG "+user.getNombre()+" ha propuesto una nueva actividad. Pulsa <a href='ClasificarActividadServlet?act="+a.getNactividad()+"'> aquí para clasificarla</a>");
                 n.setLeido(false);
                 n.setEmisor(user);
                 n.setReceptor(g.getUsuario());
                 int id = notificacionFacade.count()+1;
                 n.setIdnotificacion(id);
                 notificacionFacade.create(n);
+                /*String contenido = "La ONG "+user.getNombre()+" ha propuesto una nueva actividad. Pulsa <a href='ClasificarActividadServlet?act="+a.getNactividad()+"'> aquí para clasificarla</a>.";
+                Notificacion.enviarNotificacion(user, g.getUsuario(), contenido);*/
             }
             
-            //request.getSession().setAttribute("mensaje", "La actividad será enviada al gestor para revisión");
-            request.getSession().setAttribute("mensaje", gestores.size()+"");
+            request.getSession().setAttribute("mensaje", "La actividad será enviada al gestor para revisión");
+            //request.getSession().setAttribute("mensaje", gestores.size()+"");
             RequestDispatcher rd = request.getRequestDispatcher("/IndexServlet");
             rd.forward(request, response);  
         }

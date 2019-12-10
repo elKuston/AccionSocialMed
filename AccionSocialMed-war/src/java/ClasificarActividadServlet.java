@@ -5,9 +5,14 @@
  */
 
 import dao.ActividadFacade;
+import dao.AsignaturaFacade;
+import dao.ProfesorFacade;
 import entity.Actividad;
+import entity.Asignatura;
+import entity.Profesor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,13 +38,20 @@ public class ClasificarActividadServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @EJB ActividadFacade actividadFacade;
+    @EJB AsignaturaFacade asignaturaFacade;
+    @EJB ProfesorFacade profesorFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //request.setAttribute("actividad", request.getParameter("act"));
         int nActividad = Integer.parseInt(request.getParameter("act"));
         Actividad a = actividadFacade.find(nActividad);
-
+        List<Asignatura> asignaturas = asignaturaFacade.findAll();
+        List<Profesor> profesores = profesorFacade.findAll();
+        
         request.setAttribute("actividad", a);
+        request.setAttribute("asignaturas", asignaturas);
+        request.setAttribute("profesores", profesores);
+        
 
         RequestDispatcher rd = request.getRequestDispatcher("clasificarActividad.jsp");
         rd.forward(request, response);

@@ -5,7 +5,9 @@
  */
 package entity;
 
+import dao.NotificacionFacade;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -122,5 +124,18 @@ public class Notificacion implements Serializable {
     public String toString() {
         return "entity.Notificacion[ idnotificacion=" + idnotificacion + " ]";
     }
+    
+    /*@EJB static NotificacionFacade notificacionFacade;
+    public static void enviarNotificacion(Usuario emisor, Usuario receptor, String contenido){
+        Notificacion n = new Notificacion();
+                n.setContenido(contenido);
+                n.setLeido(false);
+                n.setEmisor(emisor);
+                n.setReceptor(receptor);
+                int id = notificacionFacade.count()+1;
+                n.setIdnotificacion(id);
+                notificacionFacade.create(n);
+    }*/
+    
     
 }
