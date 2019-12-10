@@ -31,7 +31,7 @@
         <%=e.getEtiqueta()%>
         <%}%>
 
-        <form action="UnirseActividadServlet" method="post">
+        <form action="ConfirmacionUnionProfesorServlet" method="post">
             <input type="hidden" value="<%=act.getNactividad() %>" name="id"/>
             <input type="submit" name="boton" value="Quiero unirme"> &nbsp &nbsp <input type="submit" name="boton" value="Volver">
         </form>
