@@ -10,6 +10,7 @@
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%Usuario user = (Usuario)request.getAttribute("usuario");%>
+<%Actividad actividad = (Actividad)request.getAttribute("actividad"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -66,6 +67,7 @@
         %>
         
         <form action="VerActividadServlet" method="post">
+            <input type="hidden" value="<%=actividad.getNactividad() %>" name="actividad"/>
             <input type="submit" value="Acceder a actividad" >
         </form>
     </center>

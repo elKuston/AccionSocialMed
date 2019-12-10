@@ -57,6 +57,8 @@ public class IndexServlet extends HttpServlet {
                 pendientes.add(n);
             }
         }
+        Actividad actividad=actividadFacade.findAll().get(0);
+        request.setAttribute("actividad", actividad);
         request.setAttribute("pendientes", pendientes);
         
         

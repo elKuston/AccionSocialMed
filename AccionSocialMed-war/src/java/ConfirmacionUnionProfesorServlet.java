@@ -42,7 +42,6 @@ public class ConfirmacionUnionProfesorServlet extends HttpServlet {
             throws ServletException, IOException {
         
          HttpSession sesion = request.getSession();
-         sesion.setAttribute("mensaje", "Se enviará notificacion al profesor correspondiente");
          Actividad act = actividadFacade.find(Integer.parseInt(request.getParameter("id")));
          String accion = request.getParameter("boton");
          Usuario user = (Usuario) sesion.getAttribute("usuario");
@@ -64,6 +63,7 @@ public class ConfirmacionUnionProfesorServlet extends HttpServlet {
 "            <input type=\"hidden\" value=\""+not.getIdnotificacion()+"\" name=\"notificacion\"/>\n" +
 "            <input type=\"submit\" name=\"boton\" value=\"Revisar\">\n" +
 "            </form>");
+             sesion.setAttribute("mensaje", "Se enviará notificacion al profesor correspondiente");
                 
              notificacionFacade.create(not);
              }

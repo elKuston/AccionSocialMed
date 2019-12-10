@@ -65,7 +65,8 @@ public class RevisionOngServlet extends HttpServlet {
             not.setReceptor(solicitante);
             not.setLeido(Boolean.FALSE);
             not.setIdnotificacion(notificacionFacade.findAll().get(notificacionFacade.findAll().size() - 1).getIdnotificacion() + 1);
-            not.setContenido("Has sido aceptado en la actividad"+act.getTitulo() +" de la ONG "+ act.getOng().getUsuario().getNombre());
+            not.setContenido("Has sido aceptado en la actividad "+act.getTitulo() +" de la ONG "+ act.getOng().getUsuario().getNombre());
+            notificacionFacade.create(not);
         } 
         if (boton.equals("Rechazar solicitante")){
             sesion.setAttribute("mensaje", "Solicitante rechazado");
@@ -74,7 +75,7 @@ public class RevisionOngServlet extends HttpServlet {
             not.setReceptor(solicitante);
             not.setLeido(Boolean.FALSE);
             not.setIdnotificacion(notificacionFacade.findAll().get(notificacionFacade.findAll().size() - 1).getIdnotificacion() + 1);
-            not.setContenido("Has sido rechazado de la actividad"+act.getTitulo() +" de la ONG "+ act.getOng().getUsuario().getNombre());
+            not.setContenido("Has sido rechazado de la actividad "+act.getTitulo() +" de la ONG "+ act.getOng().getUsuario().getNombre());
             notificacionFacade.create(not);
         }
 
