@@ -3,6 +3,7 @@
     Created on : 05-dic-2019, 17:43:29
     Author     : romol
 --%>
+<%@page import="entity.Asignatura"%>
 <%@page import="entity.Profesor"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Etiqueta"%>
@@ -27,6 +28,14 @@
             StringJoiner tipos = new StringJoiner(", ");
             
             StringJoiner asignaturas = new StringJoiner("\n");
+            List<Asignatura> asigs = (List<Asignatura>) request.getAttribute("asignaturas");
+            for(Asignatura as : asigs){
+                StringBuilder opt = new StringBuilder("<option value=\""+as.getCodAsignatura() +"\">");
+                opt.append(as.getNombreAsignatura());
+                
+                opt.append("</option>");
+                asignaturas.add(opt.toString());
+            }
             
             StringJoiner profesores = new StringJoiner("\n");
             List<Profesor> profs = (List<Profesor>) request.getAttribute("profesores");
@@ -57,7 +66,7 @@
             
             Clasificación actividad:
             <select id="tipo" onchange="enableSelects()">
-                <option disabled selected value> -- selecciona una opción -- </option>
+                <option disabled selected value> -- Selecciona una opción -- </option>
                 <option value="Aprendizaje-Servicio">Aprendizaje-Servicio</option>
                 <option value="Investigación">Investigación</option>
                 <option value="Voluntariado">Voluntariado</option>
@@ -65,13 +74,13 @@
             
             Asignatura asociada a la actividad:
             <select id="asignatura" disabled="true">
-                <option value="Aprendizaje-Servicio">Aprendizaje-Servicio</option>
-                <option value="Investigación">Investigación</option>
-                <option value="Voluntariado">Voluntariado</option>
+                <option disabled selected value> -- Selecciona una opción -- </option>
+                <%= asignaturas %>
             </select><br/><br/>
             
             Profesor de la actividad:
             <select id="profesor" disabled="true">
+                <option disabled selected value> -- Selecciona una opción -- </option>  
                 <%=profesores%>
             </select>
             
@@ -81,7 +90,6 @@
             <script>
                 function enableSelects(){
                     var value = document.getElementById("tipo").value;
-                    console.log(value);
                     if(value==="Aprendizaje-Servicio"){
                         document.getElementById("asignatura").disabled = false;
                         document.getElementById("profesor").disabled = true;

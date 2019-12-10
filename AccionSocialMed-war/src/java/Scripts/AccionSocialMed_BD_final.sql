@@ -1,6 +1,6 @@
 CREATE TABLE Asignatura(
 	cod_asignatura int PRIMARY KEY,
-	nombre_asignatura varchar(50) NOT NULL,
+	nombre_asignatura varchar(5000) NOT NULL,
 	n_creditos int NOT NULL);
 
 CREATE TABLE Usuario(
