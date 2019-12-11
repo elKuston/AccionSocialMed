@@ -22,6 +22,8 @@
         <title>Confirmacion1</title>
     </head>
     <body>
+        <fieldset style="width: 400px;">
+            <legend>Datos de la actividad</legend> 
         <b>Nombre de la ONG:</b> <%=act.getOng().getUsuario().getNombre()%><br/>
         <b>Nombre de la actividad:</b><%=act.getTitulo()%><br/>
         <b>Descripcion de la actividad:</b> <%=act.getDescripcion()%><br/>
@@ -38,17 +40,20 @@
         <%=et.getEtiqueta() + ", "%>
         <%}%>
         <%}%>
+        </fieldset>
 
         <br/><br/><br/><br/>
 
+        <fieldset style="width: 400px;">
+            <legend>Datos del solicitante</legend> 
         <%if (tipo.equals("profesor")) {%>
         <b>Nombre del solicitante</b> <%=solicitante.getNombre()%><br/>
         <%}%>
         <b>Tipo del solicitante</b> <%=rolSolicitante%><br/>
         <b>Lista de actividades activas</b> 
-        <%for(Actividad ac: solicitante.getActividadList()){%><br/>
+        <%for(Actividad ac: solicitante.getActividadList()){%>
             <%=ac.getTitulo()+", " %>
-        <%}%>
+        <%}%><br/>
         
         <%if (rolSolicitante.equals("Estudiante")) { %>
         <b>Asignaturas asociadas</b> 
@@ -69,6 +74,7 @@
         <%=et.getEtiqueta() + ", "%>
         <%}%>
         <%}%>
+        </fieldset>
         <br/><br/><br/>
 
 
