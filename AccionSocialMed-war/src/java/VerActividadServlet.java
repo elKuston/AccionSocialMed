@@ -36,7 +36,7 @@ public class VerActividadServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        Actividad act = actividadFacade.find(1);
+        Actividad act = actividadFacade.find(5);
         request.setAttribute("actividad",act );
         
         
