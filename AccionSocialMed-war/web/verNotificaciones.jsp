@@ -13,16 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Notificaciones</title>
         
-        
-        <% if(request.getAttribute("mensaje")!=null){
-            String mensaje =(String) request.getAttribute("mensaje");
-            request.removeAttribute("mensaje");
-            %>
-            <script>
-                alert("<%=mensaje%>");
-            </script>
-            <%
-        }%>
+        <jsp:include page="messageService.jsp" />
     </head>
     <body>
         <%

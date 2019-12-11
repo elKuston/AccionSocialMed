@@ -66,7 +66,7 @@
             <form action="ClasificarActividadServlet" method="post">
                 <input type="hidden" name ="nActividad" value="<%= a.getNactividad() %>"/>
                 Clasificación actividad:
-                <select id="tipo" onchange="enableSelects()">
+                <select id="tipo" name="tipo" onchange="enableSelects()">
                     <option disabled selected value> -- Selecciona una opción -- </option>
                     <option value="Aprendizaje-Servicio">Aprendizaje-Servicio</option>
                     <option value="Investigación">Investigación</option>
@@ -76,7 +76,7 @@
                 <br/>
 
                 Asignatura asociada a la actividad:
-                <select id="asignatura" disabled="true">
+                <select id="asignatura" name="asignatura" disabled="true">
                     <option disabled selected value> -- Selecciona una opción -- </option>
                     <%= asignaturas %>
                 </select>
@@ -84,7 +84,7 @@
                 <br/>
                 
                 Profesor de la actividad:
-                <select id="profesor" disabled="true">
+                <select id="profesor" name="profesor" disabled="true">
                     <option disabled selected value> -- Selecciona una opción -- </option>  
                     <%=profesores%>
                 </select>

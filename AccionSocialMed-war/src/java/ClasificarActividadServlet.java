@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import services.MessageService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -62,7 +63,8 @@ public class ClasificarActividadServlet extends HttpServlet {
             int nActividad = Integer.parseInt(request.getParameter("act"));
             Actividad a = actividadFacade.find(nActividad);
             if(a.getValidada()!=null){
-                request.getSession().setAttribute("mensaje", "La actividad ya ha sido clasificada o descartada anteriormente,");
+                //request.getSession().setAttribute("mensaje", "La actividad ya ha sido clasificada o descartada anteriormente.");
+                MessageService.enviarMensaje(request, "La actividad ya ha sido clasificada o descartada anteriormente.");
                 RequestDispatcher rd = request.getRequestDispatcher("VerNotificacionesServlet");
                 rd.forward(request, response);
             }
@@ -79,24 +81,45 @@ public class ClasificarActividadServlet extends HttpServlet {
             
         }else{//Segunda llamada, procesar los datos
             Notificacion n = new Notificacion();
-                //n.setContenido("La ONG "+user.getNombre()+" ha propuesto una nueva actividad. Pulsa <a href='ClasificarActividadServlet?act="+a.getNactividad()+"'> aquí para clasificarla</a>");
-                n.setLeido(false);
-                n.setEmisor((Usuario) request.getSession().getAttribute("usuario"));
-                //n.setReceptor();
-                int id = notificacionFacade.count()+1;
-                n.setIdnotificacion(id);
+            //n.setContenido("La ONG "+user.getNombre()+" ha propuesto una nueva actividad. Pulsa <a href='ClasificarActividadServlet?act="+a.getNactividad()+"'> aquí para clasificarla</a>");
+            n.setLeido(false);
+            n.setEmisor((Usuario) request.getSession().getAttribute("usuario"));
+            //n.setReceptor();
+            List<Notificacion> nots = notificacionFacade.findAll();
+            int id = nots.get(nots.size()-1).getIdnotificacion()+1;
+            n.setIdnotificacion(id);
+            
+            
+            Actividad a = actividadFacade.find(Integer.parseInt(request.getParameter("nActividad")));
                 
             if(request.getParameter("accion").equals("Descartar actividad")){//Marcar la actividad como rechazada
-                System.out.println("descartar la actividad");
-                Actividad a = actividadFacade.find(Integer.parseInt(request.getParameter("nActividad")));
                 a.setValidada(Boolean.FALSE);
                 actividadFacade.edit(a);
                 //Enviar notificación a la ong
                 n.setContenido("La actividad "+a.getTitulo()+" ha sido descartada por el gestor.");
                 n.setReceptor(a.getOng().getUsuario());
             }else if(request.getParameter("accion").equals("Clasificar actividad")){//Clasificar la actividad
-                
+                switch(request.getParameter("tipo")){
+                    case "Aprendizaje-Servicio":
+                        
+                        break;
+                    case "Investigación":
+                        Profesor p = profesorFacade.find(request.getParameter("profesor"));
+                        n.setReceptor(p.getUsuario());
+                        n.setContenido("Le ha sido asignada una nueva actividad de investigación. ");
+                        break;
+                    case "Voluntariado":
+                        a.setValidada(Boolean.TRUE);
+                        actividadFacade.edit(a);
+                        //Enviar notificación a la ONG
+                        n.setContenido("La actividad "+a.getTitulo()+" ha sido aceptada y clasificada como voluntariado");
+                        n.setReceptor(a.getOng().getUsuario());
+                        break;
+                    default:
+                        throw new RuntimeException("C mamo, el gestor ha puesto un tipo de actividad mu raro");
+                }
             }
+            
             notificacionFacade.create(n);
             
         }

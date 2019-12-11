@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import services.MessageService;
 import dao.NotificacionFacade;
 import dao.UsuarioFacade;
 import entity.Notificacion;
@@ -43,8 +44,7 @@ public class VerNotificacionesServlet extends HttpServlet {
         
         request.setAttribute("notificaciones", notificaciones);
         
-        String mensaje = (String) request.getSession().getAttribute("mensaje");
-        request.setAttribute("mensaje",mensaje);
+        MessageService.recibirMensaje(request);
         
         
       

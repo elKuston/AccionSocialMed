@@ -126,7 +126,8 @@ public class ProponerActividadServlet extends HttpServlet {
                 n.setLeido(false);
                 n.setEmisor(user);
                 n.setReceptor(g.getUsuario());
-                int id = notificacionFacade.count()+1;
+                List<Notificacion> nots = notificacionFacade.findAll();
+                int id = nots.get(nots.size()-1).getIdnotificacion()+1;
                 n.setIdnotificacion(id);
                 notificacionFacade.create(n);
                 /*String contenido = "La ONG "+user.getNombre()+" ha propuesto una nueva actividad. Pulsa <a href='ClasificarActividadServlet?act="+a.getNactividad()+"'> aquí para clasificarla</a>.";
