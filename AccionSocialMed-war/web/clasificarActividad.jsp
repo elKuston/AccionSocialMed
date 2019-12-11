@@ -16,7 +16,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Clasificar actividad</title>
     </head>
     <body>
         <%
@@ -55,34 +55,46 @@
                 }
             }
             %>
-            <p>Nombre actividad: <%=a.getTitulo()%></p><br/><br/>
-            <p>Plazas disponibles: <%=a.getNpersonas()%></p><br/><br/>
-            <p>Fecha Inicio: <%=fechaInicio%></p><br/><br/>
-            <p>Fecha Fin; <%=fechaFin%></p><br/><br/>
-            <p>Descripción: <%= a.getDescripcion() %></p><br/><br/>
+            <p>Nombre actividad: <%=a.getTitulo()%></p>
+            <p>Plazas disponibles: <%=a.getNpersonas()%></p>
+            <p>Fecha Inicio: <%=fechaInicio%></p>
+            <p>Fecha Fin; <%=fechaFin%></p>
+            <p>Descripción: <%= a.getDescripcion() %></p>
             <p>Ámbito(s) actividad: <%= ambitos %> </p>
             <p>Tipo(s) actividad: <%= tipos %> </p>
             
+            <form action="ClasificarActividadServlet" method="post">
+                <input type="hidden" name ="nActividad" value="<%= a.getNactividad() %>"/>
+                Clasificación actividad:
+                <select id="tipo" name="tipo" onchange="enableSelects()">
+                    <option disabled selected value> -- Selecciona una opción -- </option>
+                    <option value="Aprendizaje-Servicio">Aprendizaje-Servicio</option>
+                    <option value="Investigación">Investigación</option>
+                    <option value="Voluntariado">Voluntariado</option>
+                </select>
+                <br/>
+                <br/>
+
+                Asignatura asociada a la actividad:
+                <select id="asignatura" name="asignatura" disabled="true">
+                    <option disabled selected value> -- Selecciona una opción -- </option>
+                    <%= asignaturas %>
+                </select>
+                <br/>
+                <br/>
+                
+                Profesor de la actividad:
+                <select id="profesor" name="profesor" disabled="true">
+                    <option disabled selected value> -- Selecciona una opción -- </option>  
+                    <%=profesores%>
+                </select>
+                <br/>
+                <br/>
+                <br/>
+                <input type="submit" name="accion" value="Clasificar actividad"/>
+                <input type="submit" name="accion" value="Descartar actividad"/>
             
-            Clasificación actividad:
-            <select id="tipo" onchange="enableSelects()">
-                <option disabled selected value> -- Selecciona una opción -- </option>
-                <option value="Aprendizaje-Servicio">Aprendizaje-Servicio</option>
-                <option value="Investigación">Investigación</option>
-                <option value="Voluntariado">Voluntariado</option>
-            </select><br/><br/>
-            
-            Asignatura asociada a la actividad:
-            <select id="asignatura" disabled="true">
-                <option disabled selected value> -- Selecciona una opción -- </option>
-                <%= asignaturas %>
-            </select><br/><br/>
-            
-            Profesor de la actividad:
-            <select id="profesor" disabled="true">
-                <option disabled selected value> -- Selecciona una opción -- </option>  
-                <%=profesores%>
-            </select>
+            </form>
             
             
             
