@@ -102,6 +102,13 @@ public class ClasificarActividadServlet extends HttpServlet {
                 System.out.println(request.getParameter("tipo"));
                 switch(request.getParameter("tipo")){
                     case "ApS":
+                        a.setTipoActividad("Aprendizaje-Servicio");
+                        Asignatura asignatura = asignaturaFacade.find(Integer.parseInt(request.getParameter("asignatura")));
+                        a.setAsignaturaAsociada(asignatura);
+                        actividadFacade.edit(a);
+                        Profesor prof = asignatura.getProfesorList().get(0);
+                        n.setReceptor(prof.getUsuario());
+                        n.setContenido("Se ha asignado una nueva actividad a la asignatura "+asignatura.getNombreAsignatura()+" <a>Pulse para validarla</a>");
                         
                         break;
                     case "inv":
@@ -110,7 +117,7 @@ public class ClasificarActividadServlet extends HttpServlet {
                         a.setCorreoProfesor(p);
                         actividadFacade.edit(a);
                         n.setReceptor(p.getUsuario());
-                        n.setContenido("Le ha sido asignada una nueva actividad de investigación. ");
+                        n.setContenido("Le ha sido asignada una nueva actividad de investigación. <a>Pulse para validarla</a>");
                         break;
                     case "vol":
                         a.setValidada(Boolean.TRUE);
@@ -126,6 +133,9 @@ public class ClasificarActividadServlet extends HttpServlet {
             }
             
             notificacionFacade.create(n);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("VerNotificacionesServlet");
+            rd.forward(request, response);
             
         }
     }
