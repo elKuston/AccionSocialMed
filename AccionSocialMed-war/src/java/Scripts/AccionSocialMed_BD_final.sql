@@ -54,7 +54,7 @@ CREATE TABLE Actividad(
 	nActividad int PRIMARY KEY,
 	correo_profesor varchar(50),
 	asignatura_asociada int,
-        tipo_actividad varchar(50) check (tipo_actividad in ('ApS','volunt','inv')),
+        tipo_actividad varchar(50) check (tipo_actividad in ('Aprendizaje-Servicio','Voluntariado','Investigación')),
         validada boolean,
 	ong varchar(50) NOT NULL,
 	titulo varchar(50) NOT NULL,
