@@ -99,24 +99,29 @@ public class ClasificarActividadServlet extends HttpServlet {
                 n.setContenido("La actividad "+a.getTitulo()+" ha sido descartada por el gestor.");
                 n.setReceptor(a.getOng().getUsuario());
             }else if(request.getParameter("accion").equals("Clasificar actividad")){//Clasificar la actividad
+                System.out.println(request.getParameter("tipo"));
                 switch(request.getParameter("tipo")){
-                    case "Aprendizaje-Servicio":
+                    case "ApS":
                         
                         break;
-                    case "Investigación":
+                    case "inv":
+                        a.setTipoActividad("Investigación");
                         Profesor p = profesorFacade.find(request.getParameter("profesor"));
+                        a.setCorreoProfesor(p);
+                        actividadFacade.edit(a);
                         n.setReceptor(p.getUsuario());
                         n.setContenido("Le ha sido asignada una nueva actividad de investigación. ");
                         break;
-                    case "Voluntariado":
+                    case "vol":
                         a.setValidada(Boolean.TRUE);
+                        a.setTipoActividad("Voluntariado");
                         actividadFacade.edit(a);
                         //Enviar notificación a la ONG
                         n.setContenido("La actividad "+a.getTitulo()+" ha sido aceptada y clasificada como voluntariado");
                         n.setReceptor(a.getOng().getUsuario());
                         break;
                     default:
-                        throw new RuntimeException("C mamo, el gestor ha puesto un tipo de actividad mu raro");
+                        throw new RuntimeException("C mamo, el gestor ha puesto un tipo de actividad mu raro ("+request.getParameter("tipo")+")");
                 }
             }
             
@@ -160,19 +165,8 @@ public class ClasificarActividadServlet extends HttpServlet {
                 asignaturas.add(a);
             }
         }
-        
-        
-        
-        
             
         return asignaturas;
-    }
-    
-    public static String stripAccents(String s) 
-    {
-        s = Normalizer.normalize(s, Normalizer.Form.NFD);
-        s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-        return s;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

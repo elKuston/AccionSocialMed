@@ -68,9 +68,9 @@
                 Clasificación actividad:
                 <select id="tipo" name="tipo" onchange="enableSelects()">
                     <option disabled selected value> -- Selecciona una opción -- </option>
-                    <option value="Aprendizaje-Servicio">Aprendizaje-Servicio</option>
-                    <option value="Investigación">Investigación</option>
-                    <option value="Voluntariado">Voluntariado</option>
+                    <option value="ApS">Aprendizaje-Servicio</option>
+                    <option value="inv">Investigación</option>
+                    <option value="vol">Voluntariado</option>
                 </select>
                 <br/>
                 <br/>
@@ -102,10 +102,10 @@
             <script>
                 function enableSelects(){
                     var value = document.getElementById("tipo").value;
-                    if(value==="Aprendizaje-Servicio"){
+                    if(value==="ApS"){
                         document.getElementById("asignatura").disabled = false;
                         document.getElementById("profesor").disabled = true;
-                    }else if(value==="Investigación"){
+                    }else if(value==="inv"){
                         document.getElementById("profesor").disabled = false;
                         document.getElementById("asignatura").disabled = true;
                     }else{
