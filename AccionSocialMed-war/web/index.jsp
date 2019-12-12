@@ -41,6 +41,15 @@
                 <%
             }
         %>
+        
+        <%
+            if(request.getSession().getAttribute("tipo").equals("profesor")&&user.getProfesor().getGestor()){
+                %>
+                <a href="ActividadesPendientesServlet">Actividades pendientes</a>
+                <%
+            }
+        %>
+        
     <center>
         <h1>HOLA SEÑOR </h1><br/><br/>
         

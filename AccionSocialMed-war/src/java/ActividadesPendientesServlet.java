@@ -8,6 +8,7 @@ import dao.ActividadFacade;
 import entity.Actividad;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author jange
+ * @author romol
  */
-@WebServlet(urlPatterns = {"/VerActividadServlet"})
-public class VerActividadServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/ActividadesPendientesServlet"})
+public class ActividadesPendientesServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,12 +36,11 @@ public class VerActividadServlet extends HttpServlet {
     @EJB ActividadFacade actividadFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        List<Actividad> todas = actividadFacade.findAll();
         
-        Actividad act = actividadFacade.find(Integer.parseInt(request.getParameter("actividad")));
-        request.setAttribute("actividad",act );
+        request.setAttribute("todas", todas);
         
-        
-        RequestDispatcher rd = request.getRequestDispatcher("/verActividad.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("actividadesPendientes.jsp");
         rd.forward(request, response);
     }
 
