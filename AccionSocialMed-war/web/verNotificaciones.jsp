@@ -16,26 +16,39 @@
         <jsp:include page="messageService.jsp" />
     </head>
     <body>
+        <table>
         <%
             List<Notificacion> notificaciones = (List<Notificacion>) request.getAttribute("notificaciones");
-            for(Notificacion n : notificaciones){
-                if(!n.getLeido()){
-                    %>
-                    <b>
-                    <%
-                }
-                %>
-                <h2><%=n.getContenido()%></h2>
+            for(int i = notificaciones.size()-1;i>=0;i--){
+                Notificacion n = notificaciones.get(i);
+                /*%>
+                <tr>
+                    <td><p><%=(!n.getLeido()? "<b>" : "") +n.getContenido()+ (!n.getLeido()? "</b>" : "" )%></p><td>
+                    <td><p><%=(!n.getLeido()? n.getContenido() : ""%></p><td>
+
                 <%
 
                 if(!n.getLeido()){
                     %>
-                    </b>
+                <td><button style="display: inline-block" onclick="window.location='VerNotificacionesServlet?mar=<%=n.getIdnotificacion()%>'">Marcar como leído</button><td>
+                    
                     <%
                 }
+                %>
+                <tr>
+                <% */
+                if(!n.getLeido()){
+                    %>
+                    <tr>
+                        <td><p><%=n.getContenido()%></p><td>
+                    <td><button style="display: inline-block" onclick="window.location='VerNotificacionesServlet?mar=<%=n.getIdnotificacion()%>'">Marcar como leído</button><td>
+
+                    <tr>
+                    <%
+                }
+                        
             }
         %>
-        <form>
-        </form>
+        </table>
     </body>
 </html>

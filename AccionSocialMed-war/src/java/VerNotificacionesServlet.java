@@ -10,7 +10,6 @@ import dao.UsuarioFacade;
 import entity.Notificacion;
 import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -40,6 +39,14 @@ public class VerNotificacionesServlet extends HttpServlet {
     UsuarioFacade usuarioFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if(request.getParameter("mar")!=null){
+            Notificacion n = notificacionFacade.find(Integer.parseInt(request.getParameter("mar")));
+            n.setLeido(true);
+            notificacionFacade.edit(n);
+            /*RequestDispatcher rd = request.getRequestDispatcher("/VerNotificacionesServlet");
+            rd.forward(request, response);
+        */}
+        
         List<Notificacion> notificaciones = notificacionFacade.porReceptor((Usuario) request.getSession().getAttribute("usuario"));
         
         request.setAttribute("notificaciones", notificaciones);
