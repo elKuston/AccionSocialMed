@@ -58,7 +58,7 @@
             <p>Nombre actividad: <%=a.getTitulo()%></p>
             <p>Plazas disponibles: <%=a.getNpersonas()%></p>
             <p>Fecha Inicio: <%=fechaInicio%></p>
-            <p>Fecha Fin; <%=fechaFin%></p>
+            <p>Fecha Fin: <%=fechaFin%></p>
             <p>Descripción: <%= a.getDescripcion() %></p>
             <p>Ámbito(s) actividad: <%= ambitos %> </p>
             <p>Tipo(s) actividad: <%= tipos %> </p>

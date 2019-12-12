@@ -108,7 +108,7 @@ public class ClasificarActividadServlet extends HttpServlet {
                         actividadFacade.edit(a);
                         Profesor prof = asignatura.getProfesorList().get(0);
                         n.setReceptor(prof.getUsuario());
-                        n.setContenido("Se ha asignado una nueva actividad a la asignatura "+asignatura.getNombreAsignatura()+" <a>Pulse para validarla</a>");
+                        n.setContenido("Se ha asignado una nueva actividad a la asignatura "+asignatura.getNombreAsignatura()+". <a href=\"ValidarActividadServlet?a="+a.getNactividad()+"\">Pulse para validarla</a>");
                         
                         break;
                     case "inv":
@@ -117,7 +117,7 @@ public class ClasificarActividadServlet extends HttpServlet {
                         a.setCorreoProfesor(p);
                         actividadFacade.edit(a);
                         n.setReceptor(p.getUsuario());
-                        n.setContenido("Le ha sido asignada una nueva actividad de investigación. <a>Pulse para validarla</a>");
+                        n.setContenido("Le ha sido asignada una nueva actividad de investigación. <a href=\"ValidarActividadServlet?a="+a.getNactividad()+"\">Pulse para validarla</a>");
                         break;
                     case "vol":
                         a.setValidada(Boolean.TRUE);

@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>LoginUma</title>
     </head>
-    <body style="background-color:red;">
+    <body style="background-color:#a83232;">
     <center>
         <% if (request.getAttribute("mensaje") != null) {
                 String mensaje = (String) request.getAttribute("mensaje");
