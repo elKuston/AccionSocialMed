@@ -36,41 +36,55 @@ public class ConfirmacionUnionProfesorServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @EJB ActividadFacade actividadFacade;
-    @EJB NotificacionFacade notificacionFacade;
+    @EJB
+    ActividadFacade actividadFacade;
+    @EJB
+    NotificacionFacade notificacionFacade;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-         HttpSession sesion = request.getSession();
-         Actividad act = actividadFacade.find(Integer.parseInt(request.getParameter("id")));
-         String accion = request.getParameter("boton");
-         Usuario user = (Usuario) sesion.getAttribute("usuario");
-         
-         if (accion.equals("Quiero unirme")) {
-             if(user.getActividadList().contains(act)){
-                 sesion.setAttribute("mensaje", "Ya estas inscrito en esta actividad");
-             }
-             else{
-             Notificacion not = new Notificacion();
-             not.setEmisor((Usuario) sesion.getAttribute("usuario"));
-             not.setReceptor(act.getCorreoProfesor().getUsuario());
-             not.setLeido(Boolean.FALSE);
-             not.setIdnotificacion(notificacionFacade.findAll().get(notificacionFacade.findAll().size()-1).getIdnotificacion()+1);
-             not.setContenido("El usuario "+user.getNombre()+" quiere participar en una actividad, consulte el resto de la informacion aqui"
-             + "<form action=\"RevisionServlet\" method=\"post\">\n" +
-"            <input type=\"hidden\" value=\""+act.getNactividad()+"\" name=\"actividad\"/>\n" +
-"            <input type=\"hidden\" value=\""+user.getCorreo()+"\" name=\"solicitante\"/>\n" +
-"            <input type=\"hidden\" value=\""+not.getIdnotificacion()+"\" name=\"notificacion\"/>\n" +
-"            <input type=\"submit\" name=\"boton\" value=\"Revisar\">\n" +
-"            </form>");
-             sesion.setAttribute("mensaje", "Se enviará notificacion al profesor correspondiente");
-                
-             notificacionFacade.create(not);
-             }
-         }
-        
-         
-         
+
+        HttpSession sesion = request.getSession();
+        Actividad act = actividadFacade.find(Integer.parseInt(request.getParameter("id")));
+        String accion = request.getParameter("boton");
+        Usuario user = (Usuario) sesion.getAttribute("usuario");
+
+        if (accion.equals("Quiero unirme")) {
+            if (user.getActividadList().contains(act)) {
+                sesion.setAttribute("mensaje", "Ya estas inscrito en esta actividad");
+            } else {
+            
+            Notificacion not = new Notificacion();
+            not.setEmisor((Usuario) sesion.getAttribute("usuario"));;
+            not.setLeido(Boolean.FALSE);
+            not.setIdnotificacion(notificacionFacade.findAll().get(notificacionFacade.findAll().size() - 1).getIdnotificacion() + 1);
+
+            if (act.getTipoActividad().equals("Voluntariado")) {
+                not.setReceptor(act.getOng().getUsuario());
+                not.setContenido("Una persona quiere participar en una actividad, consulte el resto de la informacion aqui"
+                        + "<form action=\"RevisionServlet\" method=\"post\">\n"
+                        + "<input type=\"hidden\" value=\"" + act.getNactividad() + "\" name=\"actividad\"/>\n"
+                        + "<input type=\"hidden\" value=\"" + user.getCorreo() + "\" name=\"solicitante\"/>\n"
+                        + "<input type=\"hidden\" value=\"" + not.getIdnotificacion() + "\" name=\"notificacion\"/>\n"
+                        + "<input type=\"submit\" name=\"boton\" value=\"Revisar\">\n"
+                        + "</form>");
+            } else {
+                not.setReceptor(act.getCorreoProfesor().getUsuario());
+                not.setContenido("El usuario " + user.getNombre() + " quiere participar en una actividad, consulte el resto de la informacion aqui"
+                        + "<form action=\"RevisionServlet\" method=\"post\">\n"
+                        + "<input type=\"hidden\" value=\"" + act.getNactividad() + "\" name=\"actividad\"/>\n"
+                        + "<input type=\"hidden\" value=\"" + user.getCorreo() + "\" name=\"solicitante\"/>\n"
+                        + "<input type=\"hidden\" value=\"" + not.getIdnotificacion() + "\" name=\"notificacion\"/>\n"
+                        + "<input type=\"submit\" name=\"boton\" value=\"Revisar\">\n"
+                        + "</form>");
+
+                }
+            
+
+            notificacionFacade.create(not);
+        }
+        }
+
         RequestDispatcher rd = request.getRequestDispatcher("/IndexServlet");
         rd.forward(request, response);
     }

@@ -60,7 +60,7 @@ public class RevisionProfesorServlet extends HttpServlet {
             not.setReceptor(act.getOng().getUsuario());
             not.setLeido(Boolean.FALSE);
             not.setIdnotificacion(notificacionFacade.findAll().get(notificacionFacade.findAll().size() - 1).getIdnotificacion() + 1);
-            not.setContenido("El usuario " + solicitante.getNombre() + " quiere participar en una actividad, consulte el resto de la informacion aqui"
+            not.setContenido("Una persona quiere participar en una actividad, consulte el resto de la informacion aqui"
                     + "<form action=\"RevisionServlet\" method=\"post\">\n"
                     + "<input type=\"hidden\" value=\"" + act.getNactividad() + "\" name=\"actividad\"/>\n"
                     + "<input type=\"hidden\" value=\"" + solicitante.getCorreo() + "\" name=\"solicitante\"/>\n"
