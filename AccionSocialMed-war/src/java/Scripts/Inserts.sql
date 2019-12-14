@@ -37,6 +37,6 @@ INSERT INTO ALGUSTO.ASIGNATURA (COD_ASIGNATURA, NOMBRE_ASIGNATURA, N_CREDITOS)
 	VALUES (1, 'Estructura de datos', 6);
 
 INSERT INTO ALGUSTO.ACTIVIDAD (NACTIVIDAD, CORREO_PROFESOR, ASIGNATURA_ASOCIADA, TIPO_ACTIVIDAD, VALIDADA, ONG, TITULO, DESCRIPCION, FECHA_INICIO, FECHA_FIN, NPERSONAS, LUGAR, TURNOTARDE) 
-	VALUES (5, 'jmlupionc@uma.es', 1, 'Aprendizaje-Servicio', true, 'aproinla@uma.es', 'taes', 'asdgasdgasgasgsad', '2019-12-11', '2019-12-11', 1, 'ASDFSADFASDF', false)
+	VALUES (5, 'jmlupionc@uma.es', 1, 'Aprendizaje-Servicio', true, 'aproinla@uma.es', 'taes', 'asdgasdgasgasgsad', '2019-12-11', '2019-12-11', 1, 'ASDFSADFASDF', false);
 
 INSERT INTO IMPARTE VALUES ('jmlupionc@uma.es',2);

@@ -105,7 +105,7 @@ public class RegistroServlet extends HttpServlet {
         } else if (ocupacion.equals("PDI")) {
             Profesor nuevoPDI = new Profesor(nuevoU.getCorreo());
             nuevoPDI.setApellidos(apellidos);
-
+            nuevoPDI.setGestor(Boolean.FALSE);
             profesorFacade.create(nuevoPDI);
 
         }
