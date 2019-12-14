@@ -50,6 +50,27 @@
             }
         %>
         
+        <%
+            if(request.getSession().getAttribute("screen").equals("match"))
+            {
+                request.getSession().setAttribute("screen", "all");
+                %>
+                <a href="IndexServlet">Ver todas</a>
+                <%
+            }
+            else
+            {
+                request.getSession().setAttribute("screen", "match");
+                %>
+                <a href="IndexServlet">Matching</a>
+                <%
+            }
+            %>
+            
+        <%
+            List<Actividad> act = (List<Actividad>) request.getAttribute("actividades");
+        %>
+
     <center>
         <h1>HOLA SEÑOR </h1><br/><br/>
         
@@ -57,6 +78,65 @@
         <h1>TU CORREO ES: <%= user.getCorreo() %></h1><br/>
         <h1>TU TIPO ES: <%= request.getSession().getAttribute("tipo") %></h1><br/><br/>
         <h1>El link del iduma es: <%= request.getSession().getAttribute("json") %></h1><br/><br/>
+        
+        <%
+            if(act.size()>0)
+            {
+                %>
+                          <table border="1">
+            <tr>
+                <th>ONG</th>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Plazas</th>
+                <th>Fecha Inicio</th>
+            </tr>
+                
+           
+                <%
+                for(Actividad a: act)
+                {
+                %>
+            <tr>
+                <td><%=a.getOng().getUsuario().getNombre()  %></td>
+                <td><%=a.getTitulo()%></td>
+                <td><%=a.getTipoActividad()%></td>
+                <td><%=a.getNpersonas()%></td>
+                <td><%=a.getFechaInicio().toString()%></td>
+            <tr>
+                <%
+                } 
+                %>
+                
+                
+                
+            
+        </table>
+                
+                <%
+            }
+            else
+            {
+            %>
+            No hay actividades/Matches
+            <%
+            }
+            %>
+            
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         <a  href="CerrarSesionServlet">CERRAR SESION </a><br/><br/>
         <% 
@@ -68,7 +148,7 @@
         %>
         
                 <% 
-            if(request.getSession().getAttribute("tipo").equals("profesor")){//es (PROBABLEMENTE) una ong (hay que refinar bien si esto incluye a alguna no-ong o excluye a alguna ong
+            if(request.getSession().getAttribute("tipo").equals("profesor")&&user.getProfesor().getGestor()){//es (PROBABLEMENTE) una ong (hay que refinar bien si esto incluye a alguna no-ong o excluye a alguna ong
                 %>
                     <a href ="IngresarONGServlet">Ingresar ONG</a>
                 <%

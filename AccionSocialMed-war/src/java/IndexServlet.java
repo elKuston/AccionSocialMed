@@ -59,6 +59,19 @@ public class IndexServlet extends HttpServlet {
         }
         request.setAttribute("pendientes", pendientes);
         
+        List<Actividad> act = actividadFacade.findAll();
+        if(sesion.getAttribute("screen")==null || sesion.getAttribute("screen").equals("match"))
+        {
+            sesion.setAttribute("screen", "match");
+            act = Match(act);
+            request.setAttribute("actividades", act);
+        }
+        else
+        {
+            request.setAttribute("actividades", act);
+        }
+        
+        
             Actividad actividad=actividadFacade.findAll().get(0);
             request.setAttribute("actividad", actividad);
         
@@ -66,6 +79,12 @@ public class IndexServlet extends HttpServlet {
         
         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
+    }
+    
+    private List<Actividad> Match (List<Actividad> a)
+    {
+        a.add(a.get(0));
+        return a;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
