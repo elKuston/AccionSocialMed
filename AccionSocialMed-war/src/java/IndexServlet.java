@@ -7,11 +7,13 @@
 import dao.ActividadFacade;
 import dao.NotificacionFacade;
 import entity.Actividad;
+import entity.Etiqueta;
 import entity.Notificacion;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -38,6 +40,7 @@ public class IndexServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     @EJB NotificacionFacade notificacionFacade;
     @EJB ActividadFacade actividadFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -50,6 +53,16 @@ public class IndexServlet extends HttpServlet {
         sesion.removeAttribute("mensaje");
         request.setAttribute("usuario",user);
         
+        if(request.getParameter("all")!=null)
+        {
+            sesion.setAttribute("screen","all");
+        }
+        
+        if(request.getParameter("match")!=null)
+        {
+            sesion.setAttribute("screen", "match");
+        }
+        
         List<Notificacion> notificaciones = notificacionFacade.findAll();
         List<Notificacion> pendientes = new ArrayList<>();
         for(Notificacion n : notificaciones){
@@ -60,10 +73,11 @@ public class IndexServlet extends HttpServlet {
         request.setAttribute("pendientes", pendientes);
         
         List<Actividad> act = actividadFacade.findAll();
+        act=filtrar(act);
         if(sesion.getAttribute("screen")==null || sesion.getAttribute("screen").equals("match"))
         {
             sesion.setAttribute("screen", "match");
-            act = Match(act);
+            act = Match(user,act);
             request.setAttribute("actividades", act);
         }
         else
@@ -81,12 +95,88 @@ public class IndexServlet extends HttpServlet {
         rd.forward(request, response);
     }
     
-    private List<Actividad> Match (List<Actividad> a)
+    private List<Actividad> Match (Usuario u, List<Actividad> a)
     {
-        a.add(a.get(0));
+        int turno = 0;
+        int etiquetas = 0;
+        List<Etiqueta> e1 = u.getEtiquetaList();
+        if(a.size()>0)
+        {
+            a.add(a.get(0));
+        }
+        
+        int[] s = new int[a.size()];
+        
+        for(int i = 0; i < a.size(); i++)
+        {
+            turno=0;
+            etiquetas=0;
+            
+            if(u.getTurnotarde() && a.get(i).getTurnotarde() || !u.getTurnotarde() && !a.get(i).getTurnotarde()) turno = 1;
+            List<Etiqueta> e2 = a.get(i).getEtiquetaList();
+            
+            for(Etiqueta e : e1)
+            {
+                if(e2.contains(e)) 
+                {
+                    etiquetas+=5;
+                }
+                else
+                {
+                    etiquetas-=1;
+                }
+            }
+            
+            s[i]=etiquetas*turno;
+        }
+        
+        a = orderBy(a,s);
         return a;
     }
+    
+    private List<Actividad> filtrar(List<Actividad> ac)
+    {
+        List<Actividad> b = new ArrayList();
+        Date d = new Date();
+        for(Actividad a : ac)
+        {
+            if(a.getValidada() && a.getFechaInicio().after(d))
+            {
+                b.add(a);
+            }
+        }
+        
+        return b;
+    }
 
+    private List<Actividad> orderBy(List<Actividad> a, int[] s)
+    {
+        int max=5;
+        int maxin = -1;
+        boolean add = true;
+        List<Actividad> b = new ArrayList<>();
+        while(add)
+        {
+            add = false;
+            for(int i = 0; i < a.size();i++)
+            {
+                if(s[i]>max)
+                {
+                    max = s[i];
+                    maxin = i;
+                    add = true;
+                }
+            }
+            
+            if(add)
+            {
+                b.add(a.get(maxin));
+                s[maxin]=0;
+            }
+
+        }
+        return b;
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

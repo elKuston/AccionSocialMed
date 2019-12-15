@@ -8,7 +8,8 @@ CREATE TABLE Usuario(
 	nombre varchar(50) NOT NULL,
 	telefono int,
 	direccion varchar(50), 
-	localidad varchar(50));
+	localidad varchar(50),
+        turnoTarde boolean);
 
 --CREATE TABLE Clave_registro(
 --	clave varchar(256) PRIMARY KEY);

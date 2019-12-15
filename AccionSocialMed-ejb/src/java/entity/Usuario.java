@@ -41,6 +41,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByLocalidad", query = "SELECT u FROM Usuario u WHERE u.localidad = :localidad")})
 public class Usuario implements Serializable {
 
+    @Column(name = "TURNOTARDE")
+    private Boolean turnotarde;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -224,6 +227,14 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "entity.Usuario[ correo=" + correo + " ]";
+    }
+
+    public Boolean getTurnotarde() {
+        return turnotarde;
+    }
+
+    public void setTurnotarde(Boolean turnotarde) {
+        this.turnotarde = turnotarde;
     }
     
 }

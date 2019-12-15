@@ -53,16 +53,21 @@
         <%
             if(request.getSession().getAttribute("screen").equals("match"))
             {
-                request.getSession().setAttribute("screen", "all");
+                
                 %>
-                <a href="IndexServlet">Ver todas</a>
+                        <form action="IndexServlet" method="post">
+            <input type="submit" value="Ver todas las Actividades">
+            <input type="hidden" name="all" value="1">
+        </form>
                 <%
             }
             else
             {
-                request.getSession().setAttribute("screen", "match");
                 %>
-                <a href="IndexServlet">Matching</a>
+                        <form action="IndexServlet" method="post">
+            <input type="submit" value="Matching">
+            <input type="hidden" name="match" value="1">
+        </form>
                 <%
             }
             %>
@@ -90,6 +95,7 @@
                 <th>Tipo</th>
                 <th>Plazas</th>
                 <th>Fecha Inicio</th>
+                <th>Turno</th>
             </tr>
                 
            
@@ -103,6 +109,29 @@
                 <td><%=a.getTipoActividad()%></td>
                 <td><%=a.getNpersonas()%></td>
                 <td><%=a.getFechaInicio().toString()%></td>
+                <td>
+                <%
+                    if(a.getTurnotarde())
+                    {
+                        %>
+                        Tarde
+                        <%
+                    }
+                    else
+                    {
+                        %>
+                        Mañana
+                        <%
+                    }
+                %>
+                </td>
+                <td>
+                    <form action="VerActividadServlet" method="post">
+                        <input type="hidden" value="<%=a.getNactividad() %>" name="actividad"/>
+                        <input type="submit" value="Acceder a actividad" >
+                    </form>              
+                    
+                </td>
             <tr>
                 <%
                 } 
@@ -117,12 +146,23 @@
             }
             else
             {
-            %>
-            No hay actividades/Matches
+                    if(request.getSession().getAttribute("screen").equals("match"))
+                    {
+                        %>
+                        No hay matches. Quizas, tu perfil esta incompleto, o no hay actividades suficientes en el sistema.<br/><br/>
+                        <%
+                    }
+                    else
+                    {
+                        %>
+                        No hay actividades en el sistema.<br/><br/>
+                        <%
+                    }
+                %>
             <%
             }
             %>
-            
+           
         
         
         
@@ -160,5 +200,6 @@
             <input type="submit" value="Acceder a actividad" >
         </form>
     </center>
+
     </body>
 </html>

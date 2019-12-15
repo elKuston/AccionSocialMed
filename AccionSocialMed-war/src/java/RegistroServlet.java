@@ -91,6 +91,7 @@ public class RegistroServlet extends HttpServlet {
 
         String apellidos = (String) sesion.getAttribute("apellidos");
 
+        nuevoU.setTurnotarde(Boolean.FALSE);
         usuarioFacade.create(nuevoU);
         if (ocupacion.equals("Estudiante")) {
             Estudiante nuevoE = new Estudiante(nuevoU.getCorreo());
