@@ -78,12 +78,15 @@
                     Teléfono: <input type="number" name="tlf" value= "<%= user.getTelefono() != null ? user.getTelefono(): ""%>" size="50" maxlength="30" /><br><br>
                     Dirección: <input name="direc" value="<%= user.getDireccion() != null ? user.getDireccion():""%>" size="39" maxlength="30" /><br><br>
                     Localidad: <input name="localidad" value="<%= user.getLocalidad() != null ? user.getLocalidad():""%>" size="39" maxlength="30" /><br><br>
-             </fieldset><br>   
+             
                     <% 
                         if(request.getSession().getAttribute("tipo").equals("ong")){
                     %>
                     Página web: <input name="web" value="<%= user.getOng().getWeb() != null ? user.getOng().getWeb():""%>" size="37" maxlength="30" /><br><br>
-                    <% } else {  %>
+                    </fieldset>   
+                    <% } 
+                    if (!request.getSession().getAttribute("tipo").equals("ong")) {  %>
+        </fieldset><br> 
                      <fieldset style="width:400px">
                    <legend>Intereses</legend>
                    Ambito de actividad:<br>
