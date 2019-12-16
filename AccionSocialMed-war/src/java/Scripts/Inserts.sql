@@ -38,12 +38,12 @@ INSERT INTO ALGUSTO.ASIGNATURA (COD_ASIGNATURA, NOMBRE_ASIGNATURA, N_CREDITOS)
 
 
 INSERT INTO ALGUSTO.ACTIVIDAD (NACTIVIDAD, CORREO_PROFESOR, ASIGNATURA_ASOCIADA, TIPO_ACTIVIDAD, VALIDADA, ONG, TITULO, DESCRIPCION, FECHA_INICIO, FECHA_FIN, NPERSONAS, LUGAR, TURNOTARDE) 
-	VALUES (5, 'jmlupionc@uma.es', 1, 'Aprendizaje-Servicio', true, 'aproinla@uma.es', 'taes', 'asdgasdgasgasgsad', '2020-12-11', '2020-12-11', 1, 'ASDFSADFASDF', false);
+	VALUES (1, 'jmlupionc@uma.es', 1, 'Aprendizaje-Servicio', true, 'aproinla@uma.es', 'taes', 'asdgasdgasgasgsad', '2020-12-11', '2020-12-11', 1, 'ASDFSADFASDF', false);
 
 INSERT INTO ALGUSTO.ACTIVIDAD (NACTIVIDAD, CORREO_PROFESOR, ASIGNATURA_ASOCIADA, TIPO_ACTIVIDAD, VALIDADA, ONG, TITULO, DESCRIPCION, FECHA_INICIO, FECHA_FIN, NPERSONAS, LUGAR, TURNOTARDE) 
-	VALUES (6, 'jmlupionc@uma.es', 1, 'Aprendizaje-Servicio', true, 'aproinla@uma.es', 'taes2', 'asdgasdgasgasgsad', '2020-12-11', '2020-12-11', 1, 'ASDFSADFASDF', false);
+	VALUES (2, 'jmlupionc@uma.es', 1, 'Aprendizaje-Servicio', true, 'aproinla@uma.es', 'taes2', 'asdgasdgasgasgsad', '2020-12-11', '2020-12-11', 1, 'ASDFSADFASDF', false);
 
 INSERT INTO ALGUSTO.ACTIVIDAD (NACTIVIDAD, CORREO_PROFESOR, ASIGNATURA_ASOCIADA, TIPO_ACTIVIDAD, VALIDADA, ONG, TITULO, DESCRIPCION, FECHA_INICIO, FECHA_FIN, NPERSONAS, LUGAR, TURNOTARDE) 
-	VALUES (7, 'jmlupionc@uma.es', 1, 'Aprendizaje-Servicio', true, 'aproinla@uma.es', 'taes3', 'asdgasdgasgasgsad', '2020-12-11', '2020-12-11', 1, 'ASDFSADFASDF', false);
+	VALUES (3, 'jmlupionc@uma.es', 1, 'Aprendizaje-Servicio', true, 'aproinla@uma.es', 'taes3', 'asdgasdgasgasgsad', '2020-12-11', '2020-12-11', 1, 'ASDFSADFASDF', false);
 
 INSERT INTO IMPARTE VALUES ('jmlupionc@uma.es',2);

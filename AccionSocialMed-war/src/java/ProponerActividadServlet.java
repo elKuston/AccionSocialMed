@@ -91,7 +91,7 @@ public class ProponerActividadServlet extends HttpServlet {
             a.setOng(ongFacade.find(((Usuario) request.getSession().getAttribute("usuario")).getCorreo()));
             a.setNpersonas(plazasDisponibles);
             a.setLugar(lugar);
-            //a.setValidada(false);
+            a.setValidada(Boolean.FALSE);
             if(ff!=null){
                 Date fechaFin;
                 try{

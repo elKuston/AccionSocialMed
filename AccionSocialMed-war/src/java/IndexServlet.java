@@ -7,6 +7,7 @@
 import dao.ActividadFacade;
 import dao.NotificacionFacade;
 import entity.Actividad;
+import entity.Asignatura;
 import entity.Etiqueta;
 import entity.Notificacion;
 import entity.Usuario;
@@ -77,7 +78,7 @@ public class IndexServlet extends HttpServlet {
         if(sesion.getAttribute("screen")==null || sesion.getAttribute("screen").equals("match"))
         {
             sesion.setAttribute("screen", "match");
-            act = Match(user,act);
+            act = Match(user,act, (String) sesion.getAttribute("tipo"));
             request.setAttribute("actividades", act);
         }
         else
@@ -95,15 +96,15 @@ public class IndexServlet extends HttpServlet {
         rd.forward(request, response);
     }
     
-    private List<Actividad> Match (Usuario u, List<Actividad> a)
+    private List<Actividad> Match (Usuario u, List<Actividad> a, String rol)
     {
         int turno = 0;
         int etiquetas = 0;
+        int asignaturas = 0;
         List<Etiqueta> e1 = u.getEtiquetaList();
-        if(a.size()>0)
-        {
-            a.add(a.get(0));
-        }
+        List<Asignatura> as = null;
+        if(rol.equals("estudiante")) as = u.getEstudiante().getAsignaturaList();
+
         
         int[] s = new int[a.size()];
         
@@ -111,23 +112,29 @@ public class IndexServlet extends HttpServlet {
         {
             turno=0;
             etiquetas=0;
+            asignaturas=0;
             
             if(u.getTurnotarde() && a.get(i).getTurnotarde() || !u.getTurnotarde() && !a.get(i).getTurnotarde()) turno = 1;
             List<Etiqueta> e2 = a.get(i).getEtiquetaList();
+            
+            if(a.get(i).getAsignaturaAsociada()!=null && as!=null)
+            {
+                if(as.contains(a.get(i).getAsignaturaAsociada())) asignaturas = 10;
+            }
             
             for(Etiqueta e : e1)
             {
                 if(e2.contains(e)) 
                 {
-                    etiquetas+=5;
+                    etiquetas+=7;
                 }
                 else
                 {
-                    etiquetas-=1;
+                    etiquetas-=2;
                 }
             }
             
-            s[i]=etiquetas*turno;
+            s[i]=(etiquetas+asignaturas)*turno;
         }
         
         a = orderBy(a,s);
@@ -151,12 +158,13 @@ public class IndexServlet extends HttpServlet {
 
     private List<Actividad> orderBy(List<Actividad> a, int[] s)
     {
-        int max=5;
+        int max=4;
         int maxin = -1;
         boolean add = true;
         List<Actividad> b = new ArrayList<>();
         while(add)
         {
+            max = 4;
             add = false;
             for(int i = 0; i < a.size();i++)
             {
