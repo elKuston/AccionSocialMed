@@ -5,6 +5,7 @@
  */
 
 import dao.EstudianteFacade;
+import dao.EtiquetaFacade;
 import services.MessageService;
 import dao.NotificacionFacade;
 import dao.OngFacade;
@@ -12,6 +13,7 @@ import dao.PasFacade;
 import dao.ProfesorFacade;
 import dao.UsuarioFacade;
 import entity.Estudiante;
+import entity.Etiqueta;
 import entity.Ong;
 import entity.Pas;
 import entity.Profesor;
@@ -19,6 +21,8 @@ import entity.Usuario;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -51,6 +55,7 @@ public class PerfilServlet extends HttpServlet {
     @EJB EstudianteFacade estudianteFacade;
     @EJB ProfesorFacade profesorFacade;
     @EJB PasFacade pasFacade;
+    @EJB EtiquetaFacade etiquetaFacade;
     
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -60,6 +65,20 @@ public class PerfilServlet extends HttpServlet {
         Usuario user = (Usuario) sesion.getAttribute("usuario");
         String button = request.getParameter("bt");
         
+        if(!sesion.getAttribute("tipo").equals("ong")) {
+                 List<Etiqueta> etiquetas = etiquetaFacade.findAll();
+            List<Etiqueta> ambitos = new ArrayList<>(), tipos = new ArrayList<>();
+            for(Etiqueta e : etiquetas){
+                if(e.getTipo()==1){
+                    ambitos.add(e);
+                }else{
+                    tipos.add(e);
+                }
+            }
+            
+            request.setAttribute("ambitos", ambitos);
+            request.setAttribute("tipos", tipos);
+            }
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         
         if(button != null) {
@@ -78,6 +97,8 @@ public class PerfilServlet extends HttpServlet {
             if (!request.getParameter("localidad").equals("")) {
                 user.setLocalidad(request.getParameter("localidad"));
             }
+            
+            
             
             //tipo ong
             if (sesion.getAttribute("tipo").equals("ong")) {

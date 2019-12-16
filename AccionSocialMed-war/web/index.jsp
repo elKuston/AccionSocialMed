@@ -85,6 +85,13 @@
         <h1>TU NOMBRE ES: <%= user.getNombre() %></h1><br/>
         <h1>TU CORREO ES: <%= user.getCorreo() %></h1><br/>
         <h1>TU TIPO ES: <%= request.getSession().getAttribute("tipo") %></h1><br/><br/>
+        <% 
+            if(!request.getSession().getAttribute("tipo").equals("ong")){
+                %>
+                <h1> <a href ="InscritasServlet">Actividades inscritas</a></h1><br/>
+                <%
+            }
+        %>
         <h1>El link del iduma es: <%= request.getSession().getAttribute("json") %></h1><br/><br/>
         
         <%
@@ -129,7 +136,7 @@
                 %>
                 </td>
                 <td>
-                    <form action="VerActividadServlet" method="post">
+                    <form action="VerInscritaServlet" method="post">
                         <input type="hidden" value="<%=a.getNactividad() %>" name="actividad"/>
                         <input type="submit" value="Acceder a actividad" >
                     </form>              

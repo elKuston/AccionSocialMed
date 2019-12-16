@@ -4,6 +4,8 @@
     Author     : Angela
 --%>
 
+<%@page import="entity.Etiqueta"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="entity.Usuario"%>
@@ -12,7 +14,8 @@
 <%
     Usuario user = (Usuario) request.getAttribute("usuario");
     SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-    
+    List<Etiqueta> ambitos = (List<Etiqueta>) request.getAttribute("ambitos");
+    List<Etiqueta> tipos = (List<Etiqueta>) request.getAttribute("tipos");
    %>
 <html>
     <head>
@@ -75,15 +78,30 @@
                     Teléfono: <input type="number" name="tlf" value= "<%= user.getTelefono() != null ? user.getTelefono(): ""%>" size="50" maxlength="30" /><br><br>
                     Dirección: <input name="direc" value="<%= user.getDireccion() != null ? user.getDireccion():""%>" size="39" maxlength="30" /><br><br>
                     Localidad: <input name="localidad" value="<%= user.getLocalidad() != null ? user.getLocalidad():""%>" size="39" maxlength="30" /><br><br>
-                    
+             </fieldset><br>   
                     <% 
                         if(request.getSession().getAttribute("tipo").equals("ong")){
                     %>
                     Página web: <input name="web" value="<%= user.getOng().getWeb() != null ? user.getOng().getWeb():""%>" size="37" maxlength="30" /><br><br>
-                    <% 
-                        }
+                    <% } else {  %>
+                     <fieldset style="width:400px">
+                   <legend>Intereses</legend>
+                   Ambito de actividad:<br>
+                   <% for(Etiqueta e : ambitos){
                     %>
-             </fieldset>
+                    <input type="checkbox" name="<%=e.getEtiqueta()%>"/><%=e.getEtiqueta()%> <br/> <% } %> 
+                    <br>Tipo de actividad:<br>
+                    <%
+                for(Etiqueta e : tipos){
+                    %>
+                    <input type="checkbox" name="<%=e.getEtiqueta()%>"/><%=e.getEtiqueta()%> <br/>
+                    <%
+                }
+            %>
+                    </fieldset>
+                    <%}
+                    %>
+             
              
              <br><input type="submit" value="Guardar cambios" name="bt" style="margin-left: 10%">
         </form>            
