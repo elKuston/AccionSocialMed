@@ -19,6 +19,9 @@
         
     </head>
     <body>
+        <div style="float:right">
+            <a href="PerfilServlet">Mi perfil</a>
+        </div>
         <% if(request.getAttribute("mensaje")!=null){
             String mensaje =(String) request.getAttribute("mensaje");
             request.removeAttribute("mensaje");
