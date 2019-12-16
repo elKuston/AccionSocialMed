@@ -42,12 +42,20 @@ public class OngRegister1Servlet extends HttpServlet {
        String dir = "/ongRegister1.jsp";
        
        
-        if (usuarioFacade.find(correo) != null)
+        if (ongFacade.find(correo) != null)
        {       
-           if ( !(usuarioFacade.find(correo).getOng().getActiva()) && usuarioFacade.find(correo).getOng().getClaveRegistro().equals(clave)){
-            dir = "/ongRegister2.jsp";
+           if ( !(usuarioFacade.find(correo).getOng().getActiva())){ //si la ong no esta activa
+               if (usuarioFacade.find(correo).getOng().getClaveRegistro().equals(clave)) { //y la clave es corrrecta
+               dir = "/ongRegister2.jsp";
+               } else {
+                   request.setAttribute("mensaje", "Clave incorrecta");
+               }            
+           } else {
+               request.setAttribute("mensaje", "Cuenta ya activada");               
            }
-       }
+       } else {
+            request.setAttribute("mensaje", "Correo no activable. Consulte con el gestor.");
+        }
        
        request.setAttribute("usuario",usuarioFacade.find(correo));
        RequestDispatcher rd = request.getRequestDispatcher(dir);

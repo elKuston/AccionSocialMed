@@ -44,10 +44,7 @@ public class OngRegister2Servlet extends HttpServlet {
         String correo = request.getParameter("correo");
         String passw1 = request.getParameter("passw1");
         String passw2 = request.getParameter("passw2");
-        int tlf = Integer.parseInt(request.getParameter("tlf"));
-        String web = request.getParameter("web");
-        String direc = request.getParameter("direc");
-        String localidad = request.getParameter("localidad");
+                  
         String dir = "/ongRegister2.jsp";
         
        
@@ -55,16 +52,32 @@ public class OngRegister2Servlet extends HttpServlet {
            Usuario u = usuarioFacade.find(correo);
            Ong o = ongFacade.find(correo);
            o.setContrasena(passw1);
-           u.setTelefono(tlf);
-           o.setWeb(web);
-           u.setDireccion(direc);
-           u.setLocalidad(localidad);
            o.setActiva(true);
            
+           dir = "/loginOng.jsp";
+           
+        if (!request.getParameter("tlf").equals("")) {
+            u.setTelefono(Integer.parseInt(request.getParameter("tlf")));
+        }
+        
+        if (!request.getParameter("web").equals("")) {
+            u.setDireccion(request.getParameter("web"));
+        }
+        
+        if (!request.getParameter("direc").equals("")) {
+            u.setDireccion(request.getParameter("direc"));
+        }
+
+        if (!request.getParameter("localidad").equals("")) {
+            u.setLocalidad(request.getParameter("localidad"));
+        }
+
            usuarioFacade.edit(u);
            ongFacade.edit(o);
            
-           dir = "/prettyLogin.jsp";
+       } else {
+            request.setAttribute("mensaje", "las contraseñas no coinciden");
+            request.setAttribute("usuario",usuarioFacade.find(correo));
        }
        
        RequestDispatcher rd = request.getRequestDispatcher(dir);

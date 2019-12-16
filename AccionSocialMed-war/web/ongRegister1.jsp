@@ -8,27 +8,35 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
         <title>ONG Registro 1</title>
+        <script src="js/main.js"></script> 
+        
     </head>
-    <body>
-    <center>
-        <% if(request.getAttribute("mensaje") != null){
-            String mensaje =(String) request.getAttribute("mensaje");
-            request.removeAttribute("mensaje");
-            %>
-            <script>
+    <body style="background-color:#9370DB;">
+        <div style="float:right">
+            <a href="prettyLogin.jsp">Volver</a>
+        </div>    
+        <br> 
+        <center>
+            <% if (request.getAttribute("mensaje") != null) {
+                String mensaje = (String) request.getAttribute("mensaje");
+                request.removeAttribute("mensaje");
+        %>
+        <script>
                 alert("<%=mensaje%>");
-            </script>
-            <%
-        }%>
-        <h1>Registro de ONG</h1>
-        <form action="OngRegister1Servlet" method="get"> 
-        <input name="clave" placeholder="Introduzca la clave" size="30" maxlength="30" /><br><br>
-        <input name="correo" placeholder="Introduzca correo ONG" size="30" maxlength="30" /><br><br>
-        <input type="submit" value="Validar">
+        </script>
+        <%
+                }%>
+                
+        <h1>Registro de ONG</h1> 
+  
+         <form action="OngRegister1Servlet" id="form1"> 
+             <p> <input name="clave" placeholder=" Introduzca la clave"  id="txtclave" size="30" maxlength="30"><br><br>
+            <input name="correo" placeholder=" Introduzca correo ONG (*)" id="txtcorreo" size="30" maxlength="30"><br><br>
+            <input type="button" value=" Validar " id="btn1"></p>
         </form>
-        </form>
-    </center>    
+        </center>     
+    
     </body>
 </html>
