@@ -4,6 +4,9 @@
     Author     : romol
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Etiqueta"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,6 +15,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <%
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	Date date = new Date();    
+        %>
     </head>
     <body>
         <form action="ProponerActividadServlet" method="post">
@@ -23,11 +30,11 @@
             
             <div>
                 <p>Fecha inicio (*)</p>
-                <input name="fechaInicio" type="date" required="true"/>
+                <input id = "fechaInicio" name="fechaInicio" type="date" min="<%= dateFormat.format(date) %>" onchange="updateMinFin()" required="true"/>
             </div>
             <div>
-                <p>Fecha fin (*)</p>
-                <input name="fechaFin" type="date"/>
+                <p>Fecha fin</p>
+                <input id ="fechaFin" name="fechaFin" type="date"/>
             </div>
             <p>Seleccione el ámbito de la actividad (al menos una opción):</p>
             
@@ -56,5 +63,12 @@
             <br/><input type="submit"/>
             
         </form>
+            
+            <script>
+                function updateMinFin(){
+                    var fecha = document.getElementById("fechaInicio").value;
+                    document.getElementById("fechaFin").min = fecha;
+                }
+            </script>
     </body>
 </html>
