@@ -50,6 +50,9 @@
                     <%
                 }
             %>
+            <p>Seleccione el turno para la actividad:</p>
+            <input type="radio" name="turno" value="mañana" required/>Mañana<br/>
+            <input type="radio" name="turno" value="tarde"/>Tarde<br/>
             <br/><input type="submit"/>
             
         </form>

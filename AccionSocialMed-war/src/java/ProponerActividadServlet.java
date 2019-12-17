@@ -84,6 +84,7 @@ public class ProponerActividadServlet extends HttpServlet {
             int plazasDisponibles = Integer.parseInt(request.getParameter("plazas"));
             Date fechaInicio = Date.valueOf(request.getParameter("fechaInicio"));
             String ff = request.getParameter("fechaFin");
+            boolean turnoTarde = request.getParameter("turno").equals("tarde");
             List<Actividad> actividades = actividadFacade.findAll();
             int nActividad = actividades.get(actividades.size()-1).getNactividad()+1;//se asume que las actividades nunca se borran de la base de datos, solo se desactivan
             
@@ -91,6 +92,7 @@ public class ProponerActividadServlet extends HttpServlet {
             a.setOng(ongFacade.find(((Usuario) request.getSession().getAttribute("usuario")).getCorreo()));
             a.setNpersonas(plazasDisponibles);
             a.setLugar(lugar);
+            a.setTurnotarde(turnoTarde);
             //a.setValidada(Boolean.FALSE);
             if(ff!=null){
                 Date fechaFin;
