@@ -30,11 +30,20 @@
         <b>Fecha de inicio:</b> <%=fechaInicio%> &nbsp &nbsp 
         <b>Fecha de fin:</b> <%=fechaFin%><br/><br/>
         <b>Descripción:</b> <%=act.getDescripcion()%> <br/> <br/>
-        <b>Tags:</b>
-
-        <%for (Etiqueta e : act.getEtiquetaList()) {%>
-        <%=e.getEtiqueta()%>
+       <b>Etiquetas asociadas de ambito: </b> 
+        <%for (Etiqueta et : act.getEtiquetaList()) {%>
+            <%if (et.getTipo() == 1) {%>
+                <%=et.getEtiqueta() + ", "%> 
+            <%}%>
+            <%}%><br/><br/>
+        <b>Etiquetas asociadas de tipo: </b> 
+        <%for (Etiqueta et : act.getEtiquetaList()) {%>
+            <%if (et.getTipo() == 2) {%>
+                <%=et.getEtiqueta() + ", "%>
+            <%}%>
         <%}%>
+        <br/>
+        <br/>
 
         <form action="ConfirmacionUnionProfesorServlet" method="post">
             <input type="hidden" value="<%=act.getNactividad()%>" name="id"/>

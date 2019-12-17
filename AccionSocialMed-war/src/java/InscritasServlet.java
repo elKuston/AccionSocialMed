@@ -48,7 +48,7 @@ public class InscritasServlet extends HttpServlet {
         request.setAttribute("al", insc);
        
         
-         RequestDispatcher rd = request.getRequestDispatcher("/inscritas.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/inscritas.jsp");
         rd.forward(request, response);
     }
 

@@ -28,17 +28,18 @@
         <b>Nombre de la actividad:</b><%=act.getTitulo()%><br/>
         <b>Descripcion de la actividad:</b> <%=act.getDescripcion()%><br/>
         <b>Tipo de la actividad:</b> <%=act.getTipoActividad()%><br/>
-        <b>Etiquetas asociadas de ambito: </b> <br/>
+        <b>Etiquetas asociadas de ambito: </b> 
         <%for (Etiqueta et : act.getEtiquetaList()) {%>
-        <%if (et.getTipo() == 1) {%>
-        <%=et.getEtiqueta() + ", "%> 
+            <%if (et.getTipo() == 1) {%>
+                <%=et.getEtiqueta() + ", "%> 
+            <%}%>
         <%}%>
-        <%}%>
+        <br/>
         <b>Etiquetas asociadas de tipo: </b> 
         <%for (Etiqueta et : act.getEtiquetaList()) {%>
-        <%if (et.getTipo() == 1) {%>
-        <%=et.getEtiqueta() + ", "%>
-        <%}%>
+            <%if (et.getTipo() ==2 ) {%>
+                <%=et.getEtiqueta() + ", "%>
+            <%}%>
         <%}%>
         </fieldset>
 
@@ -64,15 +65,15 @@
 
         <b>Etiquetas asociadas de ambito: </b> 
         <%for (Etiqueta et : solicitante.getEtiquetaList()) {%>
-        <%if (et.getTipo() == 1) {%>
-        <%=et.getEtiqueta() + ", "%> 
-        <%}%>
+            <%if (et.getTipo() == 1) {%>
+                <%=et.getEtiqueta() + ", "%> 
+            <%}%>
         <%}%><br/>
         <b>Etiquetas asociadas de tipo: </b> 
         <%for (Etiqueta et : solicitante.getEtiquetaList()) {%>
-        <%if (et.getTipo() == 1) {%>
-        <%=et.getEtiqueta() + ", "%>
-        <%}%>
+            <%if (et.getTipo() == 2) {%>
+                <%=et.getEtiqueta() + ", "%>
+            <%}%>
         <%}%>
         </fieldset>
         <br/><br/><br/>

@@ -87,10 +87,6 @@ public class IndexServlet extends HttpServlet {
         }
         
         
-            Actividad actividad=actividadFacade.findAll().get(0);
-            request.setAttribute("actividad", actividad);
-        
-        
         
         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);

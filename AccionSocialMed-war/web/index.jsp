@@ -4,13 +4,13 @@
     Author     : jange
 --%>
 
+<%@page import="entity.Profesor"%>
 <%@page import="entity.Actividad"%>
 <%@page import="entity.Notificacion"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%Usuario user = (Usuario)request.getAttribute("usuario");%>
-<%Actividad actividad = (Actividad)request.getAttribute("actividad"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -44,7 +44,6 @@
                 <%
             }
         %>
-        
         <%
             if(request.getSession().getAttribute("tipo").equals("profesor")&&user.getProfesor().getGestor()){
                 %>
