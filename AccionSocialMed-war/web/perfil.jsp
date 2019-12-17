@@ -4,6 +4,7 @@
     Author     : Angela
 --%>
 
+<%@page import="java.text.DateFormat"%>
 <%@page import="entity.Etiqueta"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Date"%>
@@ -16,6 +17,20 @@
     SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
     List<Etiqueta> ambitos = (List<Etiqueta>) request.getAttribute("ambitos");
     List<Etiqueta> tipos = (List<Etiqueta>) request.getAttribute("tipos");
+    
+    String fechaNacimiento = "";
+    if(request.getSession().getAttribute("tipo").equals("estudiante")){
+            fechaNacimiento = user.getEstudiante().getFechaNacimiento() != null? "value=\""+formato.format(user.getEstudiante().getFechaNacimiento())+"\"" : "";
+    }else if(request.getSession().getAttribute("tipo").equals("profesor")){
+        fechaNacimiento = user.getProfesor().getFechaNacimiento() != null? "value=\""+formato.format(user.getProfesor().getFechaNacimiento())+"\"" : "";
+
+    }else if(request.getSession().getAttribute("tipo").equals("pas")){
+        fechaNacimiento = user.getPas().getFechaNacimiento() != null? "value=\""+formato.format(user.getPas().getFechaNacimiento())+"\"" : "";
+  
+    }
+    
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date date = new Date();  
    %>
 <html>
     <head>
@@ -36,36 +51,32 @@
                     <% 
                         if(request.getSession().getAttribute("tipo").equals("ong")){
                     %>
-                    Correo: <input type="text" name="correo" value=<%= user.getCorreo()%> size="41" disabled/> <br><br>
-                    Contraseña actual: <input type="password" name= "passw" value="<%= user.getOng().getContrasena()%>" size="30" maxlength="30" disabled/><br><br>
-                    Nueva contraseña: <input type="password" name = "passw1" placeholder="Introduzca nueva contraseña" size="30" maxlength="30" /><br><br>
-                    Repita contraseña: <input type="password" name = "passw2" placeholder="Repita la contraseña" size="30" maxlength="30" /><br><br>
+                        Correo: <input type="text" name="correo" value=<%= user.getCorreo()%> size="41" disabled/> <br><br>
+                        Contraseña actual: <input type="password" name= "passw" value="<%= user.getOng().getContrasena()%>" size="30" maxlength="30" disabled/><br><br>
+                        Nueva contraseña: <input type="password" name = "passw1" placeholder="Introduzca nueva contraseña" size="30" maxlength="30" /><br><br>
+                        Repita contraseña: <input type="password" name = "passw2" placeholder="Repita la contraseña" size="30" maxlength="30" /><br><br>
                     
                     <% 
                         } else if (request.getSession().getAttribute("tipo").equals("estudiante")){
 
                     %>
-                    Apellidos: <input type="text" name="app" value="<%=user.getEstudiante().getApellidos() != null ? user.getEstudiante().getApellidos():""%>" size="38"/> <br><br>
-                    Correo: <input type="text" name="correo" value=<%= user.getCorreo()%> size="41" disabled/> <br><br>
-                    Fecha de nacimiento: <input type="date" name="fnac" <% if (user.getEstudiante().getFechaNacimiento() != null) { %> 
-                      value="<%= formato.format(user.getEstudiante().getFechaNacimiento()) %>" <%} %> /> 
+                        Apellidos: <input type="text" name="app" value="<%=user.getEstudiante().getApellidos() != null ? user.getEstudiante().getApellidos():""%>" size="38"/> <br><br>
+                        Correo: <input type="text" name="correo" value=<%= user.getCorreo()%> size="41" disabled/> <br><br>
+                        Fecha de nacimiento: <input type="date" name="fnac" max="<%= dateFormat.format(date) %>" <%= fechaNacimiento %> /> 
                     <% 
                         } else if (request.getSession().getAttribute("tipo").equals("profesor")) {
 
                     %>
-                     Apellidos: <input type="text" name="app" value="<%=user.getProfesor().getApellidos() != null ? user.getProfesor().getApellidos():""%>" size="38"/> <br><br>
-                     Correo: <input type="text" name="correo" value=<%= user.getCorreo()%> size="41" disabled/> <br><br>
-                     Fecha de nacimiento: <input type="date" name="fnac" 
-                                                 <% if (user.getProfesor().getFechaNacimiento() != null) { %> 
-                      value="<%= formato.format(user.getProfesor().getFechaNacimiento()) %>" <%} %> />
+                        Apellidos: <input type="text" name="app" value="<%=user.getProfesor().getApellidos() != null ? user.getProfesor().getApellidos():""%>" size="38"/> <br><br>
+                        Correo: <input type="text" name="correo" value=<%= user.getCorreo()%> size="41" disabled/> <br><br>
+                        Fecha de nacimiento: <input type="date" name="fnac" max="<%= dateFormat.format(date) %>" <%= fechaNacimiento %> /> 
                     
                       <% } else { 
                     %>
                     
                     Apellidos: <input type="text" name="app" value="<%=user.getPas().getApellidos() != null ? user.getPas().getApellidos():""%>" size="38"/> <br><br>
                     Correo: <input type="text" name="correo" value=<%= user.getCorreo()%> size="41" disabled/> <br><br>
-                    Fecha de nacimiento: <input type="date" name="fnac" <% if (user.getProfesor().getFechaNacimiento() != null) { %> 
-                      value="<%= formato.format(user.getPas().getFechaNacimiento()) %>" <%} %> />
+                    Fecha de nacimiento: <input type="date" name="fnac" max="<%= dateFormat.format(date) %>" <%= fechaNacimiento %> /> 
                     <% 
                         }
                     %>
