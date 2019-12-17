@@ -147,7 +147,7 @@ public class IndexServlet extends HttpServlet {
         Date d = new Date();
         for(Actividad a : ac)
         {
-            if(a.getValidada() && a.getFechaInicio().after(d))
+            if(a.getValidada()!=null && a.getValidada() && a.getFechaInicio().after(d))
             {
                 b.add(a);
             }
