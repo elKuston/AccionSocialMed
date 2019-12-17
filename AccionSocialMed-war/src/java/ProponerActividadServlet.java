@@ -93,7 +93,6 @@ public class ProponerActividadServlet extends HttpServlet {
             a.setNpersonas(plazasDisponibles);
             a.setLugar(lugar);
             a.setTurnotarde(turnoTarde);
-            //a.setValidada(Boolean.FALSE);
             if(ff!=null){
                 Date fechaFin;
                 try{
