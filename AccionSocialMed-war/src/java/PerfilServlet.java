@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -98,6 +99,22 @@ public class PerfilServlet extends HttpServlet {
                 user.setLocalidad(request.getParameter("localidad"));
             }
             
+            if(!sesion.getAttribute("tipo").equals("ong")) {
+                List<Etiqueta> etiquetasActividad = new ArrayList<>();
+
+                Enumeration<String> ets = request.getParameterNames();
+                while(ets.hasMoreElements()){
+                    String s = ets.nextElement();
+                    Etiqueta et = etiquetaFacade.find(s);
+                    if(et!=null){
+                        etiquetasActividad.add(et);
+                    }
+                }
+
+                //if(etiquetasActividad.size()>0){
+                    user.setEtiquetaList(etiquetasActividad);
+                //}
+            }
             
             
             //tipo ong
