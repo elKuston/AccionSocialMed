@@ -42,8 +42,12 @@ public class InscritasServlet extends HttpServlet {
         HttpSession sesion = request.getSession();
         Usuario user = (Usuario) sesion.getAttribute("usuario");
         
-        request.setAttribute("u", user);
+        
+        List<Actividad> insc = user.getActividadList();
+                
+        request.setAttribute("al", insc);
        
+        
          RequestDispatcher rd = request.getRequestDispatcher("/inscritas.jsp");
         rd.forward(request, response);
     }

@@ -11,8 +11,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-Usuario user = (Usuario) request.getAttribute("u");
-List<Actividad> ins= user.getActividadList();
+
+    
+List<Actividad> ins= (List<Actividad>) request.getAttribute("al");
 
 %>
 <html>
