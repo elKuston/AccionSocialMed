@@ -76,9 +76,11 @@ public class PerfilServlet extends HttpServlet {
                     tipos.add(e);
                 }
             }
+            List<Etiqueta> activas = user.getEtiquetaList();
             
             request.setAttribute("ambitos", ambitos);
             request.setAttribute("tipos", tipos);
+            request.setAttribute("activas", activas);
             }
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         
@@ -111,9 +113,8 @@ public class PerfilServlet extends HttpServlet {
                     }
                 }
 
-                //if(etiquetasActividad.size()>0){
                     user.setEtiquetaList(etiquetasActividad);
-                //}
+                    usuarioFacade.edit(user);
             }
             
             
@@ -187,6 +188,8 @@ public class PerfilServlet extends HttpServlet {
           
             
             usuarioFacade.edit(user);
+            RequestDispatcher rd = request.getRequestDispatcher("IndexServlet");
+            rd.forward(request, response);
         }
         
         request.setAttribute("usuario",user);

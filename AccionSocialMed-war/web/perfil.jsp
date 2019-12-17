@@ -96,19 +96,23 @@
                     Página web: <input name="web" value="<%= user.getOng().getWeb() != null ? user.getOng().getWeb():""%>" size="37" maxlength="30" /><br><br>
                     </fieldset>   
                     <% } 
-                    if (!request.getSession().getAttribute("tipo").equals("ong")) {  %>
+                    if (!request.getSession().getAttribute("tipo").equals("ong")) {  
+                        List<Etiqueta> activas =(List<Etiqueta>) request.getAttribute("activas");
+                    %>
         </fieldset><br> 
                      <fieldset style="width:400px">
                    <legend>Intereses</legend>
                    Ambito de actividad:<br>
                    <% for(Etiqueta e : ambitos){
+                       String checked = activas.contains(e)? "checked" : "";
                     %>
-                    <input type="checkbox" name="<%=e.getEtiqueta()%>"/><%=e.getEtiqueta()%> <br/> <% } %> 
+                    <input type="checkbox" name="<%=e.getEtiqueta()%>" <%= checked %>/><%=e.getEtiqueta()%><br/> <% } %> 
                     <br>Tipo de actividad:<br>
                     <%
                 for(Etiqueta e : tipos){
+                       String checked = activas.contains(e)? "checked" : "";
                     %>
-                    <input type="checkbox" name="<%=e.getEtiqueta()%>"/><%=e.getEtiqueta()%> <br/>
+                    <input type="checkbox" name="<%=e.getEtiqueta()%>" <%= checked %>/><%=e.getEtiqueta()%> <br/>
                     <%
                 }
             %>
