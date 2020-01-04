@@ -16,7 +16,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author romol
+ * @author jange
  */
 @Stateless
 public class ProfesorFacade extends AbstractFacade<Profesor> {
@@ -33,7 +33,7 @@ public class ProfesorFacade extends AbstractFacade<Profesor> {
         super(Profesor.class);
     }
     
-     public List<Profesor> getGestores(){
+    public List<Profesor> getGestores(){
         Query q;
         q = this.em.createQuery("select p from Profesor p where P.gestor=true");
         return q.getResultList();

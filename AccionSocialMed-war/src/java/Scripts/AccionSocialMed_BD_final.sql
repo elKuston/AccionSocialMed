@@ -92,6 +92,16 @@ CREATE TABLE Notificacion(
 	FOREIGN KEY (receptor) REFERENCES Usuario(correo),
 	FOREIGN KEY (emisor) REFERENCES Usuario(correo));
 
+CREATE TABLE Mensaje(
+	idMensajeNotificacion int PRIMARY KEY,
+	receptor varchar(50),
+	emisor varchar(50),
+	leido boolean,
+        contenido varchar(2000),
+        titulo varchar(50),
+	FOREIGN KEY (receptor) REFERENCES Usuario(correo),
+	FOREIGN KEY (emisor) REFERENCES Usuario(correo));
+
 CREATE TABLE Etiqueta(
 	etiqueta varchar(50) PRIMARY KEY,
         tipo int);

@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author romol
+ * @author jange
  */
 @Entity
 @Table(name = "USUARIO")
@@ -38,11 +38,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre")
     , @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono")
     , @NamedQuery(name = "Usuario.findByDireccion", query = "SELECT u FROM Usuario u WHERE u.direccion = :direccion")
-    , @NamedQuery(name = "Usuario.findByLocalidad", query = "SELECT u FROM Usuario u WHERE u.localidad = :localidad")})
+    , @NamedQuery(name = "Usuario.findByLocalidad", query = "SELECT u FROM Usuario u WHERE u.localidad = :localidad")
+    , @NamedQuery(name = "Usuario.findByTurnotarde", query = "SELECT u FROM Usuario u WHERE u.turnotarde = :turnotarde")})
 public class Usuario implements Serializable {
-
-    @Column(name = "TURNOTARDE")
-    private Boolean turnotarde;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -64,6 +62,8 @@ public class Usuario implements Serializable {
     @Size(max = 50)
     @Column(name = "LOCALIDAD")
     private String localidad;
+    @Column(name = "TURNOTARDE")
+    private Boolean turnotarde;
     @ManyToMany(mappedBy = "usuarioList")
     private List<Actividad> actividadList;
     @JoinTable(name = "ETIQUETAS_USUARIO", joinColumns = {
@@ -83,6 +83,10 @@ public class Usuario implements Serializable {
     private List<Notificacion> notificacionList1;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Estudiante estudiante;
+    @OneToMany(mappedBy = "emisor")
+    private List<Mensaje> mensajeList;
+    @OneToMany(mappedBy = "receptor")
+    private List<Mensaje> mensajeList1;
 
     public Usuario() {
     }
@@ -134,6 +138,14 @@ public class Usuario implements Serializable {
 
     public void setLocalidad(String localidad) {
         this.localidad = localidad;
+    }
+
+    public Boolean getTurnotarde() {
+        return turnotarde;
+    }
+
+    public void setTurnotarde(Boolean turnotarde) {
+        this.turnotarde = turnotarde;
     }
 
     @XmlTransient
@@ -204,6 +216,24 @@ public class Usuario implements Serializable {
         this.estudiante = estudiante;
     }
 
+    @XmlTransient
+    public List<Mensaje> getMensajeList() {
+        return mensajeList;
+    }
+
+    public void setMensajeList(List<Mensaje> mensajeList) {
+        this.mensajeList = mensajeList;
+    }
+
+    @XmlTransient
+    public List<Mensaje> getMensajeList1() {
+        return mensajeList1;
+    }
+
+    public void setMensajeList1(List<Mensaje> mensajeList1) {
+        this.mensajeList1 = mensajeList1;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -227,14 +257,6 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "entity.Usuario[ correo=" + correo + " ]";
-    }
-
-    public Boolean getTurnotarde() {
-        return turnotarde;
-    }
-
-    public void setTurnotarde(Boolean turnotarde) {
-        this.turnotarde = turnotarde;
     }
     
 }

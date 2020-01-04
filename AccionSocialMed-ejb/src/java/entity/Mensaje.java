@@ -24,26 +24,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author jange
  */
 @Entity
-@Table(name = "NOTIFICACION")
+@Table(name = "MENSAJE")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Notificacion.findAll", query = "SELECT n FROM Notificacion n")
-    , @NamedQuery(name = "Notificacion.findByIdnotificacion", query = "SELECT n FROM Notificacion n WHERE n.idnotificacion = :idnotificacion")
-    , @NamedQuery(name = "Notificacion.findByLeido", query = "SELECT n FROM Notificacion n WHERE n.leido = :leido")
-    , @NamedQuery(name = "Notificacion.findByContenido", query = "SELECT n FROM Notificacion n WHERE n.contenido = :contenido")})
-public class Notificacion implements Serializable {
+    @NamedQuery(name = "Mensaje.findAll", query = "SELECT m FROM Mensaje m")
+    , @NamedQuery(name = "Mensaje.findByIdmensajenotificacion", query = "SELECT m FROM Mensaje m WHERE m.idmensajenotificacion = :idmensajenotificacion")
+    , @NamedQuery(name = "Mensaje.findByLeido", query = "SELECT m FROM Mensaje m WHERE m.leido = :leido")
+    , @NamedQuery(name = "Mensaje.findByContenido", query = "SELECT m FROM Mensaje m WHERE m.contenido = :contenido")
+    , @NamedQuery(name = "Mensaje.findByTitulo", query = "SELECT m FROM Mensaje m WHERE m.titulo = :titulo")})
+public class Mensaje implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "IDNOTIFICACION")
-    private Integer idnotificacion;
+    @Column(name = "IDMENSAJENOTIFICACION")
+    private Integer idmensajenotificacion;
     @Column(name = "LEIDO")
     private Boolean leido;
     @Size(max = 2000)
     @Column(name = "CONTENIDO")
     private String contenido;
+    @Size(max = 50)
+    @Column(name = "TITULO")
+    private String titulo;
     @JoinColumn(name = "EMISOR", referencedColumnName = "CORREO")
     @ManyToOne
     private Usuario emisor;
@@ -51,19 +55,19 @@ public class Notificacion implements Serializable {
     @ManyToOne
     private Usuario receptor;
 
-    public Notificacion() {
+    public Mensaje() {
     }
 
-    public Notificacion(Integer idnotificacion) {
-        this.idnotificacion = idnotificacion;
+    public Mensaje(Integer idmensajenotificacion) {
+        this.idmensajenotificacion = idmensajenotificacion;
     }
 
-    public Integer getIdnotificacion() {
-        return idnotificacion;
+    public Integer getIdmensajenotificacion() {
+        return idmensajenotificacion;
     }
 
-    public void setIdnotificacion(Integer idnotificacion) {
-        this.idnotificacion = idnotificacion;
+    public void setIdmensajenotificacion(Integer idmensajenotificacion) {
+        this.idmensajenotificacion = idmensajenotificacion;
     }
 
     public Boolean getLeido() {
@@ -80,6 +84,14 @@ public class Notificacion implements Serializable {
 
     public void setContenido(String contenido) {
         this.contenido = contenido;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public Usuario getEmisor() {
@@ -101,18 +113,18 @@ public class Notificacion implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idnotificacion != null ? idnotificacion.hashCode() : 0);
+        hash += (idmensajenotificacion != null ? idmensajenotificacion.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Notificacion)) {
+        if (!(object instanceof Mensaje)) {
             return false;
         }
-        Notificacion other = (Notificacion) object;
-        if ((this.idnotificacion == null && other.idnotificacion != null) || (this.idnotificacion != null && !this.idnotificacion.equals(other.idnotificacion))) {
+        Mensaje other = (Mensaje) object;
+        if ((this.idmensajenotificacion == null && other.idmensajenotificacion != null) || (this.idmensajenotificacion != null && !this.idmensajenotificacion.equals(other.idmensajenotificacion))) {
             return false;
         }
         return true;
@@ -120,7 +132,7 @@ public class Notificacion implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Notificacion[ idnotificacion=" + idnotificacion + " ]";
+        return "entity.Mensaje[ idmensajenotificacion=" + idmensajenotificacion + " ]";
     }
     
 }

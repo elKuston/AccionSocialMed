@@ -5,8 +5,7 @@
  */
 package dao;
 
-import entity.Notificacion;
-import entity.Usuario;
+import entity.Mensaje;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,7 +17,7 @@ import javax.persistence.Query;
  * @author jange
  */
 @Stateless
-public class NotificacionFacade extends AbstractFacade<Notificacion> {
+public class MensajeFacade extends AbstractFacade<Mensaje> {
 
     @PersistenceContext(unitName = "AccionSocialMed-ejbPU")
     private EntityManager em;
@@ -28,14 +27,14 @@ public class NotificacionFacade extends AbstractFacade<Notificacion> {
         return em;
     }
 
-    public NotificacionFacade() {
-        super(Notificacion.class);
+    public MensajeFacade() {
+        super(Mensaje.class);
     }
     
-    public List<Notificacion> porReceptor(Usuario receptor){
+    public List<Mensaje> findByActualUser(String usuario){
         Query q;
-        q = this.em.createQuery("select n from Notificacion n where n.receptor.correo = :rec ");
-        q.setParameter("rec", receptor.getCorreo());
+        q = this.em.createQuery("select p from Mensaje p where P.receptor.correo = :usuario and P.leido=false" );
+        q.setParameter("usuario",usuario);
         return q.getResultList();
     }
     

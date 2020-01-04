@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author romol
+ * @author jange
  */
 @Entity
 @Table(name = "ASIGNATURA")
@@ -43,7 +43,7 @@ public class Asignatura implements Serializable {
     private Integer codAsignatura;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 500)
+    @Size(min = 1, max = 5000)
     @Column(name = "NOMBRE_ASIGNATURA")
     private String nombreAsignatura;
     @Basic(optional = false)
