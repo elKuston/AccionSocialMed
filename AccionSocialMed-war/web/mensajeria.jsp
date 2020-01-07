@@ -11,6 +11,7 @@
 
 <%
     List<Mensaje> lista = (List<Mensaje>) request.getAttribute("lista");
+    Boolean entrante = (Boolean) request.getAttribute("entrante");
 %>
 <html>
     <head>
@@ -19,6 +20,14 @@
     </head>
     <body>
         <h1>Mensajeria</h1>
+        
+        <form action="MensajeriaServlet" method="post">
+            <input type="submit" value="Entrantes" name="boton">
+            <input type="submit" value="Salientes" name="boton">
+        </form>
+        
+        <br/><br/>
+       
         <% if(request.getAttribute("mensaje")!=null){
             String mensaje =(String) request.getAttribute("mensaje");
             request.removeAttribute("mensaje");
@@ -36,9 +45,14 @@
         <form action="EnviarMensajeServlet" method="post">
         <%for(Mensaje mensaje: lista){%>
         <fieldset>
-        <b>De: </b> <%=mensaje.getEmisor().getNombre()%><br/>  
+        <%if(entrante==true){%>
+             <b>De: </b> <%=mensaje.getEmisor().getNombre()%><br/>
+        <%} else{%>
+        
+             <b>Para: </b> <%=mensaje.getReceptor().getNombre() %><br/>
+        <%}%>
         <b>Titulo: </b> <%=mensaje.getTitulo() %> <br/><br/>
-        <%=mensaje.getContenido() %><br/>
+        <%=mensaje.getContenido() %>
         <input type="hidden" name="mensaje" value="<%=mensaje.getIdmensajenotificacion() %>" />
         <input type="submit" name="boton" value="Borrar"/><br/>
         </fieldset>
@@ -56,7 +70,7 @@
         </form>
         <br/>
         <form action="IndexServlet" method="post">
-            <input type="submit" value="Volver"><tab/>
+            <input type="submit" value="Volver">
         </form>
     </body>
 </html>

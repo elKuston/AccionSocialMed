@@ -38,4 +38,11 @@ public class MensajeFacade extends AbstractFacade<Mensaje> {
         return q.getResultList();
     }
     
+    public List<Mensaje> findBySalientes(String usuario){
+        Query q;
+        q = this.em.createQuery("select p from Mensaje p where P.emisor.correo = :usuario and P.leido=false" );
+        q.setParameter("usuario",usuario);
+        return q.getResultList();
+    }
+    
 }

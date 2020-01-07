@@ -9,6 +9,8 @@ import entity.Mensaje;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -34,17 +36,27 @@ public class MensajeriaServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * 
+     *
      */
-    
-    @EJB MensajeFacade mensajeFacade;
+    @EJB
+    MensajeFacade mensajeFacade;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession sesion= request.getSession();
-        Usuario user= (Usuario)sesion.getAttribute("usuario");
+        HttpSession sesion = request.getSession();
+        Usuario user = (Usuario) sesion.getAttribute("usuario");
         List<Mensaje> lista = mensajeFacade.findByActualUser(user.getCorreo());
+        Boolean entrante= TRUE;
+        
+        
+        String boton = request.getParameter("boton");
+        
+        if (boton != null && boton.equals("Salientes")) {      
+            lista = mensajeFacade.findBySalientes(user.getCorreo());    
+            entrante=FALSE;
+        }
         request.setAttribute("lista", lista);
+        request.setAttribute("entrante",entrante);
         
         
         RequestDispatcher rd = request.getRequestDispatcher("/mensajeria.jsp");
