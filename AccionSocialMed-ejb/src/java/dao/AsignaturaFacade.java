@@ -30,7 +30,7 @@ public class AsignaturaFacade extends AbstractFacade<Asignatura> {
         super(Asignatura.class);
     }
     
-     public Asignatura buscar(String nombre){
+    public Asignatura buscar(String nombre){
         Query q;
         q = this.em.createQuery("select a from Asignatura a where a.nombreAsignatura = :nombre");
         q.setParameter("nombre", nombre);

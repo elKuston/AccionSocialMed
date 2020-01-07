@@ -99,8 +99,25 @@ CREATE TABLE Mensaje(
 	leido boolean,
         contenido varchar(2000),
         titulo varchar(50),
+        fecha date,
 	FOREIGN KEY (receptor) REFERENCES Usuario(correo),
 	FOREIGN KEY (emisor) REFERENCES Usuario(correo));
+
+CREATE TABLE Informe(
+        idInforme int PRIMARY KEY,
+        profesor varchar(50),
+        estudiante varchar(50),
+        actividad int,
+        nota int,
+        evaluacionOng varchar(5000),
+        comentarioProfesor varchar(5000),
+        evaluacionProfesor int,
+        fechaInforme date,
+        fechaEvaluacion date,
+        FOREIGN KEY (profesor) REFERENCES Usuario(correo),
+        FOREIGN KEY (estudiante) REFERENCES Usuario(correo),
+        FOREIGN KEY (actividad) REFERENCES Actividad(nActividad));
+
 
 CREATE TABLE Etiqueta(
 	etiqueta varchar(50) PRIMARY KEY,

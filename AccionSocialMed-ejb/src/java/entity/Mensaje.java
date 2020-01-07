@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Mensaje.findByIdmensajenotificacion", query = "SELECT m FROM Mensaje m WHERE m.idmensajenotificacion = :idmensajenotificacion")
     , @NamedQuery(name = "Mensaje.findByLeido", query = "SELECT m FROM Mensaje m WHERE m.leido = :leido")
     , @NamedQuery(name = "Mensaje.findByContenido", query = "SELECT m FROM Mensaje m WHERE m.contenido = :contenido")
-    , @NamedQuery(name = "Mensaje.findByTitulo", query = "SELECT m FROM Mensaje m WHERE m.titulo = :titulo")})
+    , @NamedQuery(name = "Mensaje.findByTitulo", query = "SELECT m FROM Mensaje m WHERE m.titulo = :titulo")
+    , @NamedQuery(name = "Mensaje.findByFecha", query = "SELECT m FROM Mensaje m WHERE m.fecha = :fecha")})
 public class Mensaje implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,6 +52,9 @@ public class Mensaje implements Serializable {
     @Size(max = 50)
     @Column(name = "TITULO")
     private String titulo;
+    @Column(name = "FECHA")
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
     @JoinColumn(name = "EMISOR", referencedColumnName = "CORREO")
     @ManyToOne
     private Usuario emisor;
@@ -92,6 +99,14 @@ public class Mensaje implements Serializable {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public Usuario getEmisor() {
