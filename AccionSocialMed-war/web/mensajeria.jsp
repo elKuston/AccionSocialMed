@@ -4,6 +4,8 @@
     Author     : jange
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
 <%@page import="entity.Mensaje"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,6 +14,7 @@
 <%
     List<Mensaje> lista = (List<Mensaje>) request.getAttribute("lista");
     Boolean entrante = (Boolean) request.getAttribute("entrante");
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy ---- HH:mm:ss");
 %>
 <html>
     <head>
@@ -51,8 +54,10 @@
         
              <b>Para: </b> <%=mensaje.getReceptor().getNombre() %><br/>
         <%}%>
+        <b>Fecha: </b> 
+        <%if(mensaje.getFecha()!=null){%><%=formato.format(mensaje.getFecha()) %> <%}%><br/>
         <b>Titulo: </b> <%=mensaje.getTitulo() %> <br/><br/>
-        <%=mensaje.getContenido() %>
+        <%=mensaje.getContenido() %><br/><br/>
         <input type="hidden" name="mensaje" value="<%=mensaje.getIdmensajenotificacion() %>" />
         <input type="submit" name="boton" value="Borrar"/><br/>
         </fieldset>

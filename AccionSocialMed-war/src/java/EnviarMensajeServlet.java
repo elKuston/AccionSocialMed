@@ -10,6 +10,8 @@ import entity.Mensaje;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -57,6 +59,17 @@ public class EnviarMensajeServlet extends HttpServlet {
                 mensaje.setEmisor((Usuario) sesion.getAttribute("usuario"));
                 mensaje.setTitulo(titulo);
                 mensaje.setReceptor(usuarioFacade.find(destinatario));
+                //FORMATO PARA LA FECHA CON HORAS Y MINS
+                LocalDateTime now = LocalDateTime.now();
+                int hour = now.getHour();
+                int minute = now.getMinute();
+                int second = now.getSecond();
+                Date fecha = new Date();
+                fecha.setHours(hour);
+                fecha.setMinutes(minute);
+                fecha.setSeconds(second);
+                mensaje.setFecha(fecha);
+                //FIN DEL FORMATO
                 if (mensajeFacade.findAll().isEmpty()) {
                     mensaje.setIdmensajenotificacion(0);
                 } else {
@@ -65,8 +78,7 @@ public class EnviarMensajeServlet extends HttpServlet {
                 mensaje.setLeido(Boolean.FALSE);
                 mensajeFacade.create(mensaje);
                 ruta = "MensajeriaServlet";
-            }
-            else{
+            } else {
                 request.setAttribute("mensaje", "Destinatario no encontrado");
                 ruta = "MensajeriaServlet";
             }
