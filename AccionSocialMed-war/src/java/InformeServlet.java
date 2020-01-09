@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 
+import dao.UsuarioFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,8 +31,14 @@ public class InformeServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    @EJB UsuarioFacade usuarioFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String correo = request.getParameter("correo");
+        request.setAttribute("user", usuarioFacade.find(correo));
+        
+        
        RequestDispatcher rd = request.getRequestDispatcher("/informe.jsp");
         rd.forward(request, response);
     }

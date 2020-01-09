@@ -14,6 +14,7 @@
     Actividad act = (Actividad) request.getAttribute("act");
     ArrayList<String> participantesN = (ArrayList<String>) request.getAttribute("participantesN");
     List<Usuario> participantes = (List<Usuario>) request.getAttribute("participantes");
+    
 %>
 <html>
     <head>
@@ -33,18 +34,18 @@
                 <th>Informe</th> 
             </tr>
             
-            
+               
                 <%
                 for(int i = 0; i < participantesN.size(); i++){ %>
+                 <form action="InformeServlet" method="post">
                 <tr>
-                <td><%= participantesN.get(i) %></td>
-                <td><%= participantes.get(i).getCorreo() %></td>
-                <form action="InformeServlet" method="post">
-                <td><a href="InformeServlet">Informe</a></td>
+                    <td><input type="text" name="nombre" value="<%= participantesN.get(i)%>" readonly></td>
+                    <td><input type="text" name="correo" value="<%= participantes.get(i).getCorreo()%>" readonly></td>
+                    <td><input type="submit" value="Informe"></td>
                 </tr>
                     <% }
                 %>
-                
+                </form>
             
             
        
