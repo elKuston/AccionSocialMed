@@ -1,3 +1,14 @@
+
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="entity.Usuario"%>
+<%@page import="entity.Actividad"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    Actividad act = (Actividad) request.getAttribute("actividad");
+    Usuario us = (Usuario) request.getAttribute("usuario");
+    String tipo = (String)request.getSession().getAttribute("tipo");
+    SimpleDateFormat formato= new SimpleDateFormat("dd/MM/yyyy");
+%>
 <html>
     <body id="cuerpo">
         <center>
@@ -13,34 +24,34 @@
         <div style="width:750px; height:550px; padding:20px; text-align:center; border: 5px solid #787878">
                <span style="font-size:50px; font-weight:bold">Certificate of Completion</span>
                <br><br>
-               <span style="font-size:25px"><i>This is to certify that</i></span>
+               <span style="font-size:25px"><i>Esto certifica que</i></span>
                <br><br>
-               <span style="font-size:30px"><b>$student.getFullName()</b></span><br/><br/>
-               <span style="font-size:25px"><i>has completed the course</i></span> <br/><br/>
-               <span style="font-size:30px">$course.getName()</span> <br/><br/>
-               <span style="font-size:20px">with score of <b>$grade.getPoints()%</b></span> <br/><br/><br/><br/>
-               <span style="font-size:25px"><i>Completed Date</i></span><br>
-               <span style="font-size:25px"><i>01-Sep-2018</i></span><br>
+               <span style="font-size:30px"><b><%=us.getNombre() %></b></span><br/><br/>
+               <span style="font-size:25px"><i>ha completado el voluntariado</i></span> <br/><br/>
+               <span style="font-size:30px"><%=act.getTitulo() %></span> <br/><br/>
+               <span style="font-size:20px">con la puntuacion de  <b>5</b></span> <br/><br/><br/><br/>
+               <span style="font-size:25px"><i>Completado el dia</i></span><br>
+               <span style="font-size:25px"><i><%=formato.format(act.getFechaFin())%> </i></span><br>
         <table style="margin-top:40px;float:left">
         <tr>
-        <td><span><b>$student.getFullName()</b></td>
+        <td><span><b><%=us.getNombre()%></b></td>
         </tr>
         <tr>
         <td style="width:200px;float:left;border:0;border-bottom:1px solid #000;"></td>
         </tr>
         <tr>
-        <td style="text-align:center"><span><b>Signature</b></td>
+        <td style="text-align:center"><span><b>Firmado</b></td>
         </tr>
         </table>
         <table style="margin-top:40px;float:right">
         <tr>
-        <td><span><b>$student.getFullName()</b></td>
+        <td><span><b><%=act.getCorreoProfesor().getUsuario().getNombre()%> <%=act.getCorreoProfesor().getApellidos() %></b></td>
         </tr>
         <tr>
         <td style="width:200px;float:right;border:0;border-bottom:1px solid #000;"></td>
         </tr>
         <tr>
-        <td style="text-align:center"><span><b>Signature</b></td>
+        <td style="text-align:center"><span><b>Firmado</b></td>
         </tr>
         </table>
         </div>

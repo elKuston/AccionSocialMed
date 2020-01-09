@@ -9,6 +9,7 @@ import entity.Informe;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +28,14 @@ public class InformeFacade extends AbstractFacade<Informe> {
 
     public InformeFacade() {
         super(Informe.class);
+    }
+    
+    public Informe findByUser(String usuario, int actividad){
+        Query q;
+        q = this.em.createQuery("select p from Informe p where P.estudiante.correo = :usuario and P.actividad.nactividad=:actividad" );
+        q.setParameter("usuario",usuario);
+        q.setParameter("actividad",actividad);
+        return (Informe) q.getSingleResult();
     }
     
 }
