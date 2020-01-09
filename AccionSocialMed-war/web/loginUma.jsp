@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>LoginUma</title>
     </head>
-    <body style="background-color:#2f3fa3;">
+    <body style="background-color:#2f3fa3;" id="cuerpo">
     <center>
         <% if (request.getAttribute("mensaje") != null) {
                 String mensaje = (String) request.getAttribute("mensaje");
@@ -34,5 +34,8 @@
             </form>
             <br/><br/>
     </center>
+        
+        
+        
 </body>
 </html>
