@@ -22,7 +22,14 @@
         <!--===============================================================================================-->
     </head>
     <body>
-        <% if (request.getAttribute("mensaje") != null) {
+        <%
+             request.getSession().setAttribute("invitado", Boolean.FALSE);
+            
+            
+            
+            
+            
+            if (request.getAttribute("mensaje") != null) {
                 String mensaje = (String) request.getAttribute("mensaje");
                 request.removeAttribute("mensaje");
         %>

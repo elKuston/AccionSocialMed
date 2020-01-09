@@ -38,6 +38,7 @@ public class MiasServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @EJB ActividadFacade actividadFacade;
+   
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -46,7 +47,7 @@ public class MiasServlet extends HttpServlet {
         
          List<Actividad> act = actividadFacade.findAll();
          
-         ArrayList<Actividad> mis = new ArrayList<Actividad>();
+         ArrayList<Actividad> mis = new ArrayList<>();
         
         for(Actividad a : act)
         {

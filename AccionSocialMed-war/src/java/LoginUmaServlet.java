@@ -56,13 +56,11 @@ public class LoginUmaServlet extends HttpServlet {
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
         String direccion = "/loginUma.jsp";
-        if(request.getParameter("guest").equals("1")){
+        if(request.getParameter("guest")!=null&&request.getParameter("guest").equals("1")){
             sesion.setAttribute("invitado", Boolean.TRUE);
             sesion.setAttribute("tipo", "invitado");
             RequestDispatcher rd = request.getRequestDispatcher("/IndexServlet");
             rd.forward(request, response);
-        }else{
-            sesion.setAttribute("invitado", false);
         }
 
         String resultado = "";
