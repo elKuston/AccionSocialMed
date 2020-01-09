@@ -12,7 +12,6 @@ import entity.Etiqueta;
 import entity.Notificacion;
 import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +45,7 @@ public class IndexServlet extends HttpServlet {
     @EJB ActividadFacade actividadFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        boolean invitado = (Boolean) request.getSession().getAttribute("invitado");
      
         HttpSession sesion = request.getSession();
         Usuario user= (Usuario) sesion.getAttribute("usuario");
@@ -64,14 +64,20 @@ public class IndexServlet extends HttpServlet {
             sesion.setAttribute("screen", "match");
         }
         
-        List<Notificacion> notificaciones = notificacionFacade.findAll();
-        List<Notificacion> pendientes = new ArrayList<>();
-        for(Notificacion n : notificaciones){
-            if(n.getReceptor().equals(user)&&!n.getLeido()){
-                pendientes.add(n);
-            }
+        if(invitado){
+            sesion.setAttribute("screen","all");
         }
-        request.setAttribute("pendientes", pendientes);
+        
+        if(!invitado){
+            List<Notificacion> notificaciones = notificacionFacade.findAll();
+            List<Notificacion> pendientes = new ArrayList<>();
+            for(Notificacion n : notificaciones){
+                if(n.getReceptor().equals(user)&&!n.getLeido()){
+                    pendientes.add(n);
+                }
+            }
+            request.setAttribute("pendientes", pendientes);
+        }
         
         List<Actividad> act = actividadFacade.findAll();
         act=filtrar(act);

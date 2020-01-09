@@ -10,7 +10,7 @@
 <%@page import="java.util.List"%>
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%Usuario user = (Usuario)request.getAttribute("usuario");%>
+<%Usuario user = (Usuario)request.getAttribute("usuario"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,7 +21,18 @@
     <body>
         
         <div style="float:right">
-            <a href="PerfilServlet">Mi perfil</a>
+            <%
+            boolean invitado = (Boolean) request.getSession().getAttribute("invitado");
+                if(invitado){
+                    %>
+                    Invitado, <a href="iDUMARegistro.jsp">¡crea tu cuenta ya!</a>
+                    <%
+                }else{
+                    %>
+                     <a href="PerfilServlet">Mi perfil</a>
+                    <%
+                }
+                %>
         </div>
         <% if(request.getAttribute("mensaje")!=null){
             String mensaje =(String) request.getAttribute("mensaje");
@@ -34,15 +45,17 @@
         }%>
         
         <%
-            List<Notificacion> notificaciones = (List<Notificacion>) request.getAttribute("pendientes");
-            if(notificaciones.size()>0){
-                %>
-                <h2><a href="VerNotificacionesServlet"><%=notificaciones.size()%> notificaciones pendientes</a></h2>
-                <%
-            }else{
-                %>
-                <h2><a href="VerNotificacionesServlet">Mis notificaciones</a></h2>
-                <%
+            if(!invitado){
+                List<Notificacion> notificaciones = (List<Notificacion>) request.getAttribute("pendientes");
+                if(notificaciones.size()>0){
+                    %>
+                    <h2><a href="VerNotificacionesServlet"><%=notificaciones.size()%> notificaciones pendientes</a></h2>
+                    <%
+                }else{
+                    %>
+                    <h2><a href="VerNotificacionesServlet">Mis notificaciones</a></h2>
+                    <%
+                }
             }
         %>
         <%
@@ -54,24 +67,26 @@
         %>
         
         <%
-            if(request.getSession().getAttribute("screen").equals("match"))
-            {
-                
-                %>
-                        <form action="IndexServlet" method="post">
-            <input type="submit" value="Ver todas las Actividades">
-            <input type="hidden" name="all" value="1">
-        </form>
-                <%
-            }
-            else
-            {
-                %>
-                        <form action="IndexServlet" method="post">
-            <input type="submit" value="Matching">
-            <input type="hidden" name="match" value="1">
-        </form>
-                <%
+            if(!invitado){
+                if(request.getSession().getAttribute("screen").equals("match"))
+                {
+
+                    %>
+                            <form action="IndexServlet" method="post">
+                <input type="submit" value="Ver todas las Actividades">
+                <input type="hidden" name="all" value="1">
+            </form>
+                    <%
+                }
+                else
+                {
+                    %>
+                            <form action="IndexServlet" method="post">
+                <input type="submit" value="Matching">
+                <input type="hidden" name="match" value="1">
+            </form>
+                    <%
+                }
             }
             %>
             
@@ -194,14 +209,21 @@
         %>
         
         <% 
-            if(!request.getSession().getAttribute("tipo").equals("ong")){
+            if(!invitado&&!request.getSession().getAttribute("tipo").equals("ong")){
                 %>
                 <h1> <a href ="InscritasServlet">Actividades inscritas</a></h1><br/>
                 <%
             }
         %>
         
+        <%
+            if(!invitado){
+            %>
+        
         <a href="MensajeriaServlet">Mensajeria</a>
+        <%
+            }
+        %>
     </center>
 
     </body>

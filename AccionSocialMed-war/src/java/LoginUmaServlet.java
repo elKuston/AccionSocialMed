@@ -56,6 +56,14 @@ public class LoginUmaServlet extends HttpServlet {
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
         String direccion = "/loginUma.jsp";
+        if(request.getParameter("guest").equals("1")){
+            sesion.setAttribute("invitado", Boolean.TRUE);
+            sesion.setAttribute("tipo", "invitado");
+            RequestDispatcher rd = request.getRequestDispatcher("/IndexServlet");
+            rd.forward(request, response);
+        }else{
+            sesion.setAttribute("invitado", false);
+        }
 
         String resultado = "";
         String link="http://idumamockup-env.3mca2qexfx.eu-central-1.elasticbeanstalk.com/getuser/";

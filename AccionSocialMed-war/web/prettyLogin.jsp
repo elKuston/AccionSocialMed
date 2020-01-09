@@ -44,6 +44,10 @@
                     
                         <div class="text-center p-t-10">
                             
+                            <a class="txt2" href="LoginUmaServlet?guest=1">
+                                Iniciar sesión como invitado
+                                <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                            </a><br>
                             <a class="txt2" href="loginUma.jsp">
                                 Inicio sesión IDUMA
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
