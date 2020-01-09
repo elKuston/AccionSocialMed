@@ -89,10 +89,11 @@
                     </form>              
                     
                 </td>
-            <tr>
+            </tr>
         <%
             }}
             %>
-        
+         </table>
+         <br><input type="button" onclick="history.back()" name="Volver" value="Volver">
     </body>
 </html>

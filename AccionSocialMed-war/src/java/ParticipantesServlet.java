@@ -5,11 +5,15 @@
  */
 
 import dao.ActividadFacade;
+import dao.EstudianteFacade;
+import dao.PasFacade;
+import dao.ProfesorFacade;
 import entity.Actividad;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,12 +39,35 @@ public class ParticipantesServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @EJB ActividadFacade actividadFacade;
+    @EJB EstudianteFacade estudianteFacade;
+    @EJB ProfesorFacade profesorFacade;
+    @EJB PasFacade pasFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Actividad act = actividadFacade.find(Integer.parseInt(request.getParameter("actividad")));
-        
+       ArrayList<String> participantesN = new ArrayList<>();
+       List<Usuario> participantes = act.getUsuarioList();
+       
+       for(Usuario u: act.getUsuarioList()){
+           String correo = u.getCorreo();
+           String nombre = u.getNombre();
+           
+           if(estudianteFacade.find(correo) != null && u.getEstudiante().getApellidos()!= null){
+             nombre += " "+u.getEstudiante().getApellidos();
+           } else if (profesorFacade.find(correo) != null && u.getProfesor().getApellidos()!= null){
+             nombre += " "+u.getProfesor().getApellidos();
+           } else {
+               if (pasFacade.find(correo) != null && u.getPas().getApellidos()!= null){
+               nombre += " "+u.getPas().getApellidos();
+                }
+            }
+           participantesN.add(nombre);
+           
+       }
         
         request.setAttribute("act",act);
+        request.setAttribute("participantesN", participantesN);
+        request.setAttribute("participantes", participantes);
         
         RequestDispatcher rd = request.getRequestDispatcher("/participantes.jsp");
         rd.forward(request, response);

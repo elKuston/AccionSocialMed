@@ -10,6 +10,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
+    HttpSession sesion = request.getSession();
     Actividad act = (Actividad) request.getAttribute("actividad");
     int plazas = act.getNpersonas() - act.getUsuarioList().size();
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -45,9 +46,14 @@
         <br/>
         <br/>
 
+        
         <form action="ConfirmacionUnionProfesorServlet" method="post">
             <input type="hidden" value="<%=act.getNactividad()%>" name="id"/>
-            <input type="submit" name="boton" value="Quiero unirme"> &nbsp &nbsp <input type="submit" name="boton" value="Volver">
+            <% 
+            if(!sesion.getAttribute("tipo").equals("ong")){
+            %>
+            <input type="submit" name="boton" value="Quiero unirme">  <% } %>&nbsp &nbsp <input type="submit" name="boton" value="Volver">
         </form>
+           
     </body>
 </html>
