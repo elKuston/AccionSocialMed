@@ -11,9 +11,6 @@ CREATE TABLE Usuario(
 	localidad varchar(50),
         turnoTarde boolean);
 
---CREATE TABLE Clave_registro(
---	clave varchar(256) PRIMARY KEY);
-
 CREATE TABLE Estudiante(
 	correo varchar(50) PRIMARY KEY,
 	apellidos varchar(50),
@@ -108,16 +105,16 @@ CREATE TABLE Informe(
         profesor varchar(50),
         estudiante varchar(50),
         actividad int,
-        nota int,
-        evaluacionOng varchar(5000),
+        notaOng int,
+        comentarioOng varchar(5000),
         comentarioProfesor varchar(5000),
-        evaluacionProfesor int,
+        notaProfesor int,
         fechaInforme date,
         fechaEvaluacion date,
+        nHoras int,
         FOREIGN KEY (profesor) REFERENCES Usuario(correo),
         FOREIGN KEY (estudiante) REFERENCES Usuario(correo),
         FOREIGN KEY (actividad) REFERENCES Actividad(nActividad));
-
 
 CREATE TABLE Etiqueta(
 	etiqueta varchar(50) PRIMARY KEY,

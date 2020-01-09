@@ -38,5 +38,4 @@ public class NotificacionFacade extends AbstractFacade<Notificacion> {
         q.setParameter("rec", receptor.getCorreo());
         return q.getResultList();
     }
-    
 }

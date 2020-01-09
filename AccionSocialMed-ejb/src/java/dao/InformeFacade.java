@@ -5,18 +5,17 @@
  */
 package dao;
 
-import entity.Asignatura;
+import entity.Informe;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
  * @author jange
  */
 @Stateless
-public class AsignaturaFacade extends AbstractFacade<Asignatura> {
+public class InformeFacade extends AbstractFacade<Informe> {
 
     @PersistenceContext(unitName = "AccionSocialMed-ejbPU")
     private EntityManager em;
@@ -26,14 +25,8 @@ public class AsignaturaFacade extends AbstractFacade<Asignatura> {
         return em;
     }
 
-    public AsignaturaFacade() {
-        super(Asignatura.class);
+    public InformeFacade() {
+        super(Informe.class);
     }
     
-     public Asignatura buscar(String nombre){
-        Query q;
-        q = this.em.createQuery("select a from Asignatura a where a.nombreAsignatura = :nombre");
-        q.setParameter("nombre", nombre);
-        return q.getResultList().size()>0 ? (Asignatura) q.getResultList().get(0) : null;
-    }
 }

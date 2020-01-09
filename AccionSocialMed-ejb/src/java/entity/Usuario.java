@@ -77,6 +77,10 @@ public class Usuario implements Serializable {
     private Ong ong;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Profesor profesor;
+    @OneToMany(mappedBy = "estudiante")
+    private List<Informe> informeList;
+    @OneToMany(mappedBy = "profesor")
+    private List<Informe> informeList1;
     @OneToMany(mappedBy = "emisor")
     private List<Notificacion> notificacionList;
     @OneToMany(mappedBy = "receptor")
@@ -188,6 +192,24 @@ public class Usuario implements Serializable {
 
     public void setProfesor(Profesor profesor) {
         this.profesor = profesor;
+    }
+
+    @XmlTransient
+    public List<Informe> getInformeList() {
+        return informeList;
+    }
+
+    public void setInformeList(List<Informe> informeList) {
+        this.informeList = informeList;
+    }
+
+    @XmlTransient
+    public List<Informe> getInformeList1() {
+        return informeList1;
+    }
+
+    public void setInformeList1(List<Informe> informeList1) {
+        this.informeList1 = informeList1;
     }
 
     @XmlTransient

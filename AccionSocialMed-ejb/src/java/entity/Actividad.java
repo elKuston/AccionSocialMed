@@ -18,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -102,6 +103,8 @@ public class Actividad implements Serializable {
     @JoinColumn(name = "CORREO_PROFESOR", referencedColumnName = "CORREO")
     @ManyToOne
     private Profesor correoProfesor;
+    @OneToMany(mappedBy = "actividad")
+    private List<Informe> informeList;
 
     public Actividad() {
     }
@@ -237,6 +240,15 @@ public class Actividad implements Serializable {
 
     public void setCorreoProfesor(Profesor correoProfesor) {
         this.correoProfesor = correoProfesor;
+    }
+
+    @XmlTransient
+    public List<Informe> getInformeList() {
+        return informeList;
+    }
+
+    public void setInformeList(List<Informe> informeList) {
+        this.informeList = informeList;
     }
 
     @Override

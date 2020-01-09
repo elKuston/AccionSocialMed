@@ -44,5 +44,4 @@ public class MensajeFacade extends AbstractFacade<Mensaje> {
         q.setParameter("usuario",usuario);
         return q.getResultList();
     }
-    
 }
