@@ -19,6 +19,7 @@
         
     </head>
     <body>
+        
         <div style="float:right">
             <a href="PerfilServlet">Mi perfil</a>
         </div>
@@ -80,7 +81,7 @@
 
     <center>
 
-        
+        <h2><a href="MiasServlet">Acceder a mis actividades</a></h2><br>
         <%
             if(act.size()>0)
             {
