@@ -36,6 +36,10 @@ List<Actividad> ins= (List<Actividad>) request.getAttribute("al");
                         <input type="hidden" value="<%=a.getNactividad() %>" name="actividad"/>
                         <input type="submit" value="Ver actividad" >
                     </form>  </h2>
+                <form action="VerCertificado" method="post">
+                    <input type="hidden" value="<%=a.getNactividad() %>" name="actividad"/>
+                    <input type="submit" value="Ver Certificado" >
+                </form>  </h2>
                 
                 <%} }%>
 
