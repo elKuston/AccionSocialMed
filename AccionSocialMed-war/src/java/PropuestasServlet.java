@@ -25,8 +25,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Angela
  */
-@WebServlet(urlPatterns = {"/MiasServlet"})
-public class MiasServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/PropuestasServlet"})
+public class PropuestasServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -61,7 +61,7 @@ public class MiasServlet extends HttpServlet {
         
         request.setAttribute("usuario",user);
         
-        RequestDispatcher rd = request.getRequestDispatcher("/misActividades.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/actividadesPropuestas.jsp");
         rd.forward(request, response);
     }
     

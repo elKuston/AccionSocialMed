@@ -196,7 +196,7 @@
             if(request.getSession().getAttribute("tipo").equals("ong")){//es (PROBABLEMENTE) una ong (hay que refinar bien si esto incluye a alguna no-ong o excluye a alguna ong
                 %>
                 <a href ="ProponerActividadServlet">NUEVA ACTIVIDAD</a><br><br>
-                <a href="MiasServlet">ACTIVIDADES PROPUESTAS</a><br><br>
+                <a href="PropuestasServlet">ACTIVIDADES PROPUESTAS</a><br><br>
                 <%
             }
         %>
