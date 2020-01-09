@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="cuerpo">
     <head>
         <title>Login V1</title>
         <meta charset="UTF-8">
@@ -22,6 +22,8 @@
         <!--===============================================================================================-->
     </head>
     <body>
+        <script>
+            </script>
         <%
              request.getSession().setAttribute("invitado", Boolean.FALSE);
             
@@ -96,6 +98,22 @@
         </script>
         <!--===============================================================================================-->
         <script src="js/main.js"></script>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
     </body>
 </html>

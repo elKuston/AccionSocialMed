@@ -1,0 +1,77 @@
+<html>
+    <body id="cuerpo">
+        <center>
+        <style>
+        .signature, .title { 
+        float:left;
+          border-top: 1px solid #000;
+          width: 200px; 
+          text-align: center;
+        }
+        </style>
+        <div style="width:800px; height:600px; padding:20px; text-align:center; border: 10px solid #787878">
+        <div style="width:750px; height:550px; padding:20px; text-align:center; border: 5px solid #787878">
+               <span style="font-size:50px; font-weight:bold">Certificate of Completion</span>
+               <br><br>
+               <span style="font-size:25px"><i>This is to certify that</i></span>
+               <br><br>
+               <span style="font-size:30px"><b>$student.getFullName()</b></span><br/><br/>
+               <span style="font-size:25px"><i>has completed the course</i></span> <br/><br/>
+               <span style="font-size:30px">$course.getName()</span> <br/><br/>
+               <span style="font-size:20px">with score of <b>$grade.getPoints()%</b></span> <br/><br/><br/><br/>
+               <span style="font-size:25px"><i>Completed Date</i></span><br>
+               <span style="font-size:25px"><i>01-Sep-2018</i></span><br>
+        <table style="margin-top:40px;float:left">
+        <tr>
+        <td><span><b>$student.getFullName()</b></td>
+        </tr>
+        <tr>
+        <td style="width:200px;float:left;border:0;border-bottom:1px solid #000;"></td>
+        </tr>
+        <tr>
+        <td style="text-align:center"><span><b>Signature</b></td>
+        </tr>
+        </table>
+        <table style="margin-top:40px;float:right">
+        <tr>
+        <td><span><b>$student.getFullName()</b></td>
+        </tr>
+        <tr>
+        <td style="width:200px;float:right;border:0;border-bottom:1px solid #000;"></td>
+        </tr>
+        <tr>
+        <td style="text-align:center"><span><b>Signature</b></td>
+        </tr>
+        </table>
+        </div>
+        </div>
+        </center>
+    
+    
+    
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+        <script type="text/javascript">
+            genPDF();
+        function genPDF(){
+            console.log("hey");
+            html2canvas(document.getElementById("cuerpo"),{
+                scale:1,
+                onrendered:function(canvas){
+                    
+                    var img=canvas.toDataURL("image/png");
+                    var doc = new jsPDF();
+                    doc.addImage(img,'PNG', 0,0,211,9*211/16);
+                    doc.save('test.pdf');
+                }
+            });
+
+        }
+        
+        </script>
+    </body>
+    
+    
+    
+</html>
