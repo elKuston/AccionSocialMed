@@ -6,13 +6,18 @@
 
 import dao.ActividadFacade;
 import dao.EstudianteFacade;
+import dao.InformeFacade;
 import dao.PasFacade;
 import dao.ProfesorFacade;
+import dao.UsuarioFacade;
 import entity.Actividad;
+import entity.Estudiante;
+import entity.Informe;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -26,8 +31,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Angela
  */
-@WebServlet(urlPatterns = {"/ParticipantesServlet"})
-public class ParticipantesServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/GuardarInformeServlet"})
+public class GuardarInformeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,60 +43,66 @@ public class ParticipantesServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @EJB InformeFacade informeFacade;
     @EJB ActividadFacade actividadFacade;
+    @EJB UsuarioFacade usuarioFacade;
     @EJB EstudianteFacade estudianteFacade;
-    @EJB ProfesorFacade profesorFacade;
     @EJB PasFacade pasFacade;
+    @EJB ProfesorFacade profesorFacade;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Actividad act = actividadFacade.find(Integer.parseInt(request.getParameter("actividad")));
-       ArrayList<String> participantesN = new ArrayList<>();
-       ArrayList<String> participantesTipo = new ArrayList<>();
-       List<Usuario> participantes = act.getUsuarioList();
-       
-       
-       for(Usuario u: act.getUsuarioList()){
-           String correo = u.getCorreo();
-           String nombre = u.getNombre();
-           String tipo ="Otro";
-           
-           if(estudianteFacade.find(correo) != null) {
-                tipo = "Estudiante";
-                
-               if (u.getEstudiante().getApellidos()!= null) {
-                    nombre += " "+u.getEstudiante().getApellidos();
-                }
-            } else if (profesorFacade.find(correo) != null) {
-                tipo = "Profesor";
-                
-                if(u.getProfesor().getApellidos()!= null){
-                nombre += " "+u.getProfesor().getApellidos();
-                }
-                
-           } else {
-               if (pasFacade.find(correo) != null) {
-                   tipo += "PAS";
-                   if(u.getPas().getApellidos()!= null) {
-                       nombre += " "+u.getPas().getApellidos(); 
-                   }
-                }
+        
+        int nota = Integer.parseInt(request.getParameter("nota"));
+        int horas = Integer.parseInt(request.getParameter("horas"));
+        String informe = request.getParameter("informe");
+        String correo = request.getParameter("correo");
+        String tipo = request.getParameter("tipo");
+        String nActividad = request.getParameter("actividad");
+        Actividad act = actividadFacade.find(Integer.parseInt(nActividad));
 
+        List<Informe> informes = act.getInformeList();
+             
+        
+        //ver si existe informe
+        boolean existe = false;
+        for(Informe i: informes) {
+            if(i.getEstudiante().getCorreo().equals(correo)) {
+            existe = true;
             }
-            
-           participantesN.add(nombre);
-           participantesTipo.add(tipo);
+        }
+
+        Informe i = new Informe();
+        Date d = new Date();
+        
+        i.setComentarioong(informe);
+        i.setNhoras(horas);
+        i.setNotaong(nota);
+        i.setFechainforme(d);
+         
+
+        //nuevo informe
+        if(!existe){
+             i.setIdinforme(informes.size()+1);
+             i.setActividad(act);
+             
+            if(tipo.equals("Estudiante")){
+            i.setEstudiante(estudianteFacade.find(correo).getUsuario());
+            } else if (tipo.equals("Profesor")) {
+                 i.setEstudiante(profesorFacade.find(correo).getUsuario());
+            } else {
+                 i.setEstudiante(pasFacade.find(correo).getUsuario());
+            }
+               
+           informeFacade.create(i);
            
-       }
-        
-        request.setAttribute("actividad",act);
-        request.setAttribute("nAct",act.getNactividad());
-        request.setAttribute("participantesN", participantesN);
-        request.setAttribute("participantesTipo", participantesTipo);
-        request.setAttribute("participantes", participantes);
+        } else {
+            informeFacade.edit(i);
+        }
+       
+
         
         
-        RequestDispatcher rd = request.getRequestDispatcher("/participantes.jsp");
-        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

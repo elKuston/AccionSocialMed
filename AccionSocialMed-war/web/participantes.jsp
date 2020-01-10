@@ -11,10 +11,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    Actividad act = (Actividad) request.getAttribute("act");
+    Actividad act = (Actividad) request.getAttribute("actividad");
     ArrayList<String> participantesN = (ArrayList<String>) request.getAttribute("participantesN");
+    ArrayList<String> participantesTipo = (ArrayList<String>) request.getAttribute("participantesTipo");
     List<Usuario> participantes = (List<Usuario>) request.getAttribute("participantes");
-    
 %>
 <html>
     <head>
@@ -30,6 +30,7 @@
        <table border="1">
             <tr>
                 <th>Participante</th>
+                <th>Tipo</th>
                 <th>Correo</th>
                 <th>Informe</th> 
             </tr>
@@ -39,13 +40,20 @@
                 for(int i = 0; i < participantesN.size(); i++){ %>
                  <form action="InformeServlet" method="post">
                 <tr>
-                    <td><input type="text" name="nombre" value="<%= participantesN.get(i)%>" readonly></td>
-                    <td><input type="text" name="correo" value="<%= participantes.get(i).getCorreo()%>" readonly></td>
+                    <td><%= participantesN.get(i)%></td>
+                    <td><%= participantesTipo.get(i) %></td>
+                    <td><%= participantes.get(i).getCorreo()%></td>
                     <td><input type="submit" value="Informe"></td>
                 </tr>
+                <input type="hidden" value="<%= participantesN.get(i)%>" name="nombre">
+                <input type="hidden" value="<%= participantesTipo.get(i)%>" name="tipo">
+                <input type="hidden" value="<%= participantes.get(i).getCorreo()%>" name="correo">
+                <input type="hidden" value="<%= act.getNactividad() %>" name="act">
+                </form>
                     <% }
                 %>
-                </form>
+                
+                
             
             
        

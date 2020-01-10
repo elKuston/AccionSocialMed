@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
+import dao.ActividadFacade;
 import dao.UsuarioFacade;
+import entity.Actividad;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -33,11 +35,17 @@ public class InformeServlet extends HttpServlet {
      */
     
     @EJB UsuarioFacade usuarioFacade;
+    @EJB ActividadFacade actividadFacade;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String correo = request.getParameter("correo");
-        request.setAttribute("user", usuarioFacade.find(correo));
-        
+        Actividad act = actividadFacade.find(Integer.parseInt(request.getParameter("act")));
+        request.setAttribute("actividad",act );
+         
+        request.setAttribute("nombre", request.getParameter("nombre"));
+        request.setAttribute("correo", request.getParameter("correo"));
+        request.setAttribute("tipo", request.getParameter("tipo"));
+  
         
        RequestDispatcher rd = request.getRequestDispatcher("/informe.jsp");
         rd.forward(request, response);

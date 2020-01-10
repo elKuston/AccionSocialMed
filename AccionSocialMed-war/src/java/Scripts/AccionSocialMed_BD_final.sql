@@ -103,7 +103,7 @@ CREATE TABLE Mensaje(
 CREATE TABLE Informe(
         idInforme int PRIMARY KEY,
         profesor varchar(50),
-        estudiante varchar(50),
+        participante varchar(50),
         actividad int,
         notaOng int,
         comentarioOng varchar(5000),
@@ -113,7 +113,7 @@ CREATE TABLE Informe(
         fechaEvaluacion date,
         nHoras int,
         FOREIGN KEY (profesor) REFERENCES Usuario(correo),
-        FOREIGN KEY (estudiante) REFERENCES Usuario(correo),
+        FOREIGN KEY (participante) REFERENCES Usuario(correo),
         FOREIGN KEY (actividad) REFERENCES Actividad(nActividad));
 
 CREATE TABLE Etiqueta(
