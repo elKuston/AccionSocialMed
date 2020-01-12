@@ -5,10 +5,14 @@
  */
 
 import dao.ActividadFacade;
+import dao.InformeFacade;
 import dao.UsuarioFacade;
 import entity.Actividad;
+import entity.Informe;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,17 +40,53 @@ public class InformeServlet extends HttpServlet {
     
     @EJB UsuarioFacade usuarioFacade;
     @EJB ActividadFacade actividadFacade;
+    @EJB InformeFacade informeFacade;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Actividad act = actividadFacade.find(Integer.parseInt(request.getParameter("act")));
-        request.setAttribute("actividad",act );
-         
-        request.setAttribute("nombre", request.getParameter("nombre"));
-        request.setAttribute("correo", request.getParameter("correo"));
-        request.setAttribute("tipo", request.getParameter("tipo"));
-  
+        int nAct = Integer.parseInt(request.getParameter("nAct"));
+        String correo = request.getParameter("correo");
+        Actividad act = actividadFacade.find(nAct);
+        List<Informe> informes = informeFacade.findAll();
+        Informe inf;
         
+        boolean existe = false;
+        int pos = 0;
+        int id = 0;
+        
+        while(!existe && (pos < informes.size())) {
+            if (informes.get(pos).getActividad().getNactividad().equals(nAct)
+                    && (informes.get(pos).getEstudiante().getCorreo().equals(correo))){
+                id = pos+1;
+                existe = true;
+            } else {
+                pos++;
+            }
+        }
+        
+        
+        if(existe) {
+            inf = informeFacade.find(id);
+        } else {
+            inf = new Informe();
+            inf.setIdinforme(informes.size()+1);
+            inf.setActividad(act);
+            inf.setEstudiante(usuarioFacade.find(correo));
+            
+            if(act.getTipoActividad().equals("Aprendizaje-Servicio")){
+                Usuario p = usuarioFacade.find(act.getCorreoProfesor().getCorreo());
+                inf.setProfesor(p);
+            }
+            
+            informeFacade.create(inf);
+            inf = informeFacade.find(informes.size()+1);
+        }
+        
+        request.setAttribute("informe", inf);
+        request.setAttribute("nombre", request.getParameter("nombre"));
+        request.setAttribute("actividad",act);         
+
+
        RequestDispatcher rd = request.getRequestDispatcher("/informe.jsp");
         rd.forward(request, response);
     }

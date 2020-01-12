@@ -6,9 +6,11 @@
 
 import dao.ActividadFacade;
 import dao.EstudianteFacade;
+import dao.InformeFacade;
 import dao.PasFacade;
 import dao.ProfesorFacade;
 import entity.Actividad;
+import entity.Informe;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,13 +44,14 @@ public class ParticipantesServlet extends HttpServlet {
     @EJB EstudianteFacade estudianteFacade;
     @EJB ProfesorFacade profesorFacade;
     @EJB PasFacade pasFacade;
+    @EJB InformeFacade informeFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Actividad act = actividadFacade.find(Integer.parseInt(request.getParameter("actividad")));
        ArrayList<String> participantesN = new ArrayList<>();
        ArrayList<String> participantesTipo = new ArrayList<>();
        List<Usuario> participantes = act.getUsuarioList();
-       
+      
        
        for(Usuario u: act.getUsuarioList()){
            String correo = u.getCorreo();
@@ -75,9 +78,9 @@ public class ParticipantesServlet extends HttpServlet {
                        nombre += " "+u.getPas().getApellidos(); 
                    }
                 }
-
             }
-            
+           
+
            participantesN.add(nombre);
            participantesTipo.add(tipo);
            

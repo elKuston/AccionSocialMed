@@ -7,12 +7,14 @@
 import dao.ActividadFacade;
 import dao.EstudianteFacade;
 import dao.InformeFacade;
+import dao.NotificacionFacade;
 import dao.PasFacade;
 import dao.ProfesorFacade;
 import dao.UsuarioFacade;
 import entity.Actividad;
 import entity.Estudiante;
 import entity.Informe;
+import entity.Notificacion;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,6 +28,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -44,64 +47,44 @@ public class GuardarInformeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @EJB InformeFacade informeFacade;
-    @EJB ActividadFacade actividadFacade;
-    @EJB UsuarioFacade usuarioFacade;
-    @EJB EstudianteFacade estudianteFacade;
-    @EJB PasFacade pasFacade;
-    @EJB ProfesorFacade profesorFacade;
+    @EJB NotificacionFacade notificacionFacade;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        HttpSession sesion = request.getSession();
+        Usuario user = (Usuario) sesion.getAttribute("usuario");
+        
         int nota = Integer.parseInt(request.getParameter("nota"));
         int horas = Integer.parseInt(request.getParameter("horas"));
+        int id = Integer.parseInt(request.getParameter("id"));
         String informe = request.getParameter("informe");
-        String correo = request.getParameter("correo");
-        String tipo = request.getParameter("tipo");
-        String nActividad = request.getParameter("actividad");
-        Actividad act = actividadFacade.find(Integer.parseInt(nActividad));
-
-        List<Informe> informes = act.getInformeList();
-             
+        Informe inf = informeFacade.find(id);
         
-        //ver si existe informe
-        boolean existe = false;
-        for(Informe i: informes) {
-            if(i.getEstudiante().getCorreo().equals(correo)) {
-            existe = true;
-            }
-        }
-
-        Informe i = new Informe();
-        Date d = new Date();
+        inf.setComentarioong(informe);
+        inf.setNhoras(horas);
+        inf.setNotaong(nota);
+        inf.setFechainforme(new Date());
+        informeFacade.edit(inf);
         
-        i.setComentarioong(informe);
-        i.setNhoras(horas);
-        i.setNotaong(nota);
-        i.setFechainforme(d);
-         
-
-        //nuevo informe
-        if(!existe){
-             i.setIdinforme(informes.size()+1);
-             i.setActividad(act);
-             
-            if(tipo.equals("Estudiante")){
-            i.setEstudiante(estudianteFacade.find(correo).getUsuario());
-            } else if (tipo.equals("Profesor")) {
-                 i.setEstudiante(profesorFacade.find(correo).getUsuario());
-            } else {
-                 i.setEstudiante(pasFacade.find(correo).getUsuario());
-            }
-               
-           informeFacade.create(i);
-           
-        } else {
-            informeFacade.edit(i);
-        }
-       
-
+        sesion.setAttribute("mensaje", "Informe guardado correctamente.");
+ 
+        //notificacion
+        Notificacion n = new Notificacion();
+        n.setEmisor(user);
+        n.setLeido(false);
+        n.setIdnotificacion(notificacionFacade.findAll().get(notificacionFacade.findAll().size() - 1).getIdnotificacion() + 1);
         
+        n.setReceptor(inf.getProfesor());
+                n.setContenido("La ONG " + inf.getActividad().getOng().getUsuario().getNombre() + " ha realizado un informe. Puede evaluar al alumno aquí: "
+                        + "<input type=\"submit\" name=\"boton\" value=\"Evaluar\">\n"
+                        + "</form>");
+                
+                 notificacionFacade.create(n);
+        
+
+         RequestDispatcher rd = request.getRequestDispatcher("/IndexServlet");
+        rd.forward(request, response);
         
     }
 

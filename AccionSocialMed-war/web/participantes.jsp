@@ -4,6 +4,7 @@
     Author     : Angela
 --%>
 
+
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Usuario"%>
@@ -33,6 +34,7 @@
                 <th>Tipo</th>
                 <th>Correo</th>
                 <th>Informe</th> 
+               
             </tr>
             
                
@@ -43,20 +45,18 @@
                     <td><%= participantesN.get(i)%></td>
                     <td><%= participantesTipo.get(i) %></td>
                     <td><%= participantes.get(i).getCorreo()%></td>
-                    <td><input type="submit" value="Informe"></td>
-                </tr>
+                    
                 <input type="hidden" value="<%= participantesN.get(i)%>" name="nombre">
-                <input type="hidden" value="<%= participantesTipo.get(i)%>" name="tipo">
                 <input type="hidden" value="<%= participantes.get(i).getCorreo()%>" name="correo">
-                <input type="hidden" value="<%= act.getNactividad() %>" name="act">
+                <input type="hidden" value="<%= act.getNactividad() %>" name="nAct">
+               <td><input type="submit" value="Informe"></td>
+                    
+                </tr>
+                
                 </form>
                     <% }
                 %>
-                
-                
-            
-            
-       
+
        </table>
             <br><input type="button" onclick="history.back()" name="Volver" value="Volver">
 
