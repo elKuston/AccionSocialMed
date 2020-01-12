@@ -6,6 +6,7 @@
 package dao;
 
 import entity.Informe;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,10 +33,17 @@ public class InformeFacade extends AbstractFacade<Informe> {
     
     public Informe findByUser(String usuario, int actividad){
         Query q;
-        q = this.em.createQuery("select p from Informe p where P.estudiante.correo = :usuario and P.actividad.nactividad=:actividad" );
+        q = this.em.createQuery("select p from Informe p where P.participante.correo = :usuario and P.actividad.nactividad=:actividad" );
         q.setParameter("usuario",usuario);
         q.setParameter("actividad",actividad);
-        return (Informe) q.getSingleResult();
+        return q.getResultList().size()>0? (Informe) q.getSingleResult() : null;
+    }
+    
+    public List<Informe> findByNactividad( int actividad){
+        Query q;
+        q = this.em.createQuery("select p from Informe p where P.actividad.nactividad=:actividad" );
+        q.setParameter("actividad",actividad);
+        return (List<Informe>) q.getResultList();
     }
     
 }

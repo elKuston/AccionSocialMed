@@ -5,13 +5,16 @@
  */
 
 import dao.ActividadFacade;
+import dao.EstudianteFacade;
 import dao.InformeFacade;
+import dao.PasFacade;
+import dao.ProfesorFacade;
 import dao.UsuarioFacade;
-import entity.Actividad;
 import entity.Informe;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -23,10 +26,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Angela
+ * @author romol
  */
-@WebServlet(urlPatterns = {"/InformeServlet"})
-public class InformeServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/EvaluarActividadServlet"})
+public class EvaluarActividadServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,58 +40,40 @@ public class InformeServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    @EJB UsuarioFacade usuarioFacade;
-    @EJB ActividadFacade actividadFacade;
     @EJB InformeFacade informeFacade;
-    
+    @EJB ActividadFacade actividadFacade;
+    @EJB ProfesorFacade profesorFacade;
+    @EJB PasFacade pasFacade;
+    @EJB EstudianteFacade estudianteFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int nAct = Integer.parseInt(request.getParameter("nAct"));
-        String correo = request.getParameter("correo");
-        Actividad act = actividadFacade.find(nAct);
-        List<Informe> informes = informeFacade.findAll();
-        Informe inf;
-        
-        boolean existe = false;
-        int pos = 0;
-        int id = 0;
-        
-        while(!existe && (pos < informes.size())) {
-            if (informes.get(pos).getActividad().getNactividad().equals(nAct)
-                    && (informes.get(pos).getParticipante().getCorreo().equals(correo))){
-                id = pos+1;
-                existe = true;
-            } else {
-                pos++;
-            }
-        }
-        
-        
-        if(existe) {
-            inf = informeFacade.find(id);
-        } else {
-            inf = new Informe();
-            inf.setIdinforme(informes.size()+1);
-            inf.setActividad(act);
-            inf.setParticipante(usuarioFacade.find(correo));
+        int nActividad = Integer.parseInt(request.getParameter("actividad"));
+        List<Usuario> usuarios = actividadFacade.find(nActividad).getUsuarioList();
+        List<String> apellidos = new ArrayList<>();
+        request.setAttribute("participantes", usuarios);
+        List<Informe> informes = new ArrayList<>();
+        for(Usuario u : usuarios){
             
-            if(act.getTipoActividad().equals("Aprendizaje-Servicio")){
-                Usuario p = usuarioFacade.find(act.getCorreoProfesor().getCorreo());
-                inf.setProfesor(p);
+            Informe i = informeFacade.findByUser(u.getCorreo(), nActividad);
+            informes.add(i);
+            
+            String apellido = "";
+            if (profesorFacade.find(u.getCorreo()) != null) {
+                apellido = u.getProfesor().getApellidos();
+            } else if (pasFacade.find(u.getCorreo()) != null) {
+                apellido =  u.getPas().getApellidos();
+            } else if (estudianteFacade.find(u.getCorreo()) != null) {
+                apellido =  u.getEstudiante().getApellidos();
             }
             
-            informeFacade.create(inf);
-            inf = informeFacade.find(informes.size()+1);
+            apellidos.add(apellido);
         }
+        request.setAttribute("apellidos", apellidos);
+        request.setAttribute("informes", informes);
         
-        request.setAttribute("informe", inf);
-        request.setAttribute("nombre", request.getParameter("nombre"));
-        request.setAttribute("actividad",act);         
-
-
-       RequestDispatcher rd = request.getRequestDispatcher("/informe.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/evaluarActividad.jsp");
         rd.forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

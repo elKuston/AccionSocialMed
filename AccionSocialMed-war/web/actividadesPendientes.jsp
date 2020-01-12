@@ -4,6 +4,7 @@
     Author     : romol
 --%>
 
+<%@page import="java.util.Date"%>
 <%@page import="entity.Actividad"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -37,8 +38,15 @@
                         }
                     }else{
                         estado = a.getValidada()? "Aceptada" : "Rechazada";
+                        boolean finalizada = a.getFechaFin()!=null&&a.getFechaFin().compareTo(new Date())<0;
+                        if(finalizada){
+                            estado = "finalizada";
+                        }
                         if(a.getValidada()){
                             acciones = "<a href=\"VerActividadServlet?actividad="+a.getNactividad()+"\">Ver</a>";
+                        }
+                        if(finalizada){
+                            acciones +="</br><a href=\"EvaluarActividadServlet?actividad="+a.getNactividad()+"\">Evaluar</a>";
                         }
                     }
                     

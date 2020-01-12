@@ -68,9 +68,9 @@ public class Informe implements Serializable {
     @JoinColumn(name = "ACTIVIDAD", referencedColumnName = "NACTIVIDAD")
     @ManyToOne
     private Actividad actividad;
-    @JoinColumn(name = "ESTUDIANTE", referencedColumnName = "CORREO")
+    @JoinColumn(name = "PARTICIPANTE", referencedColumnName = "CORREO")
     @ManyToOne
-    private Usuario estudiante;
+    private Usuario participante;
     @JoinColumn(name = "PROFESOR", referencedColumnName = "CORREO")
     @ManyToOne
     private Usuario profesor;
@@ -154,12 +154,12 @@ public class Informe implements Serializable {
         this.actividad = actividad;
     }
 
-    public Usuario getEstudiante() {
-        return estudiante;
+    public Usuario getParticipante() {
+        return participante;
     }
 
-    public void setEstudiante(Usuario estudiante) {
-        this.estudiante = estudiante;
+    public void setParticipante(Usuario participante) {
+        this.participante = participante;
     }
 
     public Usuario getProfesor() {

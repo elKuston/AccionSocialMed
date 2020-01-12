@@ -77,7 +77,7 @@ public class Usuario implements Serializable {
     private Ong ong;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Profesor profesor;
-    @OneToMany(mappedBy = "estudiante")
+    @OneToMany(mappedBy = "participante")
     private List<Informe> informeList;
     @OneToMany(mappedBy = "profesor")
     private List<Informe> informeList1;
