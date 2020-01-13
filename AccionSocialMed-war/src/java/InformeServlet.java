@@ -48,7 +48,7 @@ public class InformeServlet extends HttpServlet {
         String correo = request.getParameter("correo");
         Actividad act = actividadFacade.find(nAct);
         List<Informe> informes = informeFacade.findAll();
-        Informe inf;
+        /*Informe inf;
         
         boolean existe = false;
         int pos = 0;
@@ -62,12 +62,14 @@ public class InformeServlet extends HttpServlet {
             } else {
                 pos++;
             }
-        }
+        }*/
+        
+        //Todo eso se puede cambiar por un método que ya viene creado:
+        Informe inf = informeFacade.findByUser(correo, act.getNactividad());
+        boolean existe = inf!=null;
         
         
-        if(existe) {
-            inf = informeFacade.find(id);
-        } else {
+        if(!existe){
             inf = new Informe();
             inf.setIdinforme(informes.size()+1);
             inf.setActividad(act);

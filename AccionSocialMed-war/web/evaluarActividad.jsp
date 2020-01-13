@@ -16,11 +16,12 @@
         <title>Evaluar actividad</title>
     </head>
     <body>
-        <table style="border:3px">
+        <%@include file="messageService.jsp" %>
+        <table>
             <tr>
                 <th>Nombre del participante</th>
                 <th>Evaluado</th>
-                <th>Informe</th>
+                <!--<th>Informe</th>-->
                 <th>Evaluación</th>
             </tr>
             <%
@@ -45,7 +46,7 @@
                     <tr>
                         <td><%= apellido+", "+p.getNombre() %></td>
                         <td><%= evaluado? "Sí" : "No" %></td>
-                        <td><a href="verInformeServlet?informe=<%= evaluado? inf.getIdinforme() : "err" %>">Ver informe</a></td>
+                        <!--<td><a href="verInformeServlet?informe=<%= evaluado? inf.getIdinforme() : "err" %>">Ver informe</a></td>-->
                         <td><%= evaluacion %></td>
                     </tr>
                     <%

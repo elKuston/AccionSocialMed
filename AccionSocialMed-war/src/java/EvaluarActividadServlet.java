@@ -23,6 +23,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import services.MessageService;
 
 /**
  *
@@ -47,6 +48,7 @@ public class EvaluarActividadServlet extends HttpServlet {
     @EJB EstudianteFacade estudianteFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        MessageService.recibirMensaje(request);
         int nActividad = Integer.parseInt(request.getParameter("actividad"));
         List<Usuario> usuarios = actividadFacade.find(nActividad).getUsuarioList();
         List<String> apellidos = new ArrayList<>();

@@ -1,4 +1,7 @@
-    <%-- 
+    <%@page import="services.Utils"%>
+<%@page import="entity.Usuario"%>
+<%@page import="entity.Informe"%>
+<%-- 
     Document   : evaluarAlumno
     Created on : 13-ene-2020, 12:13:37
     Author     : romol
@@ -9,32 +12,50 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Evaluar alumno</title>
     </head>
     <body>
+        <%
+            Informe informe = (Informe) request.getAttribute("informe");
+            Usuario participante = (Usuario) request.getAttribute("participante");
+            String apellido = (String) request.getAttribute("apellido");
+            String informeInvalido = "El informe solicitado no se encuentra disponible. lamentamos las molestias.";
+            boolean informeValido = informe!=null;
+        %>
         <table>
             <tr>
                 <td>
                     <b>Informe:</b><br/>
                     <p>
-                        Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de ... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
-                    </p>
+                        <% if(!informeValido){%>
+                            <%= informeInvalido %>
+                        <%}else{%>
+                            Puntuación ONG (1-5): <%= informe.getNotaong() %><br/>
+                            Número de horas realizadas: <%= informe.getNhoras() %><br/>
+                            Comentario de la ONG: <%= informe.getComentarioong() %><br>
+                            
+                        <%} %>
+                        <br/>
+                     </p>
                 </td>
                 <td>
                     <b>Datos del alumno:</b><br/>
                     <p>
-                        Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de ... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
+                        Nombre: <%= apellido+", "+participante.getNombre() %><br/>
+                        Otros datos...
                     </p>
                 </td>
             </tr>
         </table>
-        <p>Fecha del informe: dd/mm/yyyy</p>
+        <p>Fecha del informe: <%= informeValido?informe.getFechainforme() : "DD/MM/YYYY" %></p>
         <form>
-            Evaluación: <input type="number" min="0" max="10" id="evaluacion"/><br/>
+            <input type="hidden" name="act" value="<%= informeValido? informe.getActividad().getNactividad() : "" %>"/>
+            <input type="hidden" name="part" value="<%= informeValido? participante.getCorreo() : "" %>"/>
+            Calificación: <input type="number" min="0" max="10" name="evaluacion" value="<%= informeValido? (informe.getNotaprofesor()!=null? informe.getNotaprofesor(): "") : "" %>" required/><br/>
             Comentario:<br>
-            <textarea name="comentario"></textarea>
+            <textarea name="comentario" cols="50" rows="5" ><%= informeValido? (informe.getComentarioprofesor()!=null? informe.getComentarioprofesor() : "") : "" %></textarea>
             <br/>
-            <input type="submit" value="Gardar Evaluación" />
+            <input type="submit" name ="guardar" value="Gardar Evaluación" />
         </form>
     </body>
 </html>

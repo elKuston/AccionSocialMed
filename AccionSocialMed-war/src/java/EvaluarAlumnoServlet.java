@@ -13,6 +13,7 @@ import entity.Informe;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import services.MessageService;
 import services.Utils;
 
 /**
@@ -45,10 +47,33 @@ public class EvaluarAlumnoServlet extends HttpServlet {
     @EJB EstudianteFacade estudianteFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if(request.getParameter("guardar")==null){
+           cargarDatos(request,response);
+        }else{
+            guardarDatos(request,response);
+        }
+        
+    }
+    
+    private void guardarDatos(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+        String correoParticipante = request.getParameter("part");
+        Informe informe = informeFacade.findByUser(correoParticipante, Integer.parseInt(request.getParameter("act")));
+        informe.setComentarioprofesor(request.getParameter("comentario"));
+        informe.setFechaevaluacion(new Date());
+        informe.setNotaprofesor(Integer.parseInt(request.getParameter("evaluacion")));
+        informeFacade.edit(informe);
+        
+        MessageService.enviarMensaje(request, "La evaluación se ha guardado correctamente.");
+        
+        RequestDispatcher rd = request.getRequestDispatcher("EvaluarActividadServlet?actividad="+Integer.parseInt(request.getParameter("act")));
+        rd.forward(request, response);
+    }
+    
+    private void cargarDatos(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
         String correoParticipante = request.getParameter("part");
         Informe informe = informeFacade.findByUser(correoParticipante, Integer.parseInt(request.getParameter("act")));
         Usuario u = usuarioFacade.find(correoParticipante);
-         String apellido = "";
+        String apellido = "";
             if (profesorFacade.find(u.getCorreo()) != null) {
                 apellido = u.getProfesor().getApellidos();
             } else if (pasFacade.find(u.getCorreo()) != null) {
