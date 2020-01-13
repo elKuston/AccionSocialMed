@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 
+import dao.EstudianteFacade;
 import dao.InformeFacade;
+import dao.PasFacade;
+import dao.ProfesorFacade;
 import dao.UsuarioFacade;
 import entity.Informe;
 import entity.Usuario;
@@ -17,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import services.Utils;
 
 /**
  *
@@ -36,13 +40,25 @@ public class EvaluarAlumnoServlet extends HttpServlet {
      */
     @EJB InformeFacade informeFacade;
     @EJB UsuarioFacade usuarioFacade;
+    @EJB ProfesorFacade profesorFacade;
+    @EJB PasFacade pasFacade;
+    @EJB EstudianteFacade estudianteFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String correoParticipante = request.getParameter("part");
         Informe informe = informeFacade.findByUser(correoParticipante, Integer.parseInt(request.getParameter("act")));
         Usuario u = usuarioFacade.find(correoParticipante);
+         String apellido = "";
+            if (profesorFacade.find(u.getCorreo()) != null) {
+                apellido = u.getProfesor().getApellidos();
+            } else if (pasFacade.find(u.getCorreo()) != null) {
+                apellido =  u.getPas().getApellidos();
+            } else if (estudianteFacade.find(u.getCorreo()) != null) {
+                apellido =  u.getEstudiante().getApellidos();
+            }
         request.setAttribute("informe", informe);
         request.setAttribute("participante", u);
+        request.setAttribute("apellido", apellido);
         
         
         RequestDispatcher rd = request.getRequestDispatcher("/evaluarAlumno.jsp");
