@@ -37,7 +37,7 @@
                     if(evaluado){
                         evaluacion = ""+inf.getNotaprofesor();
                     }
-                    String urlEvaluar = "\"EvaluarAlumnoServlet?part="+p.getCorreo()+"&&act="+actividad+"\"";
+                    String urlEvaluar = "\"EvaluarAlumnoServlet?part="+p.getCorreo()+"&act="+actividad+"\"";
                     evaluacion+="<a href="+urlEvaluar+">";
                     evaluacion+=evaluado? "modificar" : "evaluar";
                     evaluacion+="</a>";
