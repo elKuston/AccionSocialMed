@@ -14,9 +14,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+
 /**
  *
- * @author jange
+ * @author Angela
  */
 @Stateless
 public class ProfesorFacade extends AbstractFacade<Profesor> {
@@ -32,8 +33,7 @@ public class ProfesorFacade extends AbstractFacade<Profesor> {
     public ProfesorFacade() {
         super(Profesor.class);
     }
-    
-    public List<Profesor> getGestores(){
+        public List<Profesor> getGestores(){
         Query q;
         q = this.em.createQuery("select p from Profesor p where P.gestor=true");
         return q.getResultList();
@@ -45,5 +45,4 @@ public class ProfesorFacade extends AbstractFacade<Profesor> {
         q.setParameter("rec", receptor.getCorreo());
         return q.getResultList();
     }
-    
 }
