@@ -46,14 +46,21 @@
         <br/>
         <br/>
 
-        
+        <%if(plazas!=0){%>
         <form action="ConfirmacionUnionProfesorServlet" method="post">
             <input type="hidden" value="<%=act.getNactividad()%>" name="id"/>
             <% 
             if(!sesion.getAttribute("tipo").equals("ong")){
             %>
-            <input type="submit" name="boton" value="Quiero unirme">  <% } %>&nbsp &nbsp <input type="submit" name="boton" value="Volver">
+            <input type="submit" name="boton" value="Quiero unirme"> 
+            <% } %>
+            &nbsp &nbsp <input type="submit" name="boton" value="Volver">
         </form>
-           
+        <%}else{%>
+        Todas las plazas ocupadas, no puedes unirte.
+        <form action="IndexServlet" method="post">
+            <input type="submit" value="Volver">
+        </form>
+        <%}%>
     </body>
 </html>
