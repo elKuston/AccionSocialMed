@@ -35,26 +35,35 @@
                     <tr>
                         <th>Correo</th>
                         <th>Clave Registro</th>
+                        <th>Estado</th>
                         
                     </tr>
                     <%
                         for(int i = 0; i < ongs.size();i++) {
+                            if(!ongs.get(i).getClaveRegistro().equals(ongs.get(i).hashCode()+"")) {
                             %>
                              <tr>
                                  <td><%=ongs.get(i).getCorreo()%></td>
                         <td><%=ongs.get(i).getClaveRegistro()%></td>
+                        <form action="DarDeBajaServlet" method="post">
+                            <td colspan="1"><input name = "bajar" type = "hidden" value="<%=ongs.get(i).getCorreo()%>"><input type="submit" value="Dar de Baja"></td>
+                          
+      
+        </form>
                             </tr>
+                            
                             <%
+                                }
                         }
                                 %>
                     
                                 
                                         <tr>
                        <form action="IngresarONGServlet2" method="post">
-                           <td colspan="2"><input name="CorreoONG" placeholder="Correo de la ONG" size="30" maxlength="30" /> <input type="submit" value="Ingresar ONG"></td>
+                           <td colspan="3"><input name="CorreoONG" placeholder="Correo de la ONG" size="30" maxlength="30" /> <input type="submit" value="Ingresar ONG"></td>
                           
       
-        <form/>
+        </form>
                         
                     </tr>
                 </table>
