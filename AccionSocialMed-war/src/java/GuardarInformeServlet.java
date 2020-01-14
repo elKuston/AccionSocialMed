@@ -77,7 +77,9 @@ public class GuardarInformeServlet extends HttpServlet {
         
         n.setReceptor(inf.getProfesor());
                 n.setContenido("La ONG " + inf.getActividad().getOng().getUsuario().getNombre() + " ha realizado un informe. Puede evaluar al alumno aquí: "
-                        + "<form action=\"EvaluarActividadServlet?actividad="+inf.getActividad().getNactividad()+"\"><input type=\"submit\" name=\"boton\" value=\"Evaluar\">\n"
+                        + "<form action=\"EvaluarActividadServlet\">"
+                                + "<input type=\"submit\" name=\"actividad\" value=\""+inf.getActividad().getNactividad()+"\"/>"
+                                + "<input type=\"submit\" name=\"boton\" value=\"Evaluar\">\n"
                         + "</form>");
                 
                  notificacionFacade.create(n);
