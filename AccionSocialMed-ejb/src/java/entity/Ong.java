@@ -6,7 +6,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author jange
+ * @author Angela
  */
 @Entity
 @Table(name = "ONG")
@@ -62,7 +62,7 @@ public class Ong implements Serializable {
     @Column(name = "ACTIVA")
     private Boolean activa;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ong")
-    private List<Actividad> actividadList;
+    private Collection<Actividad> actividadCollection;
     @JoinColumn(name = "CORREO", referencedColumnName = "CORREO", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Usuario usuario;
@@ -121,12 +121,12 @@ public class Ong implements Serializable {
     }
 
     @XmlTransient
-    public List<Actividad> getActividadList() {
-        return actividadList;
+    public Collection<Actividad> getActividadCollection() {
+        return actividadCollection;
     }
 
-    public void setActividadList(List<Actividad> actividadList) {
-        this.actividadList = actividadList;
+    public void setActividadCollection(Collection<Actividad> actividadCollection) {
+        this.actividadCollection = actividadCollection;
     }
 
     public Usuario getUsuario() {

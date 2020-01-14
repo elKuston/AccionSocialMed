@@ -6,8 +6,8 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author jange
+ * @author Angela
  */
 @Entity
 @Table(name = "ACTIVIDAD")
@@ -88,12 +88,12 @@ public class Actividad implements Serializable {
         @JoinColumn(name = "NACTIVIDAD", referencedColumnName = "NACTIVIDAD")}, inverseJoinColumns = {
         @JoinColumn(name = "USUARIO", referencedColumnName = "CORREO")})
     @ManyToMany
-    private List<Usuario> usuarioList;
+    private Collection<Usuario> usuarioCollection;
     @JoinTable(name = "ETIQUETAS_ACTIVIDAD", joinColumns = {
         @JoinColumn(name = "ACTIVIDAD", referencedColumnName = "NACTIVIDAD")}, inverseJoinColumns = {
         @JoinColumn(name = "ETIQUETA", referencedColumnName = "ETIQUETA")})
     @ManyToMany
-    private List<Etiqueta> etiquetaList;
+    private Collection<Etiqueta> etiquetaCollection;
     @JoinColumn(name = "ASIGNATURA_ASOCIADA", referencedColumnName = "COD_ASIGNATURA")
     @ManyToOne
     private Asignatura asignaturaAsociada;
@@ -104,7 +104,7 @@ public class Actividad implements Serializable {
     @ManyToOne
     private Profesor correoProfesor;
     @OneToMany(mappedBy = "actividad")
-    private List<Informe> informeList;
+    private Collection<Informe> informeCollection;
 
     public Actividad() {
     }
@@ -201,21 +201,21 @@ public class Actividad implements Serializable {
     }
 
     @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
+    public Collection<Usuario> getUsuarioCollection() {
+        return usuarioCollection;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
+    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
+        this.usuarioCollection = usuarioCollection;
     }
 
     @XmlTransient
-    public List<Etiqueta> getEtiquetaList() {
-        return etiquetaList;
+    public Collection<Etiqueta> getEtiquetaCollection() {
+        return etiquetaCollection;
     }
 
-    public void setEtiquetaList(List<Etiqueta> etiquetaList) {
-        this.etiquetaList = etiquetaList;
+    public void setEtiquetaCollection(Collection<Etiqueta> etiquetaCollection) {
+        this.etiquetaCollection = etiquetaCollection;
     }
 
     public Asignatura getAsignaturaAsociada() {
@@ -243,12 +243,12 @@ public class Actividad implements Serializable {
     }
 
     @XmlTransient
-    public List<Informe> getInformeList() {
-        return informeList;
+    public Collection<Informe> getInformeCollection() {
+        return informeCollection;
     }
 
-    public void setInformeList(List<Informe> informeList) {
-        this.informeList = informeList;
+    public void setInformeCollection(Collection<Informe> informeCollection) {
+        this.informeCollection = informeCollection;
     }
 
     @Override

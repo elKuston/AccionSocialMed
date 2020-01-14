@@ -6,8 +6,8 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author jange
+ * @author Angela
  */
 @Entity
 @Table(name = "PROFESOR")
@@ -61,9 +61,9 @@ public class Profesor implements Serializable {
         @JoinColumn(name = "CORREO_PROFESOR", referencedColumnName = "CORREO")}, inverseJoinColumns = {
         @JoinColumn(name = "COD_ASIGNATURA", referencedColumnName = "COD_ASIGNATURA")})
     @ManyToMany
-    private List<Asignatura> asignaturaList;
+    private Collection<Asignatura> asignaturaCollection;
     @OneToMany(mappedBy = "correoProfesor")
-    private List<Actividad> actividadList;
+    private Collection<Actividad> actividadCollection;
     @JoinColumn(name = "CORREO", referencedColumnName = "CORREO", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Usuario usuario;
@@ -108,21 +108,21 @@ public class Profesor implements Serializable {
     }
 
     @XmlTransient
-    public List<Asignatura> getAsignaturaList() {
-        return asignaturaList;
+    public Collection<Asignatura> getAsignaturaCollection() {
+        return asignaturaCollection;
     }
 
-    public void setAsignaturaList(List<Asignatura> asignaturaList) {
-        this.asignaturaList = asignaturaList;
+    public void setAsignaturaCollection(Collection<Asignatura> asignaturaCollection) {
+        this.asignaturaCollection = asignaturaCollection;
     }
 
     @XmlTransient
-    public List<Actividad> getActividadList() {
-        return actividadList;
+    public Collection<Actividad> getActividadCollection() {
+        return actividadCollection;
     }
 
-    public void setActividadList(List<Actividad> actividadList) {
-        this.actividadList = actividadList;
+    public void setActividadCollection(Collection<Actividad> actividadCollection) {
+        this.actividadCollection = actividadCollection;
     }
 
     public Usuario getUsuario() {

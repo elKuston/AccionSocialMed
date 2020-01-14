@@ -6,7 +6,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author jange
+ * @author Angela
  */
 @Entity
 @Table(name = "USUARIO")
@@ -64,13 +64,13 @@ public class Usuario implements Serializable {
     private String localidad;
     @Column(name = "TURNOTARDE")
     private Boolean turnotarde;
-    @ManyToMany(mappedBy = "usuarioList")
-    private List<Actividad> actividadList;
+    @ManyToMany(mappedBy = "usuarioCollection")
+    private Collection<Actividad> actividadCollection;
     @JoinTable(name = "ETIQUETAS_USUARIO", joinColumns = {
         @JoinColumn(name = "CORREO", referencedColumnName = "CORREO")}, inverseJoinColumns = {
         @JoinColumn(name = "ETIQUETA", referencedColumnName = "ETIQUETA")})
     @ManyToMany
-    private List<Etiqueta> etiquetaList;
+    private Collection<Etiqueta> etiquetaCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Pas pas;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
@@ -78,19 +78,19 @@ public class Usuario implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Profesor profesor;
     @OneToMany(mappedBy = "participante")
-    private List<Informe> informeList;
+    private Collection<Informe> informeCollection;
     @OneToMany(mappedBy = "profesor")
-    private List<Informe> informeList1;
+    private Collection<Informe> informeCollection1;
     @OneToMany(mappedBy = "emisor")
-    private List<Notificacion> notificacionList;
+    private Collection<Notificacion> notificacionCollection;
     @OneToMany(mappedBy = "receptor")
-    private List<Notificacion> notificacionList1;
+    private Collection<Notificacion> notificacionCollection1;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Estudiante estudiante;
     @OneToMany(mappedBy = "emisor")
-    private List<Mensaje> mensajeList;
+    private Collection<Mensaje> mensajeCollection;
     @OneToMany(mappedBy = "receptor")
-    private List<Mensaje> mensajeList1;
+    private Collection<Mensaje> mensajeCollection1;
 
     public Usuario() {
     }
@@ -153,21 +153,21 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public List<Actividad> getActividadList() {
-        return actividadList;
+    public Collection<Actividad> getActividadCollection() {
+        return actividadCollection;
     }
 
-    public void setActividadList(List<Actividad> actividadList) {
-        this.actividadList = actividadList;
+    public void setActividadCollection(Collection<Actividad> actividadCollection) {
+        this.actividadCollection = actividadCollection;
     }
 
     @XmlTransient
-    public List<Etiqueta> getEtiquetaList() {
-        return etiquetaList;
+    public Collection<Etiqueta> getEtiquetaCollection() {
+        return etiquetaCollection;
     }
 
-    public void setEtiquetaList(List<Etiqueta> etiquetaList) {
-        this.etiquetaList = etiquetaList;
+    public void setEtiquetaCollection(Collection<Etiqueta> etiquetaCollection) {
+        this.etiquetaCollection = etiquetaCollection;
     }
 
     public Pas getPas() {
@@ -195,39 +195,39 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public List<Informe> getInformeList() {
-        return informeList;
+    public Collection<Informe> getInformeCollection() {
+        return informeCollection;
     }
 
-    public void setInformeList(List<Informe> informeList) {
-        this.informeList = informeList;
-    }
-
-    @XmlTransient
-    public List<Informe> getInformeList1() {
-        return informeList1;
-    }
-
-    public void setInformeList1(List<Informe> informeList1) {
-        this.informeList1 = informeList1;
+    public void setInformeCollection(Collection<Informe> informeCollection) {
+        this.informeCollection = informeCollection;
     }
 
     @XmlTransient
-    public List<Notificacion> getNotificacionList() {
-        return notificacionList;
+    public Collection<Informe> getInformeCollection1() {
+        return informeCollection1;
     }
 
-    public void setNotificacionList(List<Notificacion> notificacionList) {
-        this.notificacionList = notificacionList;
+    public void setInformeCollection1(Collection<Informe> informeCollection1) {
+        this.informeCollection1 = informeCollection1;
     }
 
     @XmlTransient
-    public List<Notificacion> getNotificacionList1() {
-        return notificacionList1;
+    public Collection<Notificacion> getNotificacionCollection() {
+        return notificacionCollection;
     }
 
-    public void setNotificacionList1(List<Notificacion> notificacionList1) {
-        this.notificacionList1 = notificacionList1;
+    public void setNotificacionCollection(Collection<Notificacion> notificacionCollection) {
+        this.notificacionCollection = notificacionCollection;
+    }
+
+    @XmlTransient
+    public Collection<Notificacion> getNotificacionCollection1() {
+        return notificacionCollection1;
+    }
+
+    public void setNotificacionCollection1(Collection<Notificacion> notificacionCollection1) {
+        this.notificacionCollection1 = notificacionCollection1;
     }
 
     public Estudiante getEstudiante() {
@@ -239,21 +239,21 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public List<Mensaje> getMensajeList() {
-        return mensajeList;
+    public Collection<Mensaje> getMensajeCollection() {
+        return mensajeCollection;
     }
 
-    public void setMensajeList(List<Mensaje> mensajeList) {
-        this.mensajeList = mensajeList;
+    public void setMensajeCollection(Collection<Mensaje> mensajeCollection) {
+        this.mensajeCollection = mensajeCollection;
     }
 
     @XmlTransient
-    public List<Mensaje> getMensajeList1() {
-        return mensajeList1;
+    public Collection<Mensaje> getMensajeCollection1() {
+        return mensajeCollection1;
     }
 
-    public void setMensajeList1(List<Mensaje> mensajeList1) {
-        this.mensajeList1 = mensajeList1;
+    public void setMensajeCollection1(Collection<Mensaje> mensajeCollection1) {
+        this.mensajeCollection1 = mensajeCollection1;
     }
 
     @Override

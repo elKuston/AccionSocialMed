@@ -6,7 +6,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author jange
+ * @author Angela
  */
 @Entity
 @Table(name = "ETIQUETA")
@@ -42,10 +42,10 @@ public class Etiqueta implements Serializable {
     private String etiqueta;
     @Column(name = "TIPO")
     private Integer tipo;
-    @ManyToMany(mappedBy = "etiquetaList")
-    private List<Actividad> actividadList;
-    @ManyToMany(mappedBy = "etiquetaList")
-    private List<Usuario> usuarioList;
+    @ManyToMany(mappedBy = "etiquetaCollection")
+    private Collection<Actividad> actividadCollection;
+    @ManyToMany(mappedBy = "etiquetaCollection")
+    private Collection<Usuario> usuarioCollection;
 
     public Etiqueta() {
     }
@@ -71,21 +71,21 @@ public class Etiqueta implements Serializable {
     }
 
     @XmlTransient
-    public List<Actividad> getActividadList() {
-        return actividadList;
+    public Collection<Actividad> getActividadCollection() {
+        return actividadCollection;
     }
 
-    public void setActividadList(List<Actividad> actividadList) {
-        this.actividadList = actividadList;
+    public void setActividadCollection(Collection<Actividad> actividadCollection) {
+        this.actividadCollection = actividadCollection;
     }
 
     @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
+    public Collection<Usuario> getUsuarioCollection() {
+        return usuarioCollection;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
+    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
+        this.usuarioCollection = usuarioCollection;
     }
 
     @Override
