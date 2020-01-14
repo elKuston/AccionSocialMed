@@ -6,13 +6,15 @@
 package dao;
 
 import entity.Mensaje;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
- * @author Angela
+ * @author jange
  */
 @Stateless
 public class MensajeFacade extends AbstractFacade<Mensaje> {
@@ -29,4 +31,17 @@ public class MensajeFacade extends AbstractFacade<Mensaje> {
         super(Mensaje.class);
     }
     
+    public List<Mensaje> findByActualUser(String usuario){
+        Query q;
+        q = this.em.createQuery("select p from Mensaje p where P.receptor.correo = :usuario and P.leido=false" );
+        q.setParameter("usuario",usuario);
+        return q.getResultList();
+    }
+    
+    public List<Mensaje> findBySalientes(String usuario){
+        Query q;
+        q = this.em.createQuery("select p from Mensaje p where P.emisor.correo = :usuario and P.leido=false" );
+        q.setParameter("usuario",usuario);
+        return q.getResultList();
+    }
 }

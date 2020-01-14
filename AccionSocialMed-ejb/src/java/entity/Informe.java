@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Angela
+ * @author jange
  */
 @Entity
 @Table(name = "INFORME")
@@ -33,14 +33,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Informe.findAll", query = "SELECT i FROM Informe i")
     , @NamedQuery(name = "Informe.findByIdinforme", query = "SELECT i FROM Informe i WHERE i.idinforme = :idinforme")
     , @NamedQuery(name = "Informe.findByNotaong", query = "SELECT i FROM Informe i WHERE i.notaong = :notaong")
-    , @NamedQuery(name = "Informe.findByNotapart", query = "SELECT i FROM Informe i WHERE i.notapart = :notapart")
     , @NamedQuery(name = "Informe.findByComentarioong", query = "SELECT i FROM Informe i WHERE i.comentarioong = :comentarioong")
     , @NamedQuery(name = "Informe.findByComentarioprofesor", query = "SELECT i FROM Informe i WHERE i.comentarioprofesor = :comentarioprofesor")
-    , @NamedQuery(name = "Informe.findByComentarioparticipante", query = "SELECT i FROM Informe i WHERE i.comentarioparticipante = :comentarioparticipante")
     , @NamedQuery(name = "Informe.findByNotaprofesor", query = "SELECT i FROM Informe i WHERE i.notaprofesor = :notaprofesor")
     , @NamedQuery(name = "Informe.findByFechainforme", query = "SELECT i FROM Informe i WHERE i.fechainforme = :fechainforme")
     , @NamedQuery(name = "Informe.findByFechaevaluacion", query = "SELECT i FROM Informe i WHERE i.fechaevaluacion = :fechaevaluacion")
-    , @NamedQuery(name = "Informe.findByFechacomentario", query = "SELECT i FROM Informe i WHERE i.fechacomentario = :fechacomentario")
     , @NamedQuery(name = "Informe.findByNhoras", query = "SELECT i FROM Informe i WHERE i.nhoras = :nhoras")})
 public class Informe implements Serializable {
 
@@ -52,17 +49,12 @@ public class Informe implements Serializable {
     private Integer idinforme;
     @Column(name = "NOTAONG")
     private Integer notaong;
-    @Column(name = "NOTAPART")
-    private Integer notapart;
     @Size(max = 5000)
     @Column(name = "COMENTARIOONG")
     private String comentarioong;
     @Size(max = 5000)
     @Column(name = "COMENTARIOPROFESOR")
     private String comentarioprofesor;
-    @Size(max = 5000)
-    @Column(name = "COMENTARIOPARTICIPANTE")
-    private String comentarioparticipante;
     @Column(name = "NOTAPROFESOR")
     private Integer notaprofesor;
     @Column(name = "FECHAINFORME")
@@ -71,9 +63,6 @@ public class Informe implements Serializable {
     @Column(name = "FECHAEVALUACION")
     @Temporal(TemporalType.DATE)
     private Date fechaevaluacion;
-    @Column(name = "FECHACOMENTARIO")
-    @Temporal(TemporalType.DATE)
-    private Date fechacomentario;
     @Column(name = "NHORAS")
     private Integer nhoras;
     @JoinColumn(name = "ACTIVIDAD", referencedColumnName = "NACTIVIDAD")
@@ -109,14 +98,6 @@ public class Informe implements Serializable {
         this.notaong = notaong;
     }
 
-    public Integer getNotapart() {
-        return notapart;
-    }
-
-    public void setNotapart(Integer notapart) {
-        this.notapart = notapart;
-    }
-
     public String getComentarioong() {
         return comentarioong;
     }
@@ -131,14 +112,6 @@ public class Informe implements Serializable {
 
     public void setComentarioprofesor(String comentarioprofesor) {
         this.comentarioprofesor = comentarioprofesor;
-    }
-
-    public String getComentarioparticipante() {
-        return comentarioparticipante;
-    }
-
-    public void setComentarioparticipante(String comentarioparticipante) {
-        this.comentarioparticipante = comentarioparticipante;
     }
 
     public Integer getNotaprofesor() {
@@ -163,14 +136,6 @@ public class Informe implements Serializable {
 
     public void setFechaevaluacion(Date fechaevaluacion) {
         this.fechaevaluacion = fechaevaluacion;
-    }
-
-    public Date getFechacomentario() {
-        return fechacomentario;
-    }
-
-    public void setFechacomentario(Date fechacomentario) {
-        this.fechacomentario = fechacomentario;
     }
 
     public Integer getNhoras() {

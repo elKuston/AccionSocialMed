@@ -6,7 +6,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Angela
+ * @author jange
  */
 @Entity
 @Table(name = "ASIGNATURA")
@@ -50,12 +50,12 @@ public class Asignatura implements Serializable {
     @NotNull
     @Column(name = "N_CREDITOS")
     private int nCreditos;
-    @ManyToMany(mappedBy = "asignaturaCollection")
-    private Collection<Estudiante> estudianteCollection;
-    @ManyToMany(mappedBy = "asignaturaCollection")
-    private Collection<Profesor> profesorCollection;
+    @ManyToMany(mappedBy = "asignaturaList")
+    private List<Estudiante> estudianteList;
+    @ManyToMany(mappedBy = "asignaturaList")
+    private List<Profesor> profesorList;
     @OneToMany(mappedBy = "asignaturaAsociada")
-    private Collection<Actividad> actividadCollection;
+    private List<Actividad> actividadList;
 
     public Asignatura() {
     }
@@ -95,30 +95,30 @@ public class Asignatura implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Estudiante> getEstudianteCollection() {
-        return estudianteCollection;
+    public List<Estudiante> getEstudianteList() {
+        return estudianteList;
     }
 
-    public void setEstudianteCollection(Collection<Estudiante> estudianteCollection) {
-        this.estudianteCollection = estudianteCollection;
-    }
-
-    @XmlTransient
-    public Collection<Profesor> getProfesorCollection() {
-        return profesorCollection;
-    }
-
-    public void setProfesorCollection(Collection<Profesor> profesorCollection) {
-        this.profesorCollection = profesorCollection;
+    public void setEstudianteList(List<Estudiante> estudianteList) {
+        this.estudianteList = estudianteList;
     }
 
     @XmlTransient
-    public Collection<Actividad> getActividadCollection() {
-        return actividadCollection;
+    public List<Profesor> getProfesorList() {
+        return profesorList;
     }
 
-    public void setActividadCollection(Collection<Actividad> actividadCollection) {
-        this.actividadCollection = actividadCollection;
+    public void setProfesorList(List<Profesor> profesorList) {
+        this.profesorList = profesorList;
+    }
+
+    @XmlTransient
+    public List<Actividad> getActividadList() {
+        return actividadList;
+    }
+
+    public void setActividadList(List<Actividad> actividadList) {
+        this.actividadList = actividadList;
     }
 
     @Override

@@ -6,8 +6,8 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Angela
+ * @author jange
  */
 @Entity
 @Table(name = "ESTUDIANTE")
@@ -57,7 +57,7 @@ public class Estudiante implements Serializable {
         @JoinColumn(name = "CORREO_ESTUDIANTE", referencedColumnName = "CORREO")}, inverseJoinColumns = {
         @JoinColumn(name = "COD_ASIGNATURA", referencedColumnName = "COD_ASIGNATURA")})
     @ManyToMany
-    private Collection<Asignatura> asignaturaCollection;
+    private List<Asignatura> asignaturaList;
     @JoinColumn(name = "CORREO", referencedColumnName = "CORREO", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Usuario usuario;
@@ -94,12 +94,12 @@ public class Estudiante implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Asignatura> getAsignaturaCollection() {
-        return asignaturaCollection;
+    public List<Asignatura> getAsignaturaList() {
+        return asignaturaList;
     }
 
-    public void setAsignaturaCollection(Collection<Asignatura> asignaturaCollection) {
-        this.asignaturaCollection = asignaturaCollection;
+    public void setAsignaturaList(List<Asignatura> asignaturaList) {
+        this.asignaturaList = asignaturaList;
     }
 
     public Usuario getUsuario() {

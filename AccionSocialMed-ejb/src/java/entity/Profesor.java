@@ -6,8 +6,8 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Angela
+ * @author jange
  */
 @Entity
 @Table(name = "PROFESOR")
@@ -61,9 +61,9 @@ public class Profesor implements Serializable {
         @JoinColumn(name = "CORREO_PROFESOR", referencedColumnName = "CORREO")}, inverseJoinColumns = {
         @JoinColumn(name = "COD_ASIGNATURA", referencedColumnName = "COD_ASIGNATURA")})
     @ManyToMany
-    private Collection<Asignatura> asignaturaCollection;
+    private List<Asignatura> asignaturaList;
     @OneToMany(mappedBy = "correoProfesor")
-    private Collection<Actividad> actividadCollection;
+    private List<Actividad> actividadList;
     @JoinColumn(name = "CORREO", referencedColumnName = "CORREO", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Usuario usuario;
@@ -108,21 +108,21 @@ public class Profesor implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Asignatura> getAsignaturaCollection() {
-        return asignaturaCollection;
+    public List<Asignatura> getAsignaturaList() {
+        return asignaturaList;
     }
 
-    public void setAsignaturaCollection(Collection<Asignatura> asignaturaCollection) {
-        this.asignaturaCollection = asignaturaCollection;
+    public void setAsignaturaList(List<Asignatura> asignaturaList) {
+        this.asignaturaList = asignaturaList;
     }
 
     @XmlTransient
-    public Collection<Actividad> getActividadCollection() {
-        return actividadCollection;
+    public List<Actividad> getActividadList() {
+        return actividadList;
     }
 
-    public void setActividadCollection(Collection<Actividad> actividadCollection) {
-        this.actividadCollection = actividadCollection;
+    public void setActividadList(List<Actividad> actividadList) {
+        this.actividadList = actividadList;
     }
 
     public Usuario getUsuario() {
