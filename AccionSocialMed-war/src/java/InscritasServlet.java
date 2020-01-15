@@ -39,14 +39,7 @@ public class InscritasServlet extends HttpServlet {
      @EJB ActividadFacade actividadFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession sesion = request.getSession();
-        Usuario user = (Usuario) sesion.getAttribute("usuario");
-        
-        
-        List<Actividad> insc = user.getActividadList();
-                
-        request.setAttribute("al", insc);
-       
+      
         
         RequestDispatcher rd = request.getRequestDispatcher("/inscritas.jsp");
         rd.forward(request, response);

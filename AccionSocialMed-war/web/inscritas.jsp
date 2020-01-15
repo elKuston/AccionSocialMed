@@ -15,7 +15,6 @@
 <!DOCTYPE html>
 <%
 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY HH:mm");    
-List<Actividad> ins = (List<Actividad>) request.getAttribute("al");
 HttpSession sesion = request.getSession();
 Usuario user = (Usuario) sesion.getAttribute("usuario");
 String correo = user.getCorreo();
@@ -30,10 +29,10 @@ String correo = user.getCorreo();
             <a href="IndexServlet">Inicio</a>
         </div></h3>
         
-        <% if (ins.size()==0) {%>
-        <h2>No te has inscrito a ninguna actividad </h21>
+        <% if (user.getActividadList().isEmpty()) {%>
+        <h2>No te has inscrito a ninguna actividad </h2>
         <% } else {%>
-        <h2>Tus actividades inscritas: <%= ins.size()%> </h2>
+        <h2>Tus actividades inscritas: <%= user.getActividadList().size() %> </h2>
          <table border="1">
             <tr>
                 <th>Nombre</th>
@@ -45,7 +44,7 @@ String correo = user.getCorreo();
                 <th>Detalles</th>
             </tr>
             
-                <% for (Actividad a : ins) { %>  
+                <% for (Actividad a : user.getActividadList()) { %>  
                 <tr>
                     <td><b> <%= a.getTitulo() %> </b></td>
                     <td> <%= a.getTipoActividad() %> </td>
@@ -82,11 +81,8 @@ String correo = user.getCorreo();
                             <%} else {%>
                                     <input type="submit" value="Descargar" disabled> 
                             <%}%>
-
-                           
-
-                
-                <td><form action="VerInscritaServlet" method="post">
+  
+                <td><form action="VerActividadServlet" method="post">
                         <input type="hidden" value="<%=a.getNactividad() %>" name="actividad"/>
                         <input type="submit" value="Ver actividad" >
                     </form>   </td>

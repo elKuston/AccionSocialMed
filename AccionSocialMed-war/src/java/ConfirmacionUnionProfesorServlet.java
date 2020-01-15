@@ -68,15 +68,7 @@ public class ConfirmacionUnionProfesorServlet extends HttpServlet {
                             + "<input type=\"hidden\" value=\"" + not.getIdnotificacion() + "\" name=\"notificacion\"/>\n"
                             + "<input type=\"submit\" name=\"boton\" value=\"Revisar\">\n"
                             + "</form>");
-                } else if (act.getTipoActividad().equals("Aprendizaje-Servicio")) {
-                    not.setReceptor(act.getAsignaturaAsociada().getProfesorList().get(0).getUsuario());
-                    not.setContenido("El usuario " + user.getNombre() + " quiere participar en una actividad, consulte el resto de la informacion aqui"
-                            + "<form action=\"RevisionServlet\" method=\"post\">\n"
-                            + "<input type=\"hidden\" value=\"" + act.getNactividad() + "\" name=\"actividad\"/>\n"
-                            + "<input type=\"hidden\" value=\"" + user.getCorreo() + "\" name=\"solicitante\"/>\n"
-                            + "<input type=\"hidden\" value=\"" + not.getIdnotificacion() + "\" name=\"notificacion\"/>\n"
-                            + "<input type=\"submit\" name=\"boton\" value=\"Revisar\">\n"
-                            + "</form>");
+
                 } else {
                     not.setReceptor(act.getCorreoProfesor().getUsuario());
                     not.setContenido("El usuario " + user.getNombre() + " quiere participar en una actividad, consulte el resto de la informacion aqui"

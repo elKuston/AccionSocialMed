@@ -4,6 +4,9 @@
     Author     : jange
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="java.util.List"%>
+<%@page import="entity.Usuario"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="entity.Etiqueta"%>
 <%@page import="entity.Actividad"%>
@@ -16,6 +19,7 @@
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
     String fechaInicio = format.format(act.getFechaInicio());
     String fechaFin = act.getFechaFin() != null ? format.format(act.getFechaFin()) : "No definida";
+    Usuario user = (Usuario) sesion.getAttribute("usuario");
 %>
 <html>
     <head>
@@ -23,6 +27,10 @@
         <title>Ver Actividad</title>
     </head>
     <body>
+        <div style="float:right">
+            <a href="IndexServlet">Inicio</a>
+        </div>
+        
         <h1>Actividad</h1>
         <b>ONG: </b> <%=act.getOng().getUsuario().getNombre() %><br/><br/>
         <b>Nombre:</b><%= act.getTitulo()%> &nbsp &nbsp 
@@ -45,22 +53,28 @@
         <%}%>
         <br/>
         <br/>
-
-        <%if(plazas!=0){%>
-        <form action="ConfirmacionUnionProfesorServlet" method="post">
-            <input type="hidden" value="<%=act.getNactividad()%>" name="id"/>
-            <% 
+        
+         <%  
             if(!sesion.getAttribute("tipo").equals("ong")){
-            %>
-            <input type="submit" name="boton" value="Quiero unirme"> 
-            <% } %>
-            &nbsp &nbsp <input type="submit" name="boton" value="Volver">
-        </form>
-        <%}else{%>
-        Todas las plazas ocupadas, no puedes unirte.
-        <form action="IndexServlet" method="post">
-            <input type="submit" value="Volver">
-        </form>
-        <%}%>
+             if (user.getActividadList().contains(act)) {
+                Date ahora = new Date();
+                if (ahora.before(act.getFechaFin())){%>
+                <form action="CancelarParticipacionServlet" method="post">
+                <input type="submit" name="btnCanc" value="Cancelar participación">
+                <input type="hidden" value="<%=act.getNactividad()%>" name="id"/>
+                </form><br>
+                <%} else  {%>
+                <h3><u>Actividad finalizada</u></h3>
+             <%} } else {
+            if(plazas != 0) { %>
+            <form action="ConfirmacionUnionProfesorServlet" method="post">
+            <input type="hidden" value="<%=act.getNactividad()%>" name="id"/>
+            <input type="submit" name="boton" value="Quiero unirme">
+            </form>
+            <br> 
+            <%} else { %>
+            Todas las plazas ocupadas, no puedes unirte.
+            <%}}}%>
+            <input type="button" onclick="history.back()" name="volver" value="Volver">
     </body>
 </html>
