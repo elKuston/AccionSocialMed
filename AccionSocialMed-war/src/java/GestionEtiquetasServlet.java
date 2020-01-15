@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 
-import dao.OngFacade;
+import dao.EtiquetaFacade;
 import dao.UsuarioFacade;
+import entity.Etiqueta;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,10 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Angela
+ * @author gdiar
  */
-@WebServlet(urlPatterns = {"/OngRegister1Servlet"})
-public class OngRegister1Servlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/GestionEtiquetasServlet"})
+public class GestionEtiquetasServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,31 +36,15 @@ public class OngRegister1Servlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @EJB UsuarioFacade usuarioFacade;
-    @EJB OngFacade ongFacade;
-    
+    @EJB EtiquetaFacade etiquetaFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String clave = request.getParameter("clave");
-       String correo = request.getParameter("correo");
-       String dir = "/ongRegister1.jsp";
-       
-        if (ongFacade.find(correo) != null)
-       {       
-           if ( !(usuarioFacade.find(correo).getOng().getActiva())){ //si la ong no esta activa
-               if (usuarioFacade.find(correo).getOng().getClaveRegistro().equals(clave)) { //y la clave es corrrecta
-               dir = "/ongRegister2.jsp";
-               } else {
-                   request.setAttribute("mensaje", "Clave incorrecta");
-               }            
-           } else {
-               request.setAttribute("mensaje", "Cuenta ya activada");               
-           }
-       } else {
-            request.setAttribute("mensaje", "Correo no activable. Consulte con el gestor.");
-        }
-       
-       request.setAttribute("usuario",usuarioFacade.find(correo));
-       RequestDispatcher rd = request.getRequestDispatcher(dir);
+        
+        List<Etiqueta> e = etiquetaFacade.findAll();
+        
+        request.setAttribute("et", e);
+        
+                 RequestDispatcher rd = request.getRequestDispatcher("/GestionEtiquetas.jsp");
         rd.forward(request, response);
     }
 

@@ -189,7 +189,7 @@
         
         
         
-        
+        <a  href="GestionEtiquetasServlet">Testing gestion etiquetas </a><br/><br/>
         
         <a  href="CerrarSesionServlet">CERRAR SESION </a><br/><br/>
         <% 
