@@ -16,6 +16,7 @@ import dao.PasFacade;
 import dao.ProfesorFacade;
 import dao.UsuarioFacade;
 import entity.Asignatura;
+import entity.Estudiante;
 import entity.Profesor;
 import entity.Usuario;
 import java.io.BufferedReader;
@@ -101,8 +102,7 @@ public class LoginUmaServlet extends HttpServlet {
                     sesion.setAttribute("tipo", "profesor");
                     
                             
-                //se supone que aqui obtengo las asignaturas que imparte
-                
+                //se supone que aqui obtengo las asignaturas que imparte 
                 List<Asignatura> asignaturas = new ArrayList<>();
                        JsonObject jRaw = new Gson().fromJson(resultado, JsonObject.class);
                         JsonArray asignaturasJson = jRaw.get("courses").getAsJsonArray();
@@ -132,6 +132,34 @@ public class LoginUmaServlet extends HttpServlet {
                     sesion.setAttribute("tipo", "pas");
                 }else if (estudianteFacade.find(correo) != null) {
                     sesion.setAttribute("tipo", "estudiante");
+                    
+                    //se supone que aqui obtengo las asignaturas en las que esta matriculado
+                    List<Asignatura> asignaturas = new ArrayList<>();
+                       JsonObject jRaw = new Gson().fromJson(resultado, JsonObject.class);
+                        JsonArray asignaturasJson = jRaw.get("courses").getAsJsonArray();
+                        Iterator<JsonElement> it = asignaturasJson.iterator();
+                        while(it.hasNext()){
+                            JsonObject asig = it.next().getAsJsonObject();
+                            String nombre = asig.get("name").getAsString();
+                            if(nombre!=null){
+                                Asignatura a = asignaturaFacade.buscar(nombre);
+                                System.out.println("Asignatura "+nombre+ (a==null? " no" : "") +" encontrada "+nombre.length());
+                                if(a==null){
+                                    a = new Asignatura();
+                                    a.setNombreAsignatura(nombre);
+                                    a.setNCreditos(6);
+                                    a.setCodAsignatura(asignaturaFacade.count()+1);
+                                    asignaturaFacade.create(a);
+                                }
+                                asignaturas.add(a);
+                            }
+                        }
+                        
+                     Estudiante e = estudianteFacade.find(correo);
+                     e.setAsignaturaList(asignaturas);
+                     estudianteFacade.edit(e);
+                    
+                    
                 } else if (ongFacade.find(correo) != null) {
                     request.setAttribute("mensaje", "Este login es para usuarios");
                     direccion="/loginUma.jsp";}
