@@ -16,6 +16,9 @@
         <jsp:include page="messageService.jsp" />
     </head>
     <body>
+        <div style="float:right">
+            <a href="IndexServlet">Inicio</a>
+        </div>
         <table>
         <%
             List<Notificacion> notificaciones = (List<Notificacion>) request.getAttribute("notificaciones");

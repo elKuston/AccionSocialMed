@@ -116,11 +116,18 @@
                     <%
                 }
             %>
+            <br>Disponibilidad:<br>
+                <div class="control">
+                    
+                    <label class="radio"><input type="radio" name="turno" value="m"
+                        <% if(user.getTurnotarde().booleanValue() == false) {%> checked <% } %>>Turno de mañana</label><br>
+                    <label class="radio"><input type="radio" name="turno" value="t" 
+                     <% if(user.getTurnotarde().booleanValue() == true) {%> checked <% } %>>Turno de tarde</label>
+                  </div> 
                     </fieldset>
                     <%}
                     %>
-             
-             
+
              <br><input type="submit" value="Guardar cambios" name="bt" style="margin-left: 10%">
         </form>            
     </body>

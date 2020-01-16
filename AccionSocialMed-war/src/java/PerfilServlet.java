@@ -78,6 +78,7 @@ public class PerfilServlet extends HttpServlet {
             }
             List<Etiqueta> activas = user.getEtiquetaList();
             
+            
             request.setAttribute("ambitos", ambitos);
             request.setAttribute("tipos", tipos);
             request.setAttribute("activas", activas);
@@ -111,6 +112,14 @@ public class PerfilServlet extends HttpServlet {
                     if(et!=null){
                         etiquetasActividad.add(et);
                     }
+                }
+                
+                String turno = request.getParameter("turno");
+                if(turno.equals("t")) {
+                    user.setTurnotarde(Boolean.TRUE);
+                } 
+                if(turno.equals("m")) {
+                    user.setTurnotarde(Boolean.FALSE);
                 }
 
                     user.setEtiquetaList(etiquetasActividad);
@@ -184,10 +193,9 @@ public class PerfilServlet extends HttpServlet {
              pasFacade.edit(pas);
              
          }
-            
-          
-            
+
             usuarioFacade.edit(user);
+            sesion.setAttribute("mensaje", "Datos guardados correctamente.");
             RequestDispatcher rd = request.getRequestDispatcher("IndexServlet");
             rd.forward(request, response);
         }
