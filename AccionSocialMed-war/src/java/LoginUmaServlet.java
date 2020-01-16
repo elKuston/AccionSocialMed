@@ -5,19 +5,27 @@
  */
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dao.AsignaturaFacade;
 import dao.EstudianteFacade;
 import dao.OngFacade;
 import dao.PasFacade;
 import dao.ProfesorFacade;
 import dao.UsuarioFacade;
+import entity.Asignatura;
+import entity.Profesor;
+import entity.Usuario;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -48,6 +56,7 @@ public class LoginUmaServlet extends HttpServlet {
     @EJB ProfesorFacade profesorFacade;
     @EJB PasFacade pasFacade;
     @EJB EstudianteFacade estudianteFacade;
+    @EJB AsignaturaFacade asignaturaFacade;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -82,8 +91,7 @@ public class LoginUmaServlet extends HttpServlet {
         //Aqui obtengo el valor del usuario y se de que tipo es en iduma
         JsonObject jobj = new Gson().fromJson(resultado, JsonObject.class);     
         String json = jobj.get("situation").getAsString(); 
-        
-        
+
         
         if (usuarioFacade.find(correo) != null){
             if (json.equals("PRESENT")) {
@@ -91,6 +99,35 @@ public class LoginUmaServlet extends HttpServlet {
                 sesion.setAttribute("usuario", usuarioFacade.find(correo));
                 if (profesorFacade.find(correo)!= null) {
                     sesion.setAttribute("tipo", "profesor");
+                    
+                            
+                //se supone que aqui obtengo las asignaturas que imparte
+                
+                List<Asignatura> asignaturas = new ArrayList<>();
+                       JsonObject jRaw = new Gson().fromJson(resultado, JsonObject.class);
+                        JsonArray asignaturasJson = jRaw.get("courses").getAsJsonArray();
+                        Iterator<JsonElement> it = asignaturasJson.iterator();
+                        while(it.hasNext()){
+                            JsonObject asig = it.next().getAsJsonObject();
+                            String nombre = asig.get("name").getAsString();
+                            if(nombre!=null){
+                                Asignatura a = asignaturaFacade.buscar(nombre);
+                                System.out.println("Asignatura "+nombre+ (a==null? " no" : "") +" encontrada "+nombre.length());
+                                if(a==null){
+                                    a = new Asignatura();
+                                    a.setNombreAsignatura(nombre);
+                                    a.setNCreditos(6);
+                                    a.setCodAsignatura(asignaturaFacade.count()+1);
+                                    asignaturaFacade.create(a);
+                                }
+                                asignaturas.add(a);
+                            }
+                        }
+                
+                Profesor p = profesorFacade.find(correo);
+                p.setAsignaturaList(asignaturas);
+                profesorFacade.edit(p);
+        
                 } else if (pasFacade.find(correo)!= null) {
                     sesion.setAttribute("tipo", "pas");
                 }else if (estudianteFacade.find(correo) != null) {
@@ -114,6 +151,7 @@ public class LoginUmaServlet extends HttpServlet {
         rd.forward(request, response);
 
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

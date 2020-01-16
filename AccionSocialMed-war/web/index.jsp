@@ -70,7 +70,6 @@
             if(!invitado){
                 if(request.getSession().getAttribute("screen").equals("match"))
                 {
-
                     %>
                             <form action="IndexServlet" method="post">
                 <input type="submit" value="Ver todas las Actividades">
