@@ -29,11 +29,63 @@
                     <%
                 }else{
                     %>
-                     <a href="PerfilServlet">Mi perfil</a>
+                     <a href="PerfilServlet">Mi perfil</a>&nbsp;&nbsp;&nbsp;
+                     <a  href="CerrarSesionServlet">CERRAR SESION </a>
                     <%
                 }
                 %>
         </div>
+        
+        
+        
+            <%
+            boolean tipo = (Boolean) request.getSession().getAttribute("tipo").equals("ong");
+                if(tipo && !invitado){
+                    %>
+                    <a href ="ProponerActividadServlet">NUEVA ACTIVIDAD</a>&nbsp;&nbsp;&nbsp;
+                    <a href="PropuestasServlet">ACTIVIDADES PROPUESTAS</a>&nbsp;&nbsp;&nbsp;
+                    <a href="MensajeriaServlet">Mensajeria</a>
+                    
+                    
+                    <%
+                }
+                %>   
+                
+            <%
+            tipo = (Boolean) request.getSession().getAttribute("tipo").equals("estudiante") || (Boolean) request.getSession().getAttribute("tipo").equals("pas");
+                if(tipo && !invitado){
+                    %>
+                    <a href="MensajeriaServlet">Mensajeria</a>&nbsp;&nbsp;&nbsp;
+                    <a href ="InscritasServlet">Actividades inscritas</a>
+                    
+                    <%
+                }
+                %>   
+        
+            <%
+            tipo = (Boolean) request.getSession().getAttribute("tipo").equals("profesor");
+                if(tipo && !invitado){
+                    %>
+                    <a href="MensajeriaServlet">Mensajeria</a>&nbsp;&nbsp;&nbsp;
+                    <a href ="InscritasServlet">Actividades inscritas</a>&nbsp;&nbsp;&nbsp;
+                    
+                    <%
+                }
+                %> 
+                
+            <%
+            tipo = (Boolean) request.getSession().getAttribute("tipo").equals("profesor")&&user.getProfesor().getGestor();
+                if(tipo && !invitado){
+                    %>
+                                    <a href="ActividadesPendientesServlet">Actividades pendientes</a>&nbsp;&nbsp;&nbsp;
+                                    <a href ="IngresarONGServlet">Gestion ONGs</a>&nbsp;&nbsp;&nbsp;
+                <a  href="GestionEtiquetasServlet">Gestión Etiquetas </a>
+                    <%
+                }
+                %>   
+        
+        <br/><br/>
+        
         <% if(request.getAttribute("mensaje")!=null){
             String mensaje =(String) request.getAttribute("mensaje");
             request.removeAttribute("mensaje");
@@ -58,16 +110,9 @@
                 }
             }
         %>
-        <%
-            if(request.getSession().getAttribute("tipo").equals("profesor")&&user.getProfesor().getGestor()){
-                %>
-                <a href="ActividadesPendientesServlet">Actividades pendientes</a>
-                <%
-            }
-        %>
         
         <%
-            if(!invitado){
+            if(!invitado && !request.getSession().getAttribute("tipo").equals("ong")){
                 if(request.getSession().getAttribute("screen").equals("match"))
                 {
                     %>
@@ -93,11 +138,12 @@
             List<Actividad> act = (List<Actividad>) request.getAttribute("actividades");
         %>
 
+        <br/><br/><br/><br/>
     <center>
 
         
         <%
-            if(act.size()>0)
+            if(act.size()>0 && !request.getSession().getAttribute("tipo").equals("ong"))
             {
                 %>
                           <table border="1">
@@ -156,7 +202,7 @@
                 
                 <%
             }
-            else
+            else if(!request.getSession().getAttribute("tipo").equals("ong"))
             {
                     if(request.getSession().getAttribute("screen").equals("match"))
                     {
@@ -174,56 +220,7 @@
             <%
             }
             %>
-           
-        
-        
-        
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <a  href="GestionEtiquetasServlet">Testing gestion etiquetas </a><br/><br/>
-        
-        <a  href="CerrarSesionServlet">CERRAR SESION </a><br/><br/>
-        <% 
-            if(request.getSession().getAttribute("tipo").equals("ong")){//es (PROBABLEMENTE) una ong (hay que refinar bien si esto incluye a alguna no-ong o excluye a alguna ong
-                %>
-                <a href ="ProponerActividadServlet">NUEVA ACTIVIDAD</a><br><br>
-                <a href="PropuestasServlet">ACTIVIDADES PROPUESTAS</a><br><br>
-                <%
-            }
-        %>
-        
-                <% 
-            if(request.getSession().getAttribute("tipo").equals("profesor")&&user.getProfesor().getGestor()){//es (PROBABLEMENTE) una ong (hay que refinar bien si esto incluye a alguna no-ong o excluye a alguna ong
-                %>
-                    <a href ="IngresarONGServlet">Ingresar ONG</a>
-                <%
-            }
-        %>
-        
-        <% 
-            if(!invitado&&!request.getSession().getAttribute("tipo").equals("ong")){
-                %>
-                <h1> <a href ="InscritasServlet">Actividades inscritas</a></h1><br/>
-                <%
-            }
-        %>
-        
-        <%
-            if(!invitado){
-            %>
-        
-        <a href="MensajeriaServlet">Mensajeria</a>
-        <%
-            }
-        %>
     </center>
 
     </body>
