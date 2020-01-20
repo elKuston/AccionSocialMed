@@ -32,11 +32,10 @@ public class NotificacionFacade extends AbstractFacade<Notificacion> {
         super(Notificacion.class);
     }
     
-        public List<Notificacion> porReceptor(Usuario receptor){
+    public List<Notificacion> porReceptor(Usuario receptor){
         Query q;
         q = this.em.createQuery("select n from Notificacion n where n.receptor.correo = :rec ");
         q.setParameter("rec", receptor.getCorreo());
         return q.getResultList();
     }
-    
 }

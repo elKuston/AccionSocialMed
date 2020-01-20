@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 /**
  *
  * @author Angela
@@ -30,7 +31,7 @@ public class InformeFacade extends AbstractFacade<Informe> {
         super(Informe.class);
     }
     
-     public Informe findByUser(String usuario, int actividad){
+         public Informe findByUser(String usuario, int actividad){
         Query q;
         q = this.em.createQuery("select p from Informe p where P.participante.correo = :usuario and P.actividad.nactividad=:actividad" );
         q.setParameter("usuario",usuario);
@@ -44,5 +45,5 @@ public class InformeFacade extends AbstractFacade<Informe> {
         q.setParameter("actividad",actividad);
         return (List<Informe>) q.getResultList();
     }
-    
+   
 }

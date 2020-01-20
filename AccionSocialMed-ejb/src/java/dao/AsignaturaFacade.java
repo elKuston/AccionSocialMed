@@ -36,5 +36,4 @@ public class AsignaturaFacade extends AbstractFacade<Asignatura> {
         q.setParameter("nombre", nombre);
         return q.getResultList().size()>0 ? (Asignatura) q.getResultList().get(0) : null;
     }
-    
 }

@@ -14,7 +14,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY HH:mm");    
+SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY");    
 HttpSession sesion = request.getSession();
 Usuario user = (Usuario) sesion.getAttribute("usuario");
 String correo = user.getCorreo();

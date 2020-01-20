@@ -14,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-
 /**
  *
  * @author Angela
@@ -44,5 +43,5 @@ public class ProfesorFacade extends AbstractFacade<Profesor> {
         q = this.em.createQuery("select n from Notificacion n where n.receptor.correo = :rec ");
         q.setParameter("rec", receptor.getCorreo());
         return q.getResultList();
-    }
+    }    
 }
