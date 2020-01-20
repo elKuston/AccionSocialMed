@@ -44,6 +44,7 @@ public class OngRegister2Servlet extends HttpServlet {
         String correo = request.getParameter("correo");
         String passw1 = request.getParameter("passw1");
         String passw2 = request.getParameter("passw2");
+        String nombre = request.getParameter("nombre");
                   
         String dir = "/ongRegister2.jsp";
         
@@ -53,6 +54,7 @@ public class OngRegister2Servlet extends HttpServlet {
            Ong o = ongFacade.find(correo);
            o.setContrasena(passw1);
            o.setActiva(true);
+           u.setNombre(nombre);
            
            dir = "/loginOng.jsp";
            

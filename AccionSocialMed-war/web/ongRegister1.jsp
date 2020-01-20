@@ -31,10 +31,10 @@
                 
         <h1>Registro de ONG</h1> 
   
-         <form action="OngRegister1Servlet" id="form1"> 
-             <p> <input name="clave" placeholder=" Introduzca la clave"  id="txtclave" size="30" maxlength="30"><br><br>
-            <input name="correo" placeholder=" Introduzca correo ONG (*)" id="txtcorreo" size="30" maxlength="30"><br><br>
-            <input type="submit" value=" Validar " id="btn1"></p>
+         <form action="OngRegister1Servlet"> 
+             <input type="email" name="correo" placeholder=" Introduzca correo ONG"  size="30"  required><br><br>
+             <input type="text" name="clave" placeholder=" Introduzca la clave" size="30" required><br><br>
+            <input type="submit" value=" Validar " id="btn1">
         </form>
         </center>     
     

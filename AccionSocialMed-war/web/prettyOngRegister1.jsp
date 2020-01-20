@@ -42,19 +42,19 @@
                             Registro de ONG
                         </span>
                         
-                        <div class="wrap-input100 validate-input" data-validate = "Es necesaria la clave">
-                            <input class="input100" type="text" name="clave" placeholder="Introduzca la clave">
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-lock" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                        
                         <div class="wrap-input100 validate-input" data-validate = "Se necesita un email válido: ex@abc.xyz">
-                            <input class="input100" type="text" name="correo" placeholder="Introduzca email">
+                            <input class="input100" type="correo" name="correo" placeholder="Introduzca email" required>
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        
+                         <div class="wrap-input100 validate-input" data-validate = "Es necesaria la clave">
+                            <input class="input100" type="text" name="clave" placeholder="Introduzca la clave" required>
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
                             </span>
                         </div>
                         
@@ -64,6 +64,9 @@
                             </button>
                            
                         </div>
+                        </div>
+                </div>
+             </div>
                     </form>
         
                     

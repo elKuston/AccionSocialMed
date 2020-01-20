@@ -4,13 +4,14 @@
     Author     : Angela
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="entity.Actividad"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    Usuario user = (Usuario) request.getAttribute("usuario");
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     List<Actividad> mis= (List<Actividad>) request.getAttribute("mis");
     %>
 <html>
@@ -47,8 +48,8 @@
             <tr>
                 <td><%=a.getTitulo()%></td>
                 <td><%=a.getTipoActividad()%></td>
-                <td><%=a.getFechaInicio()%></td>
-                <td><%=a.getFechaFin() %></td>
+                <td><%=formatter.format(a.getFechaInicio())%></td>
+                <td><%=formatter.format(a.getFechaFin()) %></td>
                 <td>
                 <%
                     if(a.getTurnotarde())
