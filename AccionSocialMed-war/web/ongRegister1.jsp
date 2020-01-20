@@ -9,7 +9,7 @@
 <html>
     <head>
         
-        <title>ONG Registro 1</title>
+        <title>Registro ONG</title>
         <script src="js/main.js"></script> 
         
     </head>
@@ -34,7 +34,7 @@
          <form action="OngRegister1Servlet" id="form1"> 
              <p> <input name="clave" placeholder=" Introduzca la clave"  id="txtclave" size="30" maxlength="30"><br><br>
             <input name="correo" placeholder=" Introduzca correo ONG (*)" id="txtcorreo" size="30" maxlength="30"><br><br>
-            <input type="button" value=" Validar " id="btn1"></p>
+            <input type="submit" value=" Validar " id="btn1"></p>
         </form>
         </center>     
     

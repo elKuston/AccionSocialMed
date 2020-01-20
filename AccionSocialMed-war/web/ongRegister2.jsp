@@ -15,7 +15,7 @@ request.setAttribute("correo", user.getCorreo());%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ONG Registro 2</title>
+        <title>Registro ONG</title>
     </head>
     <body style="background-color:#9370DB;">
        <center>
@@ -29,7 +29,7 @@ request.setAttribute("correo", user.getCorreo());%>
         <%
                 }%>
             
-            <h3> ¡Hola <%= user.getNombre() %>!</h3>
+            <h3> ¡Hola, registrate!</h3>
             
             
                 <form action="OngRegister2Servlet" method="get">

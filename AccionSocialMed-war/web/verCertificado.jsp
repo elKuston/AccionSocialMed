@@ -18,7 +18,7 @@
     int nota= (Integer)request.getAttribute("nota");
 %>
 <html>
-    <body id="cuerpo">
+    <body id="cuerpo"> 
         <center>
         <style>
         .signature, .title { 

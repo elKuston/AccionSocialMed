@@ -9,7 +9,7 @@
 <html lang="es">
 <html>
     <head>        
-        <title>ONG Registro 1</title>
+        <title>Registro ONG</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--===============================================================================================-->	

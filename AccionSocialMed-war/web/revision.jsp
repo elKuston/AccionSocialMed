@@ -19,9 +19,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Confirmacion1</title>
+        <title>Revision</title>
     </head>
     <body>
+        <jsp:include page="navigation.jsp" /> 
         <fieldset style="width: 400px;">
             <legend>Datos de la actividad</legend> 
         <b>Nombre de la ONG:</b> <%=act.getOng().getUsuario().getNombre()%><br/>

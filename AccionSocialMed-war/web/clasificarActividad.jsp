@@ -19,6 +19,7 @@
         <title>Clasificar actividad</title>
     </head>
     <body>
+        <jsp:include page="navigation.jsp" /> 
         <%
             Actividad a = (Actividad) request.getAttribute("actividad");
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");

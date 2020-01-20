@@ -11,13 +11,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Gestión etiquetas</title>
     </head>
     <%
         List<Etiqueta> e = (List<Etiqueta>)request.getAttribute("et");
         %>
     <body>
-        <h1>Hello World!</h1>
+        
+        <jsp:include page="navigation.jsp" /> 
+        
+        <h1>Panel de gestión de etiquetas</h1>
         
         <table border="1">
             <tr>

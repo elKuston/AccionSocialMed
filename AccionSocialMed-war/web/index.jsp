@@ -4,6 +4,7 @@
     Author     : jange
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="entity.Profesor"%>
 <%@page import="entity.Actividad"%>
 <%@page import="entity.Notificacion"%>
@@ -11,6 +12,7 @@
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%Usuario user = (Usuario)request.getAttribute("usuario"); %>
+ <%SimpleDateFormat formato= new SimpleDateFormat("dd/MM/yyyy");%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,71 +22,9 @@
     </head>
     <body>
         
-        <div style="float:right">
-            <%
-            boolean invitado = (Boolean) request.getSession().getAttribute("invitado");
-                if(invitado){
-                    %>
-                    Invitado, <a href="iDUMARegistro.jsp">¡crea tu cuenta ya!</a>
-                    <%
-                }else{
-                    %>
-                     <a href="PerfilServlet">Mi perfil</a>&nbsp;&nbsp;&nbsp;
-                     <a  href="CerrarSesionServlet">CERRAR SESION </a>
-                    <%
-                }
-                %>
-        </div>
+        <jsp:include page="navigation.jsp" />  
         
-        
-        
-            <%
-            boolean tipo = (Boolean) request.getSession().getAttribute("tipo").equals("ong");
-                if(tipo && !invitado){
-                    %>
-                    <a href ="ProponerActividadServlet">NUEVA ACTIVIDAD</a>&nbsp;&nbsp;&nbsp;
-                    <a href="PropuestasServlet">ACTIVIDADES PROPUESTAS</a>&nbsp;&nbsp;&nbsp;
-                    <a href="MensajeriaServlet">Mensajeria</a>
-                    
-                    
-                    <%
-                }
-                %>   
-                
-            <%
-            tipo = (Boolean) request.getSession().getAttribute("tipo").equals("estudiante") || (Boolean) request.getSession().getAttribute("tipo").equals("pas");
-                if(tipo && !invitado){
-                    %>
-                    <a href="MensajeriaServlet">Mensajeria</a>&nbsp;&nbsp;&nbsp;
-                    <a href ="InscritasServlet">Actividades inscritas</a>
-                    
-                    <%
-                }
-                %>   
-        
-            <%
-            tipo = (Boolean) request.getSession().getAttribute("tipo").equals("profesor");
-                if(tipo && !invitado){
-                    %>
-                    <a href="MensajeriaServlet">Mensajeria</a>&nbsp;&nbsp;&nbsp;
-                    <a href ="InscritasServlet">Actividades inscritas</a>&nbsp;&nbsp;&nbsp;
-                    
-                    <%
-                }
-                %> 
-                
-            <%
-            tipo = (Boolean) request.getSession().getAttribute("tipo").equals("profesor")&&user.getProfesor().getGestor();
-                if(tipo && !invitado){
-                    %>
-                                    <a href="ActividadesPendientesServlet">Actividades pendientes</a>&nbsp;&nbsp;&nbsp;
-                                    <a href ="IngresarONGServlet">Gestion ONGs</a>&nbsp;&nbsp;&nbsp;
-                <a  href="GestionEtiquetasServlet">Gestión Etiquetas </a>
-                    <%
-                }
-                %>   
-        
-        <br/><br/>
+     
         
         <% if(request.getAttribute("mensaje")!=null){
             String mensaje =(String) request.getAttribute("mensaje");
@@ -96,7 +36,10 @@
             <%
         }%>
         
+        
+        
         <%
+            boolean invitado = (Boolean) request.getSession().getAttribute("invitado");
             if(!invitado){
                 List<Notificacion> notificaciones = (List<Notificacion>) request.getAttribute("pendientes");
                 if(notificaciones.size()>0){
@@ -166,7 +109,7 @@
                 <td><%=a.getTitulo()%></td>
                 <td><%=a.getTipoActividad()%></td>
                 <td><%=a.getNpersonas()%></td>
-                <td><%=a.getFechaInicio().toString()%></td>
+                <td><%=formato.format(a.getFechaInicio())%></td>
                 <td>
                 <%
                     if(a.getTurnotarde())

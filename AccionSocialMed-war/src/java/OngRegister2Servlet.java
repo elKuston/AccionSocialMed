@@ -61,7 +61,7 @@ public class OngRegister2Servlet extends HttpServlet {
         }
         
         if (!request.getParameter("web").equals("")) {
-            u.setDireccion(request.getParameter("web"));
+            o.setWeb(request.getParameter("web"));
         }
         
         if (!request.getParameter("direc").equals("")) {
@@ -71,7 +71,8 @@ public class OngRegister2Servlet extends HttpServlet {
         if (!request.getParameter("localidad").equals("")) {
             u.setLocalidad(request.getParameter("localidad"));
         }
-
+        u.setTurnotarde(Boolean.FALSE);
+        
            usuarioFacade.edit(u);
            ongFacade.edit(o);
            

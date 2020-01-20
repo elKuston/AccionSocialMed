@@ -22,9 +22,7 @@
         <title>Mensajeria</title>
     </head>
     <body>
-        <div style="float:right">
-            <a href="IndexServlet">Inicio</a>
-        </div>
+ <jsp:include page="navigation.jsp" /> 
         <h1>Mensajeria</h1>
         
         <form action="MensajeriaServlet" method="post">

@@ -16,6 +16,7 @@
         <title>Evaluar actividad</title>
     </head>
     <body>
+        <jsp:include page="navigation.jsp" /> 
         <%@include file="messageService.jsp" %>
         <table>
             <tr>

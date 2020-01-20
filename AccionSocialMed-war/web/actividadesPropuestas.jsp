@@ -16,13 +16,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Actividades propuestas</title>
     </head>
     <body>
-        <div style="float:right">
-            <a href="IndexServlet">Inicio</a>
-        </div>
-        <h1>Actividades de <%= user.getNombre() %></h1>
+        <jsp:include page="navigation.jsp" /> 
+        <h1>Tus actividades propuestas</h1>
         
         <%
             if(mis.isEmpty()) { %>
@@ -94,6 +92,5 @@
             }}
             %>
          </table>
-         <br><input type="button" onclick="history.back()" name="Volver" value="Volver">
     </body>
 </html>

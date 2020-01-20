@@ -25,9 +25,7 @@ String correo = user.getCorreo();
         <title>Actividades inscritas</title>
     </head>
     <body>
-        <h3><div style="float:right">
-            <a href="IndexServlet">Inicio</a>
-        </div></h3>
+<jsp:include page="navigation.jsp" /> 
         
         <% if (user.getActividadList().isEmpty()) {%>
         <h2>No te has inscrito a ninguna actividad </h2>

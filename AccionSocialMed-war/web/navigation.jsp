@@ -16,9 +16,77 @@
     <jsp:include page="navigation.jsp" />
 --%>
 
+<%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
-    <button >Volver</button>
+    <%Usuario user = (Usuario)request.getSession().getAttribute("usuario"); %>
+    <div style="float:right">
+            <%
+            boolean invitado = (Boolean) request.getSession().getAttribute("invitado");
+                if(invitado){
+                    %>
+                    Invitado, <a href="iDUMARegistro.jsp">¡crea tu cuenta ya!</a>
+                    <%
+                }else{
+                    %>
+                     <a href="IndexServlet">Inicio</a>&nbsp;&nbsp;&nbsp;
+                     <a href="PerfilServlet">Mi perfil</a>&nbsp;&nbsp;&nbsp;
+                     <a  href="CerrarSesionServlet">CERRAR SESION </a>
+                    <%
+                }
+                %>
+        </div>
+        
+        
+        
+            <%
+            boolean tipo = (Boolean) request.getSession().getAttribute("tipo").equals("ong");
+                if(tipo && !invitado){
+                    %>
+                    <a href ="ProponerActividadServlet">NUEVA ACTIVIDAD</a>&nbsp;&nbsp;&nbsp;
+                    <a href="PropuestasServlet">ACTIVIDADES PROPUESTAS</a>&nbsp;&nbsp;&nbsp;
+                    <a href="MensajeriaServlet">Mensajeria</a>
+                    
+                    
+                    <%
+                }
+                %>   
+                
+            <%
+            tipo = (Boolean) request.getSession().getAttribute("tipo").equals("estudiante") || (Boolean) request.getSession().getAttribute("tipo").equals("pas");
+                if(tipo && !invitado){
+                    %>
+                    <a href="MensajeriaServlet">Mensajeria</a>&nbsp;&nbsp;&nbsp;
+                    <a href ="InscritasServlet">Actividades inscritas</a>
+                    
+                    <%
+                }
+                %>   
+        
+            <%
+            tipo = (Boolean) request.getSession().getAttribute("tipo").equals("profesor");
+                if(tipo && !invitado){
+                    %>
+                    <a href="MensajeriaServlet">Mensajeria</a>&nbsp;&nbsp;&nbsp;
+                    <a href ="InscritasServlet">Actividades inscritas</a>&nbsp;&nbsp;&nbsp;
+                    
+                    <%
+                }
+                %> 
+                
+            <%
+            tipo = (Boolean) request.getSession().getAttribute("tipo").equals("profesor")&&user.getProfesor().getGestor();
+                if(tipo && !invitado){
+                    %>
+                                    <a href="ActividadesPendientesServlet">Actividades pendientes</a>&nbsp;&nbsp;&nbsp;
+                                    <a href ="IngresarONGServlet">Gestion ONGs</a>&nbsp;&nbsp;&nbsp;
+                <a  href="GestionEtiquetasServlet">Gestión Etiquetas </a>
+                    <%
+                }
+                %> 
+                
+                <br/><br/><br/>
     
 </html>

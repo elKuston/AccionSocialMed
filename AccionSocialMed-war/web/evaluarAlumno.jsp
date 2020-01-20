@@ -15,6 +15,7 @@
         <title>Evaluar alumno</title>
     </head>
     <body>
+        <jsp:include page="navigation.jsp" /> 
         <%
             Informe informe = (Informe) request.getAttribute("informe");
             Usuario participante = (Usuario) request.getAttribute("participante");

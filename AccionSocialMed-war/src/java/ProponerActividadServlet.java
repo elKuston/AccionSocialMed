@@ -86,7 +86,7 @@ public class ProponerActividadServlet extends HttpServlet {
             String ff = request.getParameter("fechaFin");
             boolean turnoTarde = request.getParameter("turno").equals("tarde");
             List<Actividad> actividades = actividadFacade.findAll();
-            int nActividad = actividades.get(actividades.size()-1).getNactividad()+1;//se asume que las actividades nunca se borran de la base de datos, solo se desactivan
+            int nActividad = actividades.isEmpty() ? 0 : actividades.get(actividades.size()-1).getNactividad()+1;//se asume que las actividades nunca se borran de la base de datos, solo se desactivan
             
             Actividad a = new Actividad(nActividad, titulo, descripcion, fechaInicio);
             a.setOng(ongFacade.find(((Usuario) request.getSession().getAttribute("usuario")).getCorreo()));
@@ -129,7 +129,7 @@ public class ProponerActividadServlet extends HttpServlet {
                 n.setEmisor(user);
                 n.setReceptor(g.getUsuario());
                 List<Notificacion> nots = notificacionFacade.findAll();
-                int id = nots.get(nots.size()-1).getIdnotificacion()+1;
+                int id = nots.isEmpty()? 0 : nots.get(nots.size()-1).getIdnotificacion()+1;
                 n.setIdnotificacion(id);
                 notificacionFacade.create(n);
                 /*String contenido = "La ONG "+user.getNombre()+" ha propuesto una nueva actividad. Pulsa <a href='ClasificarActividadServlet?act="+a.getNactividad()+"'> aquí para clasificarla</a>.";

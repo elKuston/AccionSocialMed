@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>LoginUma</title>
+        <title>Login ONG</title>
     </head>
     <body style="background-color:#a83232;">
     <center>

@@ -14,13 +14,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Proponer Actividad</title>
         <%
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	Date date = new Date();    
         %>
     </head>
     <body>
+        <jsp:include page="navigation.jsp" /> 
+        <h1>Nueva Actividad</h1>
         <form action="ProponerActividadServlet" method="post">
             <input type="hidden" value="true" name="validar"/>
             <input name="titulo" placeholder="Título" required="true"/>

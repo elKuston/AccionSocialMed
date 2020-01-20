@@ -27,9 +27,7 @@
         <title>Ver Actividad</title>
     </head>
     <body>
-        <div style="float:right">
-            <a href="IndexServlet">Inicio</a>
-        </div>
+<jsp:include page="navigation.jsp" /> 
         
         <h1>Actividad</h1>
         <b>ONG: </b> <%=act.getOng().getUsuario().getNombre() %><br/><br/>

@@ -38,9 +38,7 @@
         <title>Perfil</title>
     </head>
     <body>
-        <div style="float:right">
-            <a href="IndexServlet">Inicio</a>
-        </div>
+<jsp:include page="navigation.jsp" /> 
         <h1>Perfil de <%= user.getNombre() %></h1>
         <form action="PerfilServlet" method="post">
              <fieldset style="width:400px">

@@ -22,9 +22,7 @@
         <title>Informe</title>
     </head>
     <body>
-        <div style="float:right">
-            <a href="IndexServlet">Inicio</a>
-        </div>
+<jsp:include page="navigation.jsp" /> 
     <center>
         <br>
         <% if (informe.getNotaong()==null) { %>

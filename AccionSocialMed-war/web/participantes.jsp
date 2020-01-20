@@ -23,9 +23,7 @@
         <title>Participantes</title>
     </head>
     <body>
-        <div style="float:right">
-            <a href="IndexServlet">Inicio</a>
-        </div>
+<jsp:include page="navigation.jsp" /> 
         <h1>Participantes en <%= act.getTitulo() %></h1>
         
        <table border="1">

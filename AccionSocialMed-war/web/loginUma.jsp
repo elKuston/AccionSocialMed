@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>LoginUma</title>
+        <title>Login Uma</title>
     </head>
     <body style="background-color:#2f3fa3;" id="cuerpo">
     <center>

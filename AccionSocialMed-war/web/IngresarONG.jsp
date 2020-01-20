@@ -11,9 +11,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Gestion ONG</title>
     </head>
     <body>
+        <jsp:include page="navigation.jsp" /> 
                  <% if(request.getAttribute("mensaje")!=null){
             String mensaje =(String) request.getAttribute("mensaje");
             request.removeAttribute("mensaje");

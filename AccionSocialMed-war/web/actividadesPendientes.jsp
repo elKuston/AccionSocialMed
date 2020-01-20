@@ -12,9 +12,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Pendientes</title>
     </head>
     <body>
+        <jsp:include page="navigation.jsp" /> 
         <%
             List<Actividad> actividades = (List<Actividad>) request.getAttribute("todas");
         
