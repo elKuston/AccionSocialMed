@@ -33,7 +33,7 @@
                     %>
                      <a href="IndexServlet">Inicio</a>&nbsp;&nbsp;&nbsp;
                      <a href="PerfilServlet">Mi perfil</a>&nbsp;&nbsp;&nbsp;
-                     <a  href="CerrarSesionServlet">CERRAR SESION </a>
+                     <a  href="CerrarSesionServlet">Cerrar sesión </a>
                     <%
                 }
                 %>
@@ -45,9 +45,9 @@
             boolean tipo = (Boolean) request.getSession().getAttribute("tipo").equals("ong");
                 if(tipo && !invitado){
                     %>
-                    <a href ="ProponerActividadServlet">NUEVA ACTIVIDAD</a>&nbsp;&nbsp;&nbsp;
-                    <a href="PropuestasServlet">ACTIVIDADES PROPUESTAS</a>&nbsp;&nbsp;&nbsp;
-                    <a href="MensajeriaServlet">Mensajeria</a>
+                    <a href ="ProponerActividadServlet">Nueva actividad</a>&nbsp;&nbsp;&nbsp;
+                    <a href="PropuestasServlet">Actividades propuestas</a>&nbsp;&nbsp;&nbsp;
+                    <a href="MensajeriaServlet">Mensajería</a>
                     
                     
                     <%
@@ -58,7 +58,7 @@
             tipo = (Boolean) request.getSession().getAttribute("tipo").equals("estudiante") || (Boolean) request.getSession().getAttribute("tipo").equals("pas");
                 if(tipo && !invitado){
                     %>
-                    <a href="MensajeriaServlet">Mensajeria</a>&nbsp;&nbsp;&nbsp;
+                    <a href="MensajeriaServlet">Mensajería</a>&nbsp;&nbsp;&nbsp;
                     <a href ="InscritasServlet">Actividades inscritas</a>
                     
                     <%
@@ -69,7 +69,7 @@
             tipo = (Boolean) request.getSession().getAttribute("tipo").equals("profesor");
                 if(tipo && !invitado){
                     %>
-                    <a href="MensajeriaServlet">Mensajeria</a>&nbsp;&nbsp;&nbsp;
+                    <a href="MensajeriaServlet">Mensajería</a>&nbsp;&nbsp;&nbsp;
                     <a href ="InscritasServlet">Actividades inscritas</a>&nbsp;&nbsp;&nbsp;
                     
                     <%
@@ -81,8 +81,8 @@
                 if(tipo && !invitado){
                     %>
                                     <a href="ActividadesPendientesServlet">Actividades pendientes</a>&nbsp;&nbsp;&nbsp;
-                                    <a href ="IngresarONGServlet">Gestion ONGs</a>&nbsp;&nbsp;&nbsp;
-                <a  href="GestionEtiquetasServlet">Gestión Etiquetas </a>
+                                    <a href ="IngresarONGServlet">Gestión ONGs</a>&nbsp;&nbsp;&nbsp;
+                <a  href="GestionEtiquetasServlet">Gestión etiquetas </a>
                     <%
                 }
                 %> 
