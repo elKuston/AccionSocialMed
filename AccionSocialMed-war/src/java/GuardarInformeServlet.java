@@ -69,17 +69,36 @@ public class GuardarInformeServlet extends HttpServlet {
         
         sesion.setAttribute("mensaje", "Informe guardado correctamente.");
  
-        //notificacion
+        if(inf.getActividad().getTipoActividad().equals("Aprendizaje-Servicio")) {
+             //notificacion profe
         Notificacion n = new Notificacion();
         n.setEmisor(user);
         n.setLeido(false);
         n.setIdnotificacion(notificacionFacade.findAll().get(notificacionFacade.findAll().size() - 1).getIdnotificacion() + 1);
         
+
         n.setReceptor(inf.getProfesor());
                 n.setContenido("La ONG " + inf.getActividad().getOng().getUsuario().getNombre() + " ha realizado un informe. Puede evaluar al alumno aquí: "
                         + "<form action=\"EvaluarActividadServlet\">"
-                                + "<input type=\"submit\" name=\"actividad\" value=\""+inf.getActividad().getNactividad()+"\"/>"
                                 + "<input type=\"submit\" name=\"boton\" value=\"Evaluar\">\n"
+                        + "<input type=\"hidden\" value=\"" + inf.getActividad().getNactividad() + "\" name=\"actividad\"/>\n"
+                        + "</form>");
+                
+                 notificacionFacade.create(n);
+        }
+       
+             //notificacion profe
+        Notificacion n = new Notificacion();
+        n.setEmisor(user);
+        n.setLeido(false);
+        n.setIdnotificacion(notificacionFacade.findAll().get(notificacionFacade.findAll().size() - 1).getIdnotificacion() + 1);
+        
+
+        n.setReceptor(inf.getParticipante());
+                n.setContenido("La ONG " + inf.getActividad().getOng().getUsuario().getNombre() + " le ha evaluado. Puede verlo aquí: "
+                        + "<form action=\"VerEvaluacionServlet\">"
+                                + "<input type=\"submit\" name=\"boton\" value=\"Consultar\">\n"
+                        + "<input type=\"hidden\" value=\"" + inf.getActividad().getNactividad() + "\" name=\"actividad\"/>\n"
                         + "</form>");
                 
                  notificacionFacade.create(n);

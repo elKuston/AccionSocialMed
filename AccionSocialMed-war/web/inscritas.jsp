@@ -73,8 +73,15 @@ String correo = user.getCorreo();
                 if(!a.getInformeList().isEmpty()) {
                     for(Informe i : a.getInformeList()) {
                         if (i.getParticipante().getCorreo().equals(correo)) {
-                            if (i.getNotaprofesor() != null) {
-                                certificado = true; 
+                            if (i.getNotaong() != null) {
+                                if(i.getActividad().getTipoActividad().equals("Aprendizaje-Servicio")) {
+                                    if(i.getNotaprofesor() != null) {
+                                        certificado = true; 
+                                    }
+                                } else {
+                                    certificado = true; 
+                                }
+                                
                             } } } } if (certificado) { %>
                             <form action="VerCertificado" method="post">
                                 <input type="hidden" value="<%=a.getNactividad() %>" name="actividad"/>
@@ -93,7 +100,7 @@ String correo = user.getCorreo();
                         <input type="hidden" value="<%=a.getNactividad() %>" name="actividad">
                         <%
                             if(a.getFechaFin().before(new Date())) {%>
-                                <input type ="submit" value="Evaluación">
+                                <input type ="submit" value="Evaluación" style="width:88px">
                            <% } else { %>
                            No finalizada
                            <% } %>

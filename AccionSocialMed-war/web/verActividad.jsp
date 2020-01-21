@@ -86,12 +86,11 @@
             <%}}}
             if(finalizada) { %>
             <h3><u>Actividad finalizada</u></h3>
-            <% }
-                if(act.getInformeList().isEmpty()) { %>
-                Todavía no se ha comentado la actividad.
+            <%  if(act.getInformeList().isEmpty()) { %>
+              <a style="font-weight: 100; font-size: 20px;">Todavía no se ha comentado la actividad.</a>  
             <% } else { %>
-    <a style="font-weight: 100; font-size: 20px;">Comentarios</a><div style="border-bottom: 1px solid #dddddd"></div><br/>
-    <% for (Informe i : act.getInformeList()) {
+        <a style="font-weight: 100; font-size: 20px;">Comentarios</a><div style="border-bottom: 1px solid #dddddd"></div><br/>
+     <% for (Informe i : act.getInformeList()) {
         %>
         <b> <%= i.getParticipante().getNombre() %> el <%= formato.format(i.getFechaopinion()) %> :
         <%  if(i.getNotaparticipante() == 0) {%>
@@ -112,7 +111,7 @@
               <p><%= i.getComentarioparticipante() %> </p>
              
                <div style="border-bottom: 1px solid #dddddd"></div>
-<% } }
+<% } } }
  %>
             
     </body>
