@@ -47,7 +47,7 @@
                 %>
             <tr>
                 <td><%=a.getTitulo()%></td>
-                <td><%=a.getTipoActividad()%></td>
+                <td><%=a.getTipoActividad() != null ? a.getTipoActividad() : "Sin asignar"%></td>
                 <td><%=formatter.format(a.getFechaInicio())%></td>
                 <td><%=formatter.format(a.getFechaFin()) %></td>
                 <td>

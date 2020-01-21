@@ -58,7 +58,7 @@
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                             </a><br>
                             <a class="txt2" href="loginUma.jsp">
-                                Inicio sesión IDUMA
+                                Inicio sesión iDUMA
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                             </a><br>
                             <a class="txt2" href="loginOng.jsp">

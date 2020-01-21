@@ -71,7 +71,7 @@ p {
 	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
-	margin: 0px;
+	margin: 100px;
 }
 
 ul, li {
@@ -94,6 +94,7 @@ textarea {
 textarea:focus, input:focus {
   border-color: transparent !important;
 }
+
 
 input:focus::-webkit-input-placeholder { color:transparent; }
 input:focus:-moz-placeholder { color:transparent; }
@@ -351,7 +352,6 @@ iframe {
 .login100-form-btn:hover {
   background: #333333;
 }
-
 
 
 /*------------------------------------------------------------------

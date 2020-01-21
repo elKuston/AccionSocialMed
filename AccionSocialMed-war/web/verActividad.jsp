@@ -4,6 +4,7 @@
     Author     : jange
 --%>
 
+<%@page import="entity.Informe"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Usuario"%>
@@ -20,11 +21,20 @@
     String fechaInicio = format.format(act.getFechaInicio());
     String fechaFin = act.getFechaFin() != null ? format.format(act.getFechaFin()) : "No definida";
     Usuario user = (Usuario) sesion.getAttribute("usuario");
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ver Actividad</title>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.checked {
+  color: orange;
+}
+
+</style>
     </head>
     <body>
 <jsp:include page="navigation.jsp" /> 
@@ -52,18 +62,19 @@
         <br/>
         <br/>
         
-         <%  
+         <%  boolean finalizada = false;
+         if(act.getFechaFin().before(new Date())) {
+             finalizada = true;
+         }
             if(!sesion.getAttribute("tipo").equals("ong")){
              if (user.getActividadList().contains(act)) {
-                Date ahora = new Date();
-                if (ahora.before(act.getFechaFin())){%>
+                if (!finalizada){%>
                 <form action="CancelarParticipacionServlet" method="post">
                 <input type="submit" name="btnCanc" value="Cancelar participación">
                 <input type="hidden" value="<%=act.getNactividad()%>" name="id"/>
                 </form><br>
-                <%} else  {%>
-                <h3><u>Actividad finalizada</u></h3>
-             <%} } else {
+
+             <%}  } else {
             if(plazas != 0) { %>
             <form action="ConfirmacionUnionProfesorServlet" method="post">
             <input type="hidden" value="<%=act.getNactividad()%>" name="id"/>
@@ -72,7 +83,37 @@
             <br> 
             <%} else { %>
             Todas las plazas ocupadas, no puedes unirte.
-            <%}}}%>
-            <input type="button" onclick="history.back()" name="volver" value="Volver">
+            <%}}}
+            if(finalizada) { %>
+            <h3><u>Actividad finalizada</u></h3>
+            <% }
+                if(act.getInformeList().isEmpty()) { %>
+                Todavía no se ha comentado la actividad.
+            <% } else { %>
+    <a style="font-weight: 100; font-size: 20px;">Comentarios</a><div style="border-bottom: 1px solid #dddddd"></div><br/>
+    <% for (Informe i : act.getInformeList()) {
+        %>
+        <b> <%= i.getParticipante().getNombre() %> el <%= formato.format(i.getFechaopinion()) %> :
+        <%  if(i.getNotaparticipante() == 0) {%>
+            <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>
+         <%  } else if(i.getNotaparticipante() == 1) {%>
+                    <span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>
+        <%} else if (i.getNotaparticipante() == 2) { %>
+                    <span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>
+        <% } else if (i.getNotaparticipante() == 3) { %>
+         <span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>
+        <% } else if (i.getNotaparticipante() == 4) { %>
+             <span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span>
+        <%} else { %>
+              <span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span>
+        <% } %>
+              
+              <br> <%= i.getParticipante().getCorreo() %> :</b>
+              <p><%= i.getComentarioparticipante() %> </p>
+             
+               <div style="border-bottom: 1px solid #dddddd"></div>
+<% } }
+ %>
+            
     </body>
 </html>

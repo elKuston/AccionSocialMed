@@ -27,9 +27,9 @@
         <h2>Login ONG</h2>
         <br/><br/>
         <form action="LoginOngServlet" method="post">
-            Correo:  <input name="correo" placeholder="Usuario" size="30" maxlength="30" /> <br/><br/>
-            Contraseña: <input type="password" name="contrasena" placeholder="Contraseña" size="30" maxlength="30" /> <br/><br/>
-            <input type="submit" value="Logearse">
+            Correo:  <input name="correo" placeholder="Usuario" size="30" maxlength="30" required> <br/><br/>
+            Contraseña: <input type="password" name="contrasena" placeholder="Contraseña" size="30" maxlength="30" required> <br/><br/>
+            <input type="submit" value="Acceder">
             </form>
             <br/><br/>
     </center>

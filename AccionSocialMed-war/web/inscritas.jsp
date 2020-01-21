@@ -40,6 +40,7 @@ String correo = user.getCorreo();
                 <th>Turno</th>
                 <th>Certificado</th>
                 <th>Detalles</th>
+                <th>Evaluación</th>
             </tr>
             
                 <% for (Actividad a : user.getActividadList()) { %>  
@@ -64,6 +65,9 @@ String correo = user.getCorreo();
                     }
                 %>
                 </td>
+                
+
+                    
                 <td>
                 <% boolean certificado = false;
                 if(!a.getInformeList().isEmpty()) {
@@ -85,6 +89,18 @@ String correo = user.getCorreo();
                         <input type="submit" value="Ver actividad" >
                     </form>   </td>
                 
+                <td><form action ="VerEvaluacionServlet" method="post">
+                        <input type="hidden" value="<%=a.getNactividad() %>" name="actividad">
+                        <%
+                            if(a.getFechaFin().before(new Date())) {%>
+                                <input type ="submit" value="Evaluación">
+                           <% } else { %>
+                           No finalizada
+                           <% } %>
+                        
+                    </form>
+                    
+                </td>
                 </tr>
                 <%} }%>
 

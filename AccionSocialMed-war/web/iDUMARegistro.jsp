@@ -30,7 +30,7 @@
         <form action="iDUMARegistroServlet" method="post">
             Correo:  <input name="correo" placeholder="Usuario" size="30" maxlength="30" /> <br/><br/>
             Contraseña: <input type="password" name="contrasena" placeholder="Contraseña" size="30" maxlength="30" /> <br/><br/>
-            <input type="submit" value="Logearse">
+            <input type="submit" value="Acceder">
             </form>
             <br/><br/>
     </center>
