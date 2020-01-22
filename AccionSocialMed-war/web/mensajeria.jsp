@@ -23,7 +23,7 @@
     </head>
     <body>
  <jsp:include page="navigation.jsp" /> 
-        <h1>Mensajeria</h1>
+        <h1>Mensajería</h1>
         
         <form action="MensajeriaServlet" method="post">
             <input type="submit" value="Entrantes" name="boton">

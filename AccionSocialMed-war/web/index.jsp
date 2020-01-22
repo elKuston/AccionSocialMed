@@ -44,11 +44,11 @@
                 List<Notificacion> notificaciones = (List<Notificacion>) request.getAttribute("pendientes");
                 if(notificaciones.size()>0){
                     %>
-                    <h2><a href="VerNotificacionesServlet"><%=notificaciones.size()%> notificaciones pendientes</a></h2>
+                    <h2>&nbsp;&nbsp;&nbsp;<a href="VerNotificacionesServlet"><%=notificaciones.size()%> notificaciones pendientes</a></h2>
                     <%
                 }else{
                     %>
-                    <h2><a href="VerNotificacionesServlet">Mis notificaciones</a></h2>
+                    <h2>&nbsp;&nbsp;&nbsp;<a href="VerNotificacionesServlet">Mis notificaciones</a></h2>
                     <%
                 }
             }
@@ -60,7 +60,7 @@
                 {
                     %>
                             <form action="IndexServlet" method="post">
-                <input type="submit" value="Ver todas las Actividades">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Ver todas las Actividades">
                 <input type="hidden" name="all" value="1">
             </form>
                     <%
@@ -69,7 +69,7 @@
                 {
                     %>
                             <form action="IndexServlet" method="post">
-                <input type="submit" value="Matching">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Matching">
                 <input type="hidden" name="match" value="1">
             </form>
                     <%

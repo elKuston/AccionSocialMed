@@ -39,8 +39,12 @@
                     <a  href="CerrarSesionServlet">Cerrar sesión </a>
         </div>
         
-        
-        
+        <div style="float:left">
+            <img src="images/Asm.png" style="width: 150px;"/> 
+        </div>
+              &nbsp;&nbsp;&nbsp;
+        <div style="float:left">
+            &nbsp;&nbsp;&nbsp;
             <%
             boolean tipo = (Boolean) request.getSession().getAttribute("tipo").equals("ong");
                 if(tipo && !invitado){
@@ -86,7 +90,8 @@
                     <%
                 }
                 %> 
+        </div>
                 
-                <br/><br/><br/>
+        <br/><br/><br/><br><br/><br/><br/><br>
     
 </html>
