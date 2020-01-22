@@ -36,7 +36,7 @@
                     <%if(e.get(i).getTipo() == 1)
                     {
                         %>
-                        <td>Ambito</td>
+                        <td>Ámbito</td>
                         <%
                     }
                     else
@@ -60,7 +60,7 @@
             <tr>
                 <td colspan="2">
                 <form action="GestionEtiquetas2Servlet" method="post">
-                    <input name="nEt" placeholder="Nombre de la Etiqueta" size="30" maxlength="30"><input type="radio" name="tipo" value="1">Ambito<input type="radio" name="tipo" value="2">Tipo <input type="submit" name="option" value="Nueva Etiqueta">
+                    <input required name="nEt" placeholder="Nombre de la Etiqueta" size="30" maxlength="30"><input type="radio" name="tipo" value="1" checked>Ámbito<input type="radio" name="tipo" value="2">Tipo <input type="submit" name="option" value="Nueva Etiqueta">
                 </form>
                     </td>
             </tr>

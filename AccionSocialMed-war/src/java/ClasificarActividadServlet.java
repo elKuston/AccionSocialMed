@@ -68,7 +68,12 @@ public class ClasificarActividadServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("VerNotificacionesServlet");
                 rd.forward(request, response);
             }
-            List<Asignatura> asignaturas = cargarAsignaturas();
+            //List<Asignatura> asignaturas = cargarAsignaturas();
+            List<Asignatura> asignaturas = new ArrayList<>();
+            for(Profesor p : profesorFacade.findAll()){
+               asignaturas.addAll(p.getAsignaturaList());
+            }
+            
             List<Profesor> profesores = profesorFacade.findAll();
 
             request.setAttribute("actividad", a);
@@ -105,8 +110,9 @@ public class ClasificarActividadServlet extends HttpServlet {
                         a.setTipoActividad("Aprendizaje-Servicio");
                         Asignatura asignatura = asignaturaFacade.find(Integer.parseInt(request.getParameter("asignatura")));
                         a.setAsignaturaAsociada(asignatura);
-                        actividadFacade.edit(a);
                         Profesor prof = asignatura.getProfesorList().get(0);
+                        a.setCorreoProfesor(prof);
+                        actividadFacade.edit(a);
                         n.setReceptor(prof.getUsuario());
                         n.setContenido("Se ha asignado una nueva actividad a la asignatura "+asignatura.getNombreAsignatura()+". <a href=\"ValidarActividadServlet?a="+a.getNactividad()+"\">Pulse para validarla</a>");
                         

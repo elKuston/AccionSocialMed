@@ -44,13 +44,17 @@ public class LoginOngServlet extends HttpServlet {
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
 
-        if (usuarioFacade.find(correo).getOng() != null) {
-            if (contrasena.equals(usuarioFacade.find(correo).getOng().getContrasena())) {
-                direccion = "/IndexServlet";
-                sesion.setAttribute("usuario", usuarioFacade.find(correo));
-                sesion.setAttribute("tipo", "ong");
+        if (usuarioFacade.find(correo) != null) {
+            if (usuarioFacade.find(correo).getOng() != null) {
+                if (contrasena.equals(usuarioFacade.find(correo).getOng().getContrasena())) {
+                    direccion = "/IndexServlet";
+                    sesion.setAttribute("usuario", usuarioFacade.find(correo));
+                    sesion.setAttribute("tipo", "ong");
+                } else {
+                    request.setAttribute("mensaje", "Contraseña erronea");
+                }
             } else {
-                request.setAttribute("mensaje", "Contraseña erronea");
+                request.setAttribute("mensaje", "ONG no encontrada");
             }
         } else {
             request.setAttribute("mensaje", "ONG no encontrada");

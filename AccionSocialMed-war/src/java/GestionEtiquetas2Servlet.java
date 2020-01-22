@@ -45,9 +45,10 @@ public class GestionEtiquetas2Servlet extends HttpServlet {
         
                 
                 String r = (String) request.getParameter("option");
-                int t = Integer.parseInt((String)request.getParameter("tipo"));
+                
                 if(r.equals("Nueva Etiqueta"))
                 {
+                    int t = Integer.parseInt((String)request.getParameter("tipo"));
                     System.out.println("I ENTERED");
                     Etiqueta nE = new Etiqueta((String)request.getParameter("nEt"));
                     nE.setTipo(t);

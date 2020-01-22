@@ -86,9 +86,9 @@ public class PerfilServlet extends HttpServlet {
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         
         if(button != null) {
-            if (!request.getParameter("nombre").equals("")) {
+            /*if (!request.getParameter("nombre").equals("")) {
             user.setNombre(request.getParameter("nombre"));              
-            }
+            }*/
             
             if(!request.getParameter("tlf").equals("")){
             user.setTelefono(Integer.parseInt(request.getParameter("tlf")));  
@@ -147,9 +147,9 @@ public class PerfilServlet extends HttpServlet {
             } else if (sesion.getAttribute("tipo").equals("estudiante")) {
              Estudiante e = user.getEstudiante();
              
-             if (!request.getParameter("app").equals("")) {
+             /*if (!request.getParameter("app").equals("")) {
                  e.setApellidos(request.getParameter("app"));
-             }
+             }*/
              
              if (!request.getParameter("fnac").equals("")) {
                  
@@ -166,9 +166,9 @@ public class PerfilServlet extends HttpServlet {
          } else if (sesion.getAttribute("tipo").equals("profesor")) {
              Profesor p = user.getProfesor();
              
-             if (!request.getParameter("app").equals("")) {
+             /*if (!request.getParameter("app").equals("")) {
                  p.setApellidos(request.getParameter("app"));
-             }
+             }*/
              
              if (!request.getParameter("fnac").equals("")) {
                  
@@ -186,9 +186,9 @@ public class PerfilServlet extends HttpServlet {
          } else {
              Pas pas = user.getPas();
              
-             if (!request.getParameter("app").equals("")) {
+             /*if (!request.getParameter("app").equals("")) {
                  pas.setApellidos(request.getParameter("app"));
-             }
+             }*/
              
              pasFacade.edit(pas);
              

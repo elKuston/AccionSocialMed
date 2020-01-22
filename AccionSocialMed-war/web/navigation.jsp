@@ -27,16 +27,16 @@
             boolean invitado = (Boolean) request.getSession().getAttribute("invitado");
                 if(invitado){
                     %>
-                    Invitado, <a href="iDUMARegistro.jsp">¡crea tu cuenta ya!</a>
+                    Invitado, <a href="iDUMARegistro.jsp">¡regístrate ya!</a>&nbsp;&nbsp;&nbsp;
                     <%
                 }else{
                     %>
                      <a href="IndexServlet">Inicio</a>&nbsp;&nbsp;&nbsp;
                      <a href="PerfilServlet">Mi perfil</a>&nbsp;&nbsp;&nbsp;
-                     <a  href="CerrarSesionServlet">Cerrar sesión </a>
                     <%
                 }
                 %>
+                    <a  href="CerrarSesionServlet">Cerrar sesión </a>
         </div>
         
         

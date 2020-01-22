@@ -1,4 +1,5 @@
-    <%@page import="services.Utils"%>
+    <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="services.Utils"%>
 <%@page import="entity.Usuario"%>
 <%@page import="entity.Informe"%>
 <%-- 
@@ -17,15 +18,17 @@
     <body>
         <jsp:include page="navigation.jsp" /> 
         <%
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            
             Informe informe = (Informe) request.getAttribute("informe");
             Usuario participante = (Usuario) request.getAttribute("participante");
             String apellido = (String) request.getAttribute("apellido");
             String informeInvalido = "El informe solicitado no se encuentra disponible. lamentamos las molestias.";
             boolean informeValido = informe!=null;
         %>
-        <table>
+        <table >
             <tr>
-                <td>
+                <td style="width: 500px">
                     <b>Informe:</b><br/>
                     <p>
                         <% if(!informeValido){%>
@@ -43,12 +46,12 @@
                     <b>Datos del alumno:</b><br/>
                     <p>
                         Nombre: <%= apellido+", "+participante.getNombre() %><br/>
-                        Otros datos...
+                       
                     </p>
                 </td>
             </tr>
         </table>
-        <p>Fecha del informe: <%= informeValido?informe.getFechainforme() : "DD/MM/YYYY" %></p>
+                        <p>Fecha del informe: <%= informeValido?formato.format(informe.getFechainforme()) : "fecha no disponible" %></p>
         <form>
             <input type="hidden" name="act" value="<%= informeValido? informe.getActividad().getNactividad() : "" %>"/>
             <input type="hidden" name="part" value="<%= informeValido? participante.getCorreo() : "" %>"/>
@@ -56,7 +59,7 @@
             Comentario:<br>
             <textarea name="comentario" cols="50" rows="5" ><%= informeValido? (informe.getComentarioprofesor()!=null? informe.getComentarioprofesor() : "") : "" %></textarea>
             <br/>
-            <input type="submit" name ="guardar" value="Gardar Evaluación" />
+            <input type="submit" name ="guardar" value="Guardar Evaluación" />
         </form>
     </body>
 </html>

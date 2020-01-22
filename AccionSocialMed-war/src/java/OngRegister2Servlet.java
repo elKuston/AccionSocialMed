@@ -79,7 +79,7 @@ public class OngRegister2Servlet extends HttpServlet {
            ongFacade.edit(o);
            
        } else {
-            request.setAttribute("mensaje", "las contraseñas no coinciden");
+            request.setAttribute("mensaje", "Las contraseñas no coinciden");
             request.setAttribute("usuario",usuarioFacade.find(correo));
        }
        

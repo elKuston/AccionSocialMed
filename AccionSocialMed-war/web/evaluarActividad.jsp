@@ -4,12 +4,14 @@
     Author     : romol
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="entity.Informe"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Usuario"%>
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -32,12 +34,12 @@
                 int actividad = Integer.parseInt(request.getParameter("actividad"));
                 for(int i=0;i<participantes.size();i++){
                     Usuario p = participantes.get(i);
-                    String apellido = apellidos.get(0);
+                    String apellido = apellidos.get(i);
                     Informe inf = informes.get(i);
                     boolean evaluado = inf !=null && inf.getNotaprofesor()!=null;
                     String evaluacion = "";
                     if(evaluado){
-                        evaluacion = ""+inf.getNotaprofesor();
+                        evaluacion = inf.getNotaprofesor()+"   ";
                     }
                     String urlEvaluar = "\"EvaluarAlumnoServlet?part="+p.getCorreo()+"&act="+actividad+"\"";
                     evaluacion+="<a href="+urlEvaluar+">";

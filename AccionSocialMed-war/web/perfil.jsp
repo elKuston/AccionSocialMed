@@ -45,7 +45,7 @@
                  <input type="hidden" value="true" name="datos"/>
                    <legend>Datos personales</legend>
                    <br>
-                    Nombre: <input type="text" name="nombre" value="<%= user.getNombre()%>" size="40"/> <br><br>
+                   Nombre: <input disabled="true" type="text" name="nombre" value="<%= user.getNombre()%>" size="40"/> <br><br>
                     <% 
                         if(request.getSession().getAttribute("tipo").equals("ong")){
                     %>
@@ -58,21 +58,21 @@
                         } else if (request.getSession().getAttribute("tipo").equals("estudiante")){
 
                     %>
-                        Apellidos: <input type="text" name="app" value="<%=user.getEstudiante().getApellidos() != null ? user.getEstudiante().getApellidos():""%>" size="38"/> <br><br>
+                        Apellidos: <input disabled="true" type="text" name="app" value="<%=user.getEstudiante().getApellidos() != null ? user.getEstudiante().getApellidos():""%>" size="38"/> <br><br>
                         Correo: <input type="text" name="correo" value=<%= user.getCorreo()%> size="41" disabled/> <br><br>
                         Fecha de nacimiento: <input type="date" name="fnac" max="<%= dateFormat.format(date) %>" <%= fechaNacimiento %> /> 
                     <% 
                         } else if (request.getSession().getAttribute("tipo").equals("profesor")) {
 
                     %>
-                        Apellidos: <input type="text" name="app" value="<%=user.getProfesor().getApellidos() != null ? user.getProfesor().getApellidos():""%>" size="38"/> <br><br>
+                        Apellidos: <input disabled="true" type="text" name="app" value="<%=user.getProfesor().getApellidos() != null ? user.getProfesor().getApellidos():""%>" size="38"/> <br><br>
                         Correo: <input type="text" name="correo" value=<%= user.getCorreo()%> size="41" disabled/> <br><br>
                         Fecha de nacimiento: <input type="date" name="fnac" max="<%= dateFormat.format(date) %>" <%= fechaNacimiento %> /> 
                     
                       <% } else { 
                     %>
                     
-                    Apellidos: <input type="text" name="app" value="<%=user.getPas().getApellidos() != null ? user.getPas().getApellidos():""%>" size="38"/> <br><br>
+                    Apellidos: <input disabled="true" type="text" name="app" value="<%=user.getPas().getApellidos() != null ? user.getPas().getApellidos():""%>" size="38"/> <br><br>
                     Correo: <input type="text" name="correo" value=<%= user.getCorreo()%> size="41" disabled/> <br><br>
                     Fecha de nacimiento: <input type="date" name="fnac" max="<%= dateFormat.format(date) %>" <%= fechaNacimiento %> /> 
                     <% 

@@ -53,7 +53,7 @@ public class ConfirmacionUnionProfesorServlet extends HttpServlet {
             if (user.getActividadList().contains(act)) {
                 sesion.setAttribute("mensaje", "Ya estas inscrito en esta actividad");
             } else {
-
+                sesion.setAttribute("mensaje", "Solicitud enviada");
                 Notificacion not = new Notificacion();
                 not.setEmisor((Usuario) sesion.getAttribute("usuario"));;
                 not.setLeido(Boolean.FALSE);

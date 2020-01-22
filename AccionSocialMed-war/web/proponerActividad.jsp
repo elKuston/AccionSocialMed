@@ -27,7 +27,7 @@
             <input type="hidden" value="true" name="validar"/>
             <input name="titulo" placeholder="Título" required="true"/>
             <input name="plazas" placeholder="Plazas disponibles" type="number" required="true"/><br/><br/>
-            <textarea name="descripcion" placeholder="Dedscripción de la actividad" rows="10" cols="80" required="true"></textarea><br/>
+            <textarea name="descripcion" placeholder="Descripción de la actividad" rows="10" cols="80" required="true"></textarea><br/>
             <input name="lugar" placeholder="Lugar" required="true"/><br/><br/>
             
             <div>
