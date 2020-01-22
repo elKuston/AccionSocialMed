@@ -76,7 +76,7 @@ public class ValidarActividadServlet extends HttpServlet {
             
             notificacionFacade.create(n);
             
-            RequestDispatcher rd = request.getRequestDispatcher("VerNotificacionesServlet");
+            RequestDispatcher rd = request.getRequestDispatcher("IndexServlet");
             rd.forward(request, response);
         }
     }
